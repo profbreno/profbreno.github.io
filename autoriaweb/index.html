@@ -4,24 +4,82 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Página principal</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!--<link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />-->
+        <style type="text/css">
+        table, td, th{
+            border: solid 1px black;
+        }
+        </style>
     </head>
     <body>
         <div class="container">
             <h1 class="page-header">
-                Exemplo uso do framework Bootstrap
+                Exemplo uso de Tabelas
             </h1>
-            <div class="row">
-                <div class="alert alert-info col-sm-4">
-                    Lorem ipsum dolor ist amett.
-                </div>
-                <div class="alert alert-info col-sm-4">
-                    Lorem ipsum dolor ist amett.
-                </div>
-                <div class="alert alert-info col-sm-4">
-                    Lorem ipsum dolor ist amett.
-                </div>
-            </div>
+            <table>
+                <caption>Tabela referente a alunos e turmas</caption>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Turma</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Fim da tabela</td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr>
+                        <td>Breno</td>
+                        <td rowspan="4">Autoria Web</td>
+                    </tr>
+                    <tr>
+                        <td>Betânia</td>
+                    </tr>
+                    <tr>
+                        <td>Geise</td>
+                    </tr>
+                    <tr>
+                        <td>Antonio</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br /><br />
+            <!-- Exemplo de mesclagens -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Horário</th>
+                        <th colspan="2">Segunda</th>
+                        <th colspan="2">Terça</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>7h</td>
+                        <td rowspan="2" colspan="2">SOCIO</td>
+                        <td rowspan="2" colspan="2">SOCIO</td>
+                    </tr>
+                    <tr>
+                        <td>7h50</td>
+                    </tr>
+                    <tr>
+                        <td>8h40</td>
+                        <td>QUIM</td>
+                        <td>INFO</td>
+                        <td>QUIM</td>
+                        <td>INFO</td>
+                    </tr>
+                    <tr>
+                        <td>9h30</td>
+                        <td>QUIM</td>
+                        <td>INFO</td>
+                        <td>QUIM</td>
+                        <td>INFO</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>
