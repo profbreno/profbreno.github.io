@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Páginas da turma</title>
+</head>
+<body>
+    <h1>Páginas da turma</h1>
+
+<p>Um tesouro perdido há séculos foi encontrado na ilha de Cyberspace.
+A expedição, liderada pela Dra. Ada Lovelace, encontrou artefatos que
+revelam a história de um povo antigo.</p>
+
+<p>Localização:</p>
+    <ul>
+        <li>Monte Sintaxe, 12.</li>
+    </ul>
+<img src="img/images.jpg" alt="Indiana Jones">
+<p>Data da descoberta:</p> 
+    <ul>
+        <li>25 de setembro.</li>
+    </ul>
+    <table border="1">
+        <caption>Artefatos encontrados</caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Artefato</th>
+                <th>Peso (kg)</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4">Peso Total: X Kg</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                <td>Manuscrito</td>
+                <td>Mapa Antigo</td>
+                <td>0.8</td>
+                <td>Em avaliação</td>
+            </tr>
+            <tr>
+                <td>Manuscrito</td>
+                <td>Diário de Bordo</td>
+                <td>1.2</td>
+                <td>Analisado</td>
+            </tr>
+            <tr>
+                <td>Joalheria</td>
+                <td>Amuleto de Jade (Pequeno)</td>
+                <td>0.3</td>
+                <td>Analisado</td>
+            </tr>
+            <tr>
+                <td>Joalheria</td>
+                <td>Amuleto de Jade (Grande)</td>
+                <td>0.6</td>
+                <td>Em avaliação</td>
+            </tr>
+            <tr>
+                <td>Ferramenta</td>
+                <td>Bússola Criptografada</td>
+                <td>0.9</td>
+                <td>Pendente</td>
+            </tr>
+        </tbody>
+    </table>
+    <table border="1">
+        <tr>
+            <td colspan="2">1</td>
+            <td rowspan="2">2</td>
+        </tr>
+        <tr>
+            <td rowspan="2">3</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td colspan="2">5</td>
+        </tr>
+    </table>
+
+    <!-- Formulários -->
+    <form action="/submit_treasure_info" method="post">
+        <fieldset>
+            <legend>Informações do Tesouro</legend>
+            <label for="researcher_name">Nome do Pesquisador:</label>
+            <input type="text" id="researcher_name" name="researcher_name" required><br><br>
+
+            <label for="discovery_date">Data da Descoberta:</label>
+            <input type="date" id="discovery_date" name="discovery_date" required><br><br>
+
+            <label for="sexo">Sexo:</label>
+            <input type="radio" id="masculino" name="sexo" value="masculino">
+            <label for="masculino">Masculino</label>
+            <input type="radio" id="feminino" name="sexo" value="feminino">
+            <label for="feminino">Feminino</label>
+            <input type="radio" id="outro" name="sexo" value="outro">
+            <label for="outro">Outro</label><br><br>
+
+            <label for="artifact_type">Tipo de Artefato:</label>
+            <select id="artifact_type" name="artifact_type">
+                <option value="manuscrito">Manuscrito</option>
+                <option value="joalheria">Joalheria</option>
+                <option value="ferramenta">Ferramenta</option>
+            </select><br><br>
+
+            <label for="artifact_weight">Peso do Artefato (kg):</label>
+            <input type="number" id="artifact_weight" name="artifact_weight" step="0.1" required><br><br>
+
+            <label for="artifact_status">Status do Artefato:</label>
+            <input type="checkbox" id="analisado" name="artifact_status" value="analisado">
+            <label for="analisado">Analisado</label>
+            <br><br>
+            <input type="submit" value="Enviar Informação">
+            <input type="reset" value="Limpar Campos">
+        </fieldset>
+    </form>
+<a href="tesouro.html">Leia mais sobre a descoberta em nosso blog.</a>
+</body>
+</html>
