@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Página Inicial</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+      </div>
+      <div style="text-align: center;">
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+    <div style="flex:1 1 420px; min-width:280px;">
+      <h2>Maratona de Programação</h2>
+      <p><a href="https://bcwd.me/d-10972" target="_blank" rel="noopener">bcwd.me/d-10972</a></p>
+      <p><strong>Código:</strong> <code>ziHjcaK</code></p>
+    </div>
+
+    <aside style="text-align: left; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; max-width: 420px; flex:0 0 420px;">
+      <p><strong>Instituição:</strong> IF Sertão Pernambucano — Campus Floresta</p>
+      <p><strong>Evento:</strong> Semana Nacional de Ciência e Tecnologia 2025</p>
+      <p><strong>Organização:</strong> Clube da Programação</p>
+    </aside>
+  </div>
+</div>
+
+<!-- Destaque apenas para a contagem -->
+<div class="jumbotron" style="text-align: center;">
+  <small>
+    <strong>Hora de início:</strong>
+    <time datetime="2025-10-22T19:00:00-03:00">22/10/2025 às 19:00</time> (horário de Brasília) <br>
+    <strong>Hora de término:</strong>
+    <time datetime="2025-10-22T21:30:00-03:00">22/10/2025 às 21:30</time> (horário de Brasília) <br>
+    <span>Contagem regressiva</span>
+  </small>
+  <!-- Ajuste a data/hora do evento no atributo data-deadline (ISO 8601) -->
+  <div id="countdown" class="countdown" data-deadline="2025-10-22T21:30:00-03:00">
+    <div class="slot"><span data-part="hours">00</span><small>horas</small></div>
+    <div class="slot"><span data-part="minutes">00</span><small>min</small></div>
+    <div class="slot"><span data-part="seconds">00</span><small>seg</small></div>
+  </div>
+</div>
+
+<style>
+  .countdown { display: flex; gap: 30px; align-items: center; margin-top: 12px; justify-content: center; }
+  .countdown .slot { text-align: center; min-width: 70px; }
+  .countdown .slot span { display: block; font-size: 7rem; font-weight: 700; }
+  .countdown .slot small { color: #666; }
+  #countdown .started { font-weight: 600; }
+</style>
+
+<script>
+  (function () {
+    const el = document.getElementById('countdown');
+    const ds = el.getAttribute('data-deadline');
+    const deadline = new Date(ds);
+    if (!ds || isNaN(deadline.getTime())) {
+      el.textContent = 'Defina uma data/hora válida em data-deadline (ex.: 2025-12-31T09:00:00-03:00).';
+      return;
+    }
+
+    function two(n) { return String(n).padStart(2, '0'); }
+
+    function tick() {
+      const now = new Date();
+      let ms = deadline - now;
+
+      if (ms <= 0) {
+        clearInterval(t);
+        el.innerHTML = '<span class="started">Evento iniciado!</span>';
+        return;
+      }
+
+      const h = Math.floor(ms / 3600000);  ms -= h * 3600000;
+      const m = Math.floor(ms / 60000);    ms -= m * 60000;
+      const s = Math.floor(ms / 1000);
+
+      el.querySelector('[data-part="hours"]').textContent = two(h);
+      el.querySelector('[data-part="minutes"]').textContent = two(m);
+      el.querySelector('[data-part="seconds"]').textContent = two(s);
+    }
+
+    const t = setInterval(tick, 1000);
+    tick();
+  })();
+</script>
+    </div> <!-- /container -->
+  </body>
+</html>
