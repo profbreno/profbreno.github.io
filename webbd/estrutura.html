@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TAGS Estruturais HTML5</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="css/responsive.css"
+      media="screen and (max-width: 800px)"
+    />
+  </head>
+  <body>
+    <a href="#cards" class="arrow__icon">
+      <img
+        src="img/arrow.svg"
+        alt="Ir para explicação"
+        width="50"
+        height="50"
+        loading="lazy"
+      />
+    </a>
+    <div class="tag-container">
+      <a href="#header__card" class="header">
+        <header class="elemento__card flex p-1">
+          <p class="p__tag">header</p>
+        </header>
+      </a>
+      <a href="#nav__card" class="nav">
+        <nav class="elemento__card flex p-1">
+          <p class="p__tag">nav</p>
+          <ul>
+            <li>link 1</li>
+            <li>link 2</li>
+            <li>link 3</li>
+          </ul>
+        </nav>
+      </a>
+      <a href="#aside__card" class="aside">
+        <aside class="elemento__card p-1">
+          <p class="p__tag">aside</p>
+        </aside>
+      </a>
+      <main class="elemento__card main">
+        <a href="#main__card"><p class="p__tag">main</p></a>
+        <article class="elemento__card article">
+          <a href="#article__card">
+            <p class="p__tag">article</p>
+          </a>
+          <a href="#header__card">
+            <header class="elemento__card header__article">
+              <p class="p__tag">header</p>
+            </header>
+          </a>
+          <a href="#section__card">
+            <section class="elemento__card section">
+              <p class="p__tag">section</p>
+            </section>
+          </a>
+          <a href="#footer__card">
+            <footer class="elemento__card footer__article">
+              <p class="p__tag">footer</p>
+            </footer>
+          </a>
+        </article>
+      </main>
+      <a href="#footer__card" class="footer">
+        <footer class="elemento__card flex p-1">
+          <p class="p__tag">footer</p>
+        </footer>
+      </a>
+    </div>
+    <section class="cards" id="cards">
+      <h2 id="header__card">header</h2>
+      <p class="p__tag p__card">
+        Representa um grupo de suporte introdutório ou navegacional. Pode conter
+        alguns elementos de cabeçalho mas também outros elementos como um logo,
+        seções de cabeçalho, formulário de pesquisa, e outros. Você pode ter
+        vários header em um documento HTML.
+      </p>
+      <h2 id="nav__card">nav</h2>
+      <p class="p__tag p__card">
+        Representa o espaço onde ficam as rotas de navegação da página.
+        Geralmente são colocadas ligações para a própria página (links internos)
+        ou ligações para sites externos.
+      </p>
+      <h2 id="aside__card">aside</h2>
+      <p class="p__tag p__card">
+        Agrupa informações relacionadas ao conteúdo ao seu redor. Muito usada em
+        barras laterais(as famosas sidebars).
+      </p>
+      <h2 id="main__card">main</h2>
+      <p class="p__tag p__card">
+        Define o conteúdo principal dentro do body. Não se deve incluir mais de
+        um elemento main.
+      </p>
+      <h2 id="article__card">article</h2>
+      <p class="p__tag p__card">
+        Especifica conteúdo independente. Muito usada em: postagens, notícias e
+        etc.
+      </p>
+      <h2 id="section__card">section</h2>
+      <p class="p__tag p__card">
+        Uma seção genérica. Muita usada quando não existir um elemento semântico
+        mais específico para representá-lo.
+      </p>
+      <h2 id="footer__card">footer</h2>
+      <p class="p__tag p__card">
+        Representa o rodapé. Normalmente um rodapé contém informações sobre o
+        autor da seção de dados, direitos autorais ou links para documentos
+        relacionados.
+      </p>
+    </section>
+  </body>
+</html>
