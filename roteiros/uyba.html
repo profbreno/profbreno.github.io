@@ -317,7 +317,24 @@
         }
 
         function convertMoeda(source) {
-            const taxa = 7.50; // 1 BRL = 7.5 UYU
+            // obter taxa automaticamente e cachear em window.taxa (1 BRL = taxa UYU)
+            if (!window.taxa) {
+                // buscar cotação: base BRL -> UYU
+                fetch('https://api.exchangerate.host/latest?base=BRL&symbols=UYU')
+                    .then(res => res.ok ? res.json() : Promise.reject(res))
+                    .then(data => {
+                        const rate = data && data.rates && data.rates.UYU;
+                        window.taxa = (typeof rate === 'number' && rate > 0) ? rate : 7.5; // fallback
+                        // reexecutar conversão agora que a taxa está disponível
+                        convertMoeda(source);
+                    })
+                    .catch(() => {
+                        window.taxa = 7.5; // fallback em caso de erro
+                        convertMoeda(source);
+                    });
+                return; // aguardar resultado assíncrono
+            }
+            const taxa = window.taxa;
             const uyuInput = document.getElementById('uyu-input');
             const brlInput = document.getElementById('brl-input');
 
