@@ -1,0 +1,258 @@
+/* Base */
+:root {
+  --color-bg: rgb(37, 37, 37);
+  --color-text: rgb(255, 246, 255);
+  --color-card: rgba(255, 246, 255, 0.9);
+  --color-card-text: var(--color-bg);
+}
+
+/*
+Nesse caso foi criado um grid de 3 colunas da seguinte forma:
+
+  | 1fr |   min(1000px, 100%)   | 1fr |
+
+A função min() escolhe o menor valor entre 1000px e 100%, já
+a unidade `fr` se refere a uma fração da página. Logo, em uma
+página em que a tela tem 1200px de largura:
+
+  | 100px (1fr) |       1000px     | 100px (1fr) |
+
+No caso acima a função min() avaliou que 1000px é menor que 100%
+pois 100% seria 1200px. No caso de uma tela com a largura de 800px
+
+  | 0px |   800px   | 0px |
+
+Como `fr` se refere à uma fração do > espaço restante <, a coluna
+do meio sendo igual a 100% (pois 100% agora é 800px, menor que 1000px)
+o fr vai ser igual a zero, transformando o layout de 3 colunas em um
+de uma coluna só pra mobile.
+
+
+O trecho:
+body > * { grid-column: 2; }
+
+coloca todos elementos diretamente dentro do body na coluna do meio.
+
+Caso você queira que um dos elementos ocupe 100% da largura do site,
+basta adicionar:
+
+grid-column: span 3;
+
+*/
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  display: grid;
+  grid-template-columns: 1fr min(800px, 100%) 1fr;
+  padding: 2ch;
+  background-color: var(--color-bg);
+  font-family: monospace;
+}
+
+body > * {
+  grid-column: 2;
+}
+
+h2 {
+  font-size: 2rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text);
+  margin: 20px 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/*
+Ao invés de definir um layout de maneira estática com px
+que demanda muitas media queries, podemos usar CSS Grid e deixar
+o navegador calcular o layout pra nós!
+
+Foram definidas 3 colunas (grid-template-columns)
+Cada elemento vai automáticamente ocupar uma célula
+de cada uma das 3 colunas, no 4º elemento o grid
+cria automáticamente uma nova linha.
+
+Na regra grid-auto-rows: max-content; estamos dizendo
+que cada linha criada automáticamente será do tamanho
+do conteúdo que tiver dentro dela
+
+O grid-template-areas permite a gente alocar elementos no
+grid apenas declarando o nome deles!
+
+O grid fica dessa forma
+
+   | 20px  |   1fr    |   1fr  |
+      ---       ---        ---
+   | header |  header  | header |
+   | nav    |  nav     | nav    |
+   | aside  | main     | main   |
+   | footer | footer   | footer |
+
+*/
+
+/* Main code */
+
+.tag-container {
+  display: grid;
+  grid-template-columns: 200px repeat(2, 1fr);
+  grid-auto-rows: max-content;
+  grid-template-areas:
+    "header header header"
+    "nav nav nav"
+    "aside main main"
+    "footer footer footer";
+  gap: 2ch;
+  margin-top: 30px;
+}
+
+.tag-container .p__tag {
+  width: min-content;
+}
+
+.arrow__icon {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  bottom: calc(100vh - 90%);
+  left: 10%;
+  cursor: pointer;
+  transform: translateY(10px);
+  animation: arrow 500ms forwards alternate infinite
+    cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+
+.p__tag {
+  letter-spacing: 0.1em;
+  font-size: 1.5rem;
+  color: var(--color-text);
+  margin: 0 20px;
+  position: relative;
+}
+
+.p__tag::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0.25ch;
+  width: 100%;
+  transition: transform 300ms ease-in-out;
+  transform: scaleX(0);
+  transform-origin: left;
+  background-color: currentColor;
+}
+
+a:hover .p__tag::before {
+  transform: scaleX(1);
+}
+
+.p__card {
+  font-size: 1rem;
+  color: var(--color-card-text);
+  background: var(--color-card);
+  border-radius: 5px;
+  padding: 20px;
+  max-width: 700px;
+  margin: 0 0 50px 0;
+}
+
+.elemento__card {
+  background-color: var(--color-card-text);
+  border: 1px solid var(--color-text);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.header {
+  grid-area: header;
+}
+
+.nav {
+  grid-area: nav;
+  color: var(--color-text);
+}
+
+.nav ul {
+  display: flex;
+  column-gap: 2ch;
+}
+
+.nav li {
+  width: max-content;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.aside {
+  grid-area: aside;
+}
+
+aside {
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  gap: 2ch;
+  padding: 3ch 6ch 2ch 3ch;
+}
+
+article .elemento__card {
+  padding: 2ch 0;
+}
+
+.article {
+  display: grid;
+  place-content: center start;
+  grid-template-columns: 80%;
+  row-gap: 2ch;
+  padding: 60px 20px;
+}
+
+.article a:first-child .p__tag {
+  margin: 0;
+}
+
+.section {
+  height: 200px;
+  display: flex;
+  align-items: center;
+}
+
+.footer {
+  width: 100%;
+  grid-area: footer;
+}
+
+.cards {
+  display: grid;
+  place-items: center;
+}
+
+/* Animations */
+@keyframes arrow {
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Utility */
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p-1 {
+  padding: 1rem;
+}
