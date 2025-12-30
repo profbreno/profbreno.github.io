@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roteiro Uruguai & BA 2026 | Família & Bebé</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Nunito', sans-serif; }
+        .baby-tip { border-left: 4px solid #3B82F6; background-color: #EFF6FF; }
+        .winery-tip { border-left: 4px solid #9333ea; background-color: #f3e8ff; }
+        .hotel-card { border-left: 4px solid #10b981; background-color: #f0fdf4; }
+        .flight-card { border-left: 4px solid #1e40af; background-color: #f8fafc; }
+        .hidden-tab { display: none; }
+        .active-tab { border-bottom: 3px solid #2563EB; color: #2563EB; font-weight: 700; }
+        .checkbox-wrapper input:checked + div { text-decoration: line-through; opacity: 0.6; }
+        
+        /* Animação suave */
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-500 text-white pb-24 pt-10 px-6 rounded-b-[3rem] shadow-lg">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block bg-yellow-400 text-blue-900 font-bold px-4 py-1 rounded-full text-sm mb-4 shadow-sm text-blue-900 uppercase tracking-wider">
+                <i class="fas fa-plane"></i> 04 a 15 de Novembro de 2026
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-white">Uruguai & Buenos Aires</h1>
+            <p class="text-xl opacity-90 font-light italic text-white">"O conforto do bebé em primeiro lugar"</p>
+            
+            <!-- Flight Quick Info -->
+            <div class="mt-6 inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-4 py-2 rounded-xl text-sm">
+                <i class="fas fa-ticket-alt"></i>
+                <span>Reserva Azul: <strong class="text-yellow-300">123456</strong></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navegação de Abas -->
+    <nav class="max-w-5xl mx-auto px-6 -mt-8 mb-8 sticky top-4 z-50">
+        <div class="bg-white rounded-2xl shadow-xl flex justify-start md:justify-center overflow-x-auto p-2 gap-2">
+            <button onclick="switchTab('mvd')" id="btn-mvd" class="px-4 py-2 text-sm md:text-base transition-all active-tab whitespace-nowrap rounded-lg">Montevidéu</button>
+            <button onclick="switchTab('colonia')" id="btn-colonia" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Colonia & BA</button>
+            <button onclick="switchTab('punta')" id="btn-punta" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Punta del Este</button>
+            <button onclick="switchTab('logistica')" id="btn-logistica" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Informações & Voos</button>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 mb-20">
+
+        <!-- MONTEVIDÉU -->
+        <div id="mvd" class="fade-in space-y-6">
+            <div class="hotel-card p-5 rounded-xl shadow-sm">
+                <h3 class="font-bold text-green-800 flex items-center gap-2"><i class="fas fa-hotel"></i> Estadia em MVD</h3>
+                <p class="text-sm text-green-700 mt-1"><strong>Sugerido: Hyatt Centric Pocitos.</strong> Estrutura familiar premium frente à Rambla.</p>
+            </div>
+
+            <!-- Dia 1 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-blue-600"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-blue-600 font-bold text-xs uppercase">Dia 1 • 04/11 (Quarta)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Chegada em Montevidéu</h2>
+                <p class="text-gray-600 text-sm mb-3">Voo AD8760 (14:00). Retirada do carro e check-in. Passeio leve pela Rambla de Pocitos.</p>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Jantar:</strong> Restaurante <strong>Francis</strong> (Pocitos) - peixes e massas com excelente atendimento para famílias.
+                </div>
+            </div>
+
+            <!-- Dia 2 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-blue-600 font-bold text-xs uppercase">Dia 2 • 05/11 (Quinta)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Parques e Ciudad Vieja</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã no Parque Rodó (lago e sombras). Tarde na Plaza Independencia e Mercado del Puerto.</p>
+                <div class="baby-tip p-3 rounded-lg text-xs text-blue-800 flex gap-3">
+                    <i class="fas fa-baby"></i>
+                    <div>Parque Rodó tem caminhos planos excelentes para o carrinho de bebé.</div>
+                </div>
+            </div>
+
+            <!-- Dia 3 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-purple-600"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-purple-600 font-bold text-xs uppercase">Dia 3 • 06/11 (Sexta)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Vinho e Jardim: Bodega Bouza</h2>
+                <p class="text-gray-600 text-sm mb-3">Visita à vinícola Bouza para almoço harmonizado. O bebé pode aproveitar os jardins e ver os animais da quinta.</p>
+                <div class="winery-tip p-3 rounded-lg text-xs text-purple-800">
+                    <strong>Reserva:</strong> Faça a reserva do almoço com meses de antecedência.
+                </div>
+            </div>
+        </div>
+
+        <!-- COLONIA & BUENOS AIRES -->
+        <div id="colonia" class="fade-in space-y-6 hidden-tab">
+            <!-- Dia 4 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-orange-500"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-orange-600 font-bold text-xs uppercase">Dia 4 • 07/11 (Sábado)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Colonia del Sacramento</h2>
+                <p class="text-gray-600 text-sm mb-3">Check-out em MVD e viagem de 2h30 para Colonia. Check-in na **Posada del Angel** ou **Charco**. Pôr do sol no Bastión de San Pedro.</p>
+            </div>
+
+            <!-- Dia 5 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-green-600"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-green-600 font-bold text-xs uppercase">Dia 5 • 08/11 (Domingo)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Buenos Aires: San Telmo & Don Julio</h2>
+                <p class="text-gray-600 text-sm mb-3">Ferry às 08:30 (deixar carro no porto). Visita ao Mercado de San Telmo e feira. Almoço no **Don Julio** (Palermo).</p>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Pernoite:</strong> Hotel Palacio Duhau ou CasaSur Recoleta.
+                </div>
+            </div>
+
+            <!-- Dia 6 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-green-500"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-green-600 font-bold text-xs uppercase">Dia 6 • 09/11 (Segunda)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Cultura Portenha e Retorno</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã na Livraria El Ateneo. Ferry de volta às 17:00. Pernoite em Colonia para descansar do ferry.</p>
+            </div>
+        </div>
+
+        <!-- PUNTA DEL ESTE -->
+        <div id="punta" class="fade-in space-y-6 hidden-tab">
+            <!-- Dia 7 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-500"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-yellow-600 font-bold text-xs uppercase">Dia 7 • 10/11 (Terça)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Rumo a Punta del Este</h2>
+                <p class="text-gray-600 text-sm mb-3">Viagem de Colonia a Punta (4h30). Check-in no **The Grand Hotel** (Brava/Mansa). Tarde de relax na piscina aquecida.</p>
+            </div>
+
+            <!-- Dia 8 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-400"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-yellow-600 font-bold text-xs uppercase">Dia 8 • 11/11 (Quarta)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Praia Mansa e Lobos</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã na Parada 3 da Mansa (água de piscina). Tarde no porto para ver os lobos marinhos.</p>
+            </div>
+
+            <!-- Dia 9 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-400"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-yellow-600 font-bold text-xs uppercase">Dia 9 • 12/11 (Quinta)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Bate-volta Piriápolis</h2>
+                <p class="text-gray-600 text-sm mb-3">Passeio rápido (40min). Subir ao Cerro San Antonio (teleférico ou carro) e almoço na orla.</p>
+            </div>
+
+            <!-- Dia 10 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-purple-600 font-bold text-xs uppercase">Dia 10 • 13/11 (Sexta)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Alto de la Ballena & Casapueblo</h2>
+                <p class="text-gray-600 text-sm mb-3">Vinícola Alto de la Ballena (deck panorâmico). Tarde no café da Casapueblo (use canguru para as escadas).</p>
+            </div>
+
+            <!-- Dia 11 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-400"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-yellow-600 font-bold text-xs uppercase">Dia 11 • 14/11 (Sábado)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">La Barra e Retorno</h2>
+                <p class="text-gray-600 text-sm mb-3">Atravessar a ponte ondulada e visitar o Museu do Mar. Noite de pernoite em **Carrasco** (MVD) para estar perto do aeroporto.</p>
+            </div>
+
+            <!-- Dia 12 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-blue-700"></div>
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-blue-700 font-bold text-xs uppercase">Dia 12 • 15/11 (Domingo)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">Voo de Regresso</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã livre em Carrasco. Devolução do carro no aeroporto às 14:00. Voo Azul 8761 às 16:05.</p>
+            </div>
+        </div>
+
+        <!-- LOGÍSTICA E VOOS -->
+        <div id="logistica" class="fade-in space-y-6 hidden-tab">
+            <div class="bg-blue-800 text-white rounded-2xl p-6 shadow-lg">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fas fa-ticket-alt text-yellow-300"></i> Reserva Azul: 123456</h3>
+                <div class="space-y-4">
+                    <div class="border-l-2 border-white/20 pl-4">
+                        <p class="text-xs uppercase opacity-70 font-bold italic">Ida (04/11 • AD8760)</p>
+                        <p class="font-bold">REC 08:35 <i class="fas fa-arrow-right text-[10px]"></i> MVD 14:00</p>
+                    </div>
+                    <div class="border-l-2 border-white/20 pl-4">
+                        <p class="text-xs uppercase opacity-70 font-bold italic">Volta (15/11 • AD8761)</p>
+                        <p class="font-bold">MVD 16:05 <i class="fas fa-arrow-right text-[10px]"></i> REC 20:55</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+                <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2"><i class="fas fa-info-circle text-blue-600"></i> Notas Importantes</h3>
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-id-card text-blue-500 mt-1"></i> Documentação: RG (original com foto recente) ou Passaporte obrigatórios.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-car text-orange-500 mt-1"></i> Carro: Deixe o carro no porto de Colonia (estacionamento seguro) ao ir para BA.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-ship text-green-500 mt-1"></i> Ferry: Reserve Buquebus para o domingo de San Telmo.</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-gray-400 py-10 text-xs bg-white border-t border-gray-100">
+        <p>Uruguai & Argentina • Novembro 2026 • © Família em Viagem</p>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            const tabs = ['mvd', 'colonia', 'punta', 'logistica'];
+            tabs.forEach(t => {
+                document.getElementById(t).classList.add('hidden-tab');
+                document.getElementById('btn-' + t).classList.remove('active-tab');
+                document.getElementById('btn-' + t).classList.add('text-gray-500');
+            });
+
+            document.getElementById(tabName).classList.remove('hidden-tab');
+            document.getElementById('btn-' + tabName).classList.add('active-tab');
+            document.getElementById('btn-' + tabName).classList.remove('text-gray-500');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
