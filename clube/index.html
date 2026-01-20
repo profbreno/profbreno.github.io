@@ -1,102 +1,352 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Clube da Programação | IF Sertão-PE - Floresta</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--bg: #061622;
+			--bg-alt: #0b2436;
+			--primary: #0fb5ba;
+			--accent: #f6ae2d;
+			--muted: #9fb6c6;
+			--card: rgba(255, 255, 255, 0.04);
+			--border: rgba(255, 255, 255, 0.08);
+			--shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+		}
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Página Inicial</title>
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container">
-      <div class="header clearfix">
-      </div>
-      <div style="text-align: center;">
-  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap;">
-    <div style="flex:1 1 420px; min-width:280px;">
-      <h2>Maratona de Programação</h2>
-      <p><a href="https://bcwd.me/d-10972" target="_blank" rel="noopener">bcwd.me/d-10972</a></p>
-      <p><strong>Código:</strong> <code>ziHjcaK</code></p>
-      <p><strong>Regras:</strong></p>
-      <ul>
-        <li>As equipes devem ser compostas por até 4 participantes;</li>
-        <li>As linguagens de programação permitidas serão Python, C++, Java, JS e C;</li>
-        <li>Cada equipe terá acesso a um único computador;</li>
-        <li>As soluções devem ser submetidas ao sistema <a href="https://judge.beecrowd.com/" target="_blank" rel="noopener">judge.beecrowd.com</a>.</li>
-      </ul>
-    </div>
+		* {
+			box-sizing: border-box;
+		}
 
-    <aside style="text-align: left; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; max-width: 420px; flex:0 0 420px;">
-      <p><strong>Instituição:</strong> IF Sertão Pernambucano — Campus Floresta</p>
-      <p><strong>Evento:</strong> Semana Nacional de Ciência e Tecnologia 2025</p>
-      <p><strong>Organização:</strong> Clube da Programação</p>
-    </aside>
-  </div>
-</div>
+		body {
+			margin: 0;
+			font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+			background: radial-gradient(circle at 20% 20%, rgba(15, 181, 186, 0.18), transparent 35%),
+						radial-gradient(circle at 80% 0%, rgba(246, 174, 45, 0.18), transparent 32%),
+						linear-gradient(135deg, var(--bg), var(--bg-alt));
+			color: #e9f1f7;
+			min-height: 100vh;
+			line-height: 1.6;
+		}
 
-<!-- Destaque apenas para a contagem -->
-<div class="jumbotron" style="text-align: center;">
-  <small>
-    <strong>Hora de início:</strong>
-    <time datetime="2025-10-22T19:00:00-03:00">22/10/2025 às 19:00</time> (horário de Brasília) <br>
-    <strong>Hora de término:</strong>
-    <time datetime="2025-10-22T21:30:00-03:00">22/10/2025 às 21:30</time> (horário de Brasília) <br>
-    <span>Contagem regressiva</span>
-  </small>
-  <!-- Ajuste a data/hora do evento no atributo data-deadline (ISO 8601) -->
-  <div id="countdown" class="countdown" data-deadline="2025-10-22T21:30:00-03:00">
-    <div class="slot"><span data-part="hours">00</span><small>horas</small></div>
-    <div class="slot"><span data-part="minutes">00</span><small>min</small></div>
-    <div class="slot"><span data-part="seconds">00</span><small>seg</small></div>
-  </div>
-</div>
+		header {
+			padding: 48px 24px 16px;
+			max-width: 1080px;
+			margin: 0 auto;
+		}
 
+		.pill {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			padding: 8px 14px;
+			border: 1px solid var(--border);
+			border-radius: 999px;
+			background: rgba(255, 255, 255, 0.04);
+			color: var(--muted);
+			font-size: 14px;
+			letter-spacing: 0.02em;
+		}
 
+		.pill::before {
+			content: '';
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, var(--primary), var(--accent));
+			box-shadow: 0 0 12px rgba(15, 181, 186, 0.6);
+		}
 
-<style>
-  .countdown { display: flex; gap: 30px; align-items: center; margin-top: 12px; justify-content: center; }
-  .countdown .slot { text-align: center; min-width: 70px; }
-  .countdown .slot span { display: block; font-size: 7rem; font-weight: 700; }
-  .countdown .slot small { color: #666; }
-  #countdown .started { font-weight: 600; }
-</style>
+		h1 {
+			font-size: clamp(32px, 5vw, 52px);
+			margin: 18px 0 12px;
+			letter-spacing: -0.02em;
+		}
 
-<script>
-  (function () {
-    const el = document.getElementById('countdown');
-    const ds = el.getAttribute('data-deadline');
-    const deadline = new Date(ds);
-    if (!ds || isNaN(deadline.getTime())) {
-      el.textContent = 'Defina uma data/hora válida em data-deadline (ex.: 2025-12-31T09:00:00-03:00).';
-      return;
-    }
+		.subtitle {
+			max-width: 720px;
+			font-size: 18px;
+			color: var(--muted);
+			margin-bottom: 28px;
+		}
 
-    function two(n) { return String(n).padStart(2, '0'); }
+		.hero {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 20px;
+			align-items: center;
+		}
 
-    function tick() {
-      const now = new Date();
-      let ms = deadline - now;
+		.hero-card {
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 20px;
+			padding: 22px;
+			box-shadow: var(--shadow);
+			position: relative;
+			overflow: hidden;
+		}
 
-      if (ms <= 0) {
-        clearInterval(t);
-        el.innerHTML = '<span class="started">Evento iniciado!</span>';
-        return;
-      }
+		.hero-card::after {
+			content: '';
+			position: absolute;
+			inset: -40%;
+			background: radial-gradient(circle at 30% 30%, rgba(15, 181, 186, 0.1), transparent 50%);
+			transform: rotate(12deg);
+			pointer-events: none;
+		}
 
-      const h = Math.floor(ms / 3600000);  ms -= h * 3600000;
-      const m = Math.floor(ms / 60000);    ms -= m * 60000;
-      const s = Math.floor(ms / 1000);
+		.logo {
+			width: 140px;
+			height: auto;
+			margin-bottom: 16px;
+			filter: drop-shadow(0 10px 30px rgba(0,0,0,0.35));
+		}
 
-      el.querySelector('[data-part="hours"]').textContent = two(h);
-      el.querySelector('[data-part="minutes"]').textContent = two(m);
-      el.querySelector('[data-part="seconds"]').textContent = two(s);
-    }
+		.tagline {
+			font-size: 24px;
+			margin: 8px 0 14px;
+		}
 
-    const t = setInterval(tick, 1000);
-    tick();
-  })();
-</script>
-    </div> <!-- /container -->
-  </body>
+		.cta {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			padding: 12px 18px;
+			border-radius: 12px;
+			border: 1px solid var(--border);
+			background: linear-gradient(135deg, rgba(15, 181, 186, 0.25), rgba(246, 174, 45, 0.25));
+			color: #0b2436;
+			font-weight: 700;
+			text-decoration: none;
+			transition: transform 160ms ease, box-shadow 160ms ease;
+			box-shadow: 0 12px 30px rgba(15, 181, 186, 0.25);
+		}
+
+		.cta:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 18px 36px rgba(246, 174, 45, 0.28);
+		}
+
+		.chips {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			margin-top: 12px;
+		}
+
+		.chip {
+			padding: 10px 12px;
+			border-radius: 12px;
+			border: 1px solid var(--border);
+			background: rgba(255,255,255,0.03);
+			color: #e9f1f7;
+			font-weight: 600;
+			font-size: 14px;
+		}
+
+		section {
+			max-width: 1080px;
+			margin: 40px auto;
+			padding: 0 24px;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			gap: 18px;
+		}
+
+		.card {
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 18px;
+			box-shadow: var(--shadow);
+		}
+
+		.card h3 {
+			margin: 0 0 10px;
+			font-size: 18px;
+		}
+
+		.card p {
+			margin: 0;
+			color: var(--muted);
+			font-size: 15px;
+		}
+
+		.list {
+			display: grid;
+			gap: 12px;
+			margin-top: 12px;
+		}
+
+		.list-item {
+			display: flex;
+			gap: 12px;
+			padding: 12px;
+			border-radius: 12px;
+			border: 1px solid var(--border);
+			background: rgba(255,255,255,0.02);
+		}
+
+		.list-item strong {
+			color: #e9f1f7;
+		}
+
+		.accent-dot {
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background: var(--accent);
+			margin-top: 6px;
+			flex-shrink: 0;
+			box-shadow: 0 0 12px rgba(246, 174, 45, 0.7);
+		}
+
+		.footer {
+			margin: 48px auto 32px;
+			padding: 0 24px;
+			max-width: 1080px;
+			color: var(--muted);
+			font-size: 14px;
+		}
+
+		@keyframes floatIn {
+			from { opacity: 0; transform: translateY(12px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		.animate {
+			animation: floatIn 420ms ease both;
+		}
+
+		.animate:nth-child(2) { animation-delay: 0.06s; }
+		.animate:nth-child(3) { animation-delay: 0.12s; }
+		.animate:nth-child(4) { animation-delay: 0.18s; }
+
+		@media (max-width: 640px) {
+			header { padding-top: 32px; }
+			.hero-card { text-align: center; }
+			.logo { margin: 0 auto 16px; }
+			.cta { width: 100%; justify-content: center; }
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="pill">Clube da Programação · IF Sertão-PE | Campus Floresta</div>
+		<h1>Aprenda, crie e compartilhe tecnologia com a comunidade do sertão.</h1>
+		<p class="subtitle">Somos um espaço aberto para trocar ideias, desenvolver projetos reais, preparar para maratonas de programação e apoiar quem está começando a programar. Participe dos encontros semanais e construa algo incrível com a gente.</p>
+
+		<div class="hero">
+			<div class="hero-card animate">
+				<img src="logo.png" alt="Logo do Clube da Programação" class="logo">
+				<div class="tagline">Comunidade hands-on</div>
+				<p class="subtitle" style="margin-bottom:16px;">Mentorias, trilhas de estudo, desafios práticos e projetos colaborativos guiados por estudantes e docentes do IF Sertão-PE.</p>
+				<a class="cta" href="#participar" aria-label="Quero participar do clube">Quero participar →</a>
+				<div class="chips">
+					<span class="chip">Algoritmos</span>
+					<span class="chip">Web</span>
+					<span class="chip">Dados</span>
+					<span class="chip">IA</span>
+					<span class="chip">Maratonas</span>
+				</div>
+			</div>
+			<div class="hero-card animate" style="animation-delay:0.08s;">
+				<h3 style="margin:0 0 10px;">Quando e onde?</h3>
+				<p style="color:var(--muted); margin:0 0 14px;">Encontros semanais às quintas, 17h, Laboratório de Informática 2. Traga seu notebook se puder.</p>
+				<div class="list">
+					<div class="list-item">
+						<div class="accent-dot"></div>
+						<div><strong>Oficinas guiadas</strong><br><span style="color:var(--muted);">Git, HTML/CSS/JS, Python, dados e automação.</span></div>
+					</div>
+					<div class="list-item">
+						<div class="accent-dot" style="background:var(--primary);"></div>
+						<div><strong>Desafios relâmpago</strong><br><span style="color:var(--muted);">Problemas curtos para praticar raciocínio lógico.</span></div>
+					</div>
+					<div class="list-item">
+						<div class="accent-dot" style="background:#6dd3ff;"></div>
+						<div><strong>Projetos abertos</strong><br><span style="color:var(--muted);">Sites, bots, visualizações e ideias da própria comunidade.</span></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section id="beneficios">
+		<div class="grid">
+			<div class="card animate">
+				<h3>Aprendizado aplicado</h3>
+				<p>Trilhas curtas com resultados rápidos: publique uma página, resolva um problema, entregue um script útil.</p>
+			</div>
+			<div class="card animate">
+				<h3>Networking local</h3>
+				<p>Troque experiências com colegas, docentes e egressos atuando na área.</p>
+			</div>
+			<div class="card animate">
+				<h3>Preparação para maratonas</h3>
+				<p>Treinos focados, editoriais comentados e simulações de provas.</p>
+			</div>
+			<div class="card animate">
+				<h3>Portfólio real</h3>
+				<p>Crie projetos que podem ir para o GitHub e serem usados pelo campus ou comunidade.</p>
+			</div>
+		</div>
+	</section>
+
+	<section id="agenda">
+		<h2 style="margin:0 0 14px; font-size:22px;">Roteiro das próximas semanas</h2>
+		<div class="list">
+			<div class="list-item animate">
+				<div class="accent-dot"></div>
+				<div><strong>Semana 1 · Onboarding</strong><br><span style="color:var(--muted);">Ambiente, Git e primeiros desafios.</span></div>
+			</div>
+			<div class="list-item animate">
+				<div class="accent-dot" style="background:var(--primary);"></div>
+				<div><strong>Semana 2 · Web rápida</strong><br><span style="color:var(--muted);">HTML/CSS/JS básicos com deploy estático.</span></div>
+			</div>
+			<div class="list-item animate">
+				<div class="accent-dot" style="background:#6dd3ff;"></div>
+				<div><strong>Semana 3 · Resolução de problemas</strong><br><span style="color:var(--muted);">Algoritmos clássicos e dicas de competição.</span></div>
+			</div>
+			<div class="list-item animate">
+				<div class="accent-dot" style="background:#f687b3;"></div>
+				<div><strong>Semana 4 · Projeto aberto</strong><br><span style="color:var(--muted);">Squads para construir algo útil para o campus.</span></div>
+			</div>
+		</div>
+	</section>
+
+	<section id="participar">
+		<div class="hero-card animate" style="max-width:1080px; margin:0 auto;">
+			<h2 style="margin:0 0 10px; font-size:22px;">Como participar</h2>
+			<p style="color:var(--muted); margin:0 0 16px;">Preencha o formulário de interesse e venha para o próximo encontro. Não precisa ter experiência prévia.</p>
+			<div class="list" style="margin-bottom:12px;">
+				<div class="list-item">
+					<div class="accent-dot"></div>
+					<div><strong>Inscreva-se</strong><br><span style="color:var(--muted);">Formulário rápido no laboratório ou pelo link divulgado nas turmas.</span></div>
+				</div>
+				<div class="list-item">
+					<div class="accent-dot" style="background:var(--primary);"></div>
+					<div><strong>Traga curiosidade</strong><br><span style="color:var(--muted);">Notebook opcional; nós ajudamos a configurar o ambiente.</span></div>
+				</div>
+				<div class="list-item">
+					<div class="accent-dot" style="background:var(--accent);"></div>
+					<div><strong>Entre no grupo</strong><br><span style="color:var(--muted);">Comunidade para avisos, dúvidas e compartilhar conquistas.</span></div>
+				</div>
+			</div>
+			<a class="cta" href="https://forms.gle" target="_blank" rel="noopener">Preencher interesse</a>
+		</div>
+	</section>
+
+	<div class="footer">
+		Clube da Programação · IF Sertão Pernambucano - Campus Floresta · Toda quinta, 17h · Laboratório de Informática 2
+	</div>
+</body>
 </html>

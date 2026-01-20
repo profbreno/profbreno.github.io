@@ -1,0 +1,341 @@
+﻿<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maratona de Programação | Clube da Programação</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #061622;
+            --bg-alt: #0b2436;
+            --primary: #0fb5ba;
+            --accent: #f6ae2d;
+            --muted: #9fb6c6;
+            --card: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(15, 181, 186, 0.18), transparent 35%),
+                        radial-gradient(circle at 80% 0%, rgba(246, 174, 45, 0.18), transparent 32%),
+                        linear-gradient(135deg, var(--bg), var(--bg-alt));
+            color: #e9f1f7;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        header {
+            padding: 48px 24px 24px;
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 14px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--muted);
+            font-size: 14px;
+            letter-spacing: 0.02em;
+        }
+
+        .pill::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            box-shadow: 0 0 12px rgba(15, 181, 186, 0.6);
+        }
+
+        h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            margin: 18px 0 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            align-items: start;
+        }
+
+        .hero-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle at 30% 30%, rgba(15, 181, 186, 0.1), transparent 50%);
+            transform: rotate(12deg);
+            pointer-events: none;
+        }
+
+        .logo {
+            width: 140px;
+            height: auto;
+            margin-bottom: 14px;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.35));
+        }
+
+        .tagline { font-size: 22px; margin: 8px 0 12px; }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.05);
+            font-weight: 700;
+            color: #e9f1f7;
+            margin: 8px 0 12px;
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(15, 181, 186, 0.25), rgba(246, 174, 45, 0.25));
+            color: #0b2436;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 160ms ease, box-shadow 160ms ease;
+            box-shadow: 0 12px 30px rgba(15, 181, 186, 0.25);
+        }
+
+        .cta:hover { transform: translateY(-2px); box-shadow: 0 18px 36px rgba(246, 174, 45, 0.28); }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .chip {
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+            color: #e9f1f7;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .list { display: grid; gap: 12px; margin-top: 12px; }
+
+        .list-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .list-item strong { color: #e9f1f7; }
+
+        .accent-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-top: 6px;
+            flex-shrink: 0;
+            box-shadow: 0 0 12px rgba(246, 174, 45, 0.7);
+        }
+
+        section { max-width: 1080px; margin: 32px auto 12px; padding: 0 24px; }
+
+        .countdown-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 22px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-card::after {
+            content: '';
+            position: absolute;
+            inset: -40%;
+            background: radial-gradient(circle at 70% 30%, rgba(246, 174, 45, 0.12), transparent 55%);
+            transform: rotate(-8deg);
+            pointer-events: none;
+        }
+
+        .countdown { display: flex; gap: 22px; align-items: center; justify-content: center; margin-top: 14px; }
+        .countdown .slot { text-align: center; min-width: 90px; }
+        .countdown .slot span { display: block; font-size: 58px; font-weight: 700; }
+        .countdown .slot small { color: var(--muted); }
+        #countdown .started { font-weight: 700; color: var(--accent); }
+
+        .footer {
+            margin: 44px auto 32px;
+            padding: 0 24px;
+            max-width: 1080px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate { animation: floatIn 420ms ease both; }
+        .animate:nth-child(2) { animation-delay: 0.06s; }
+        .animate:nth-child(3) { animation-delay: 0.12s; }
+        .animate:nth-child(4) { animation-delay: 0.18s; }
+
+        @media (max-width: 640px) {
+            header { padding-top: 32px; }
+            .hero-card, .countdown-card { text-align: center; }
+            .logo { margin: 0 auto 16px; }
+            .cta { width: 100%; justify-content: center; }
+            .countdown { gap: 12px; }
+            .countdown .slot span { font-size: 44px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="pill">Clube da Programação · IF Sertão-PE | Campus Floresta</div>
+        <h1>Maratona de Programação</h1>
+        <p class="subtitle">Prova presencial durante a Semana Nacional de Ciência e Tecnologia 2025. Traga seu time, resolva desafios e submeta no beecrowd.</p>
+
+        <section aria-labelledby="countdown-title">
+          <div class="countdown-card animate">
+              <h2 id="countdown-title" style="margin:0 0 8px; font-size:22px;">Contagem regressiva</h2>
+              <p style="color:var(--muted); margin:0;">
+                  <strong>Início:</strong> <time datetime="2026-01-20T09:00:00-03:00">20/01/2026 às 09:00</time> ·
+                  <strong>Término:</strong> <time datetime="2026-01-20T21:30:00-03:00">20/01/2026 às 21:30</time>
+              </p>
+              <div id="countdown" class="countdown" data-deadline="2026-01-20T21:30:00-03:00">
+                  <div class="slot"><span data-part="hours">00</span><small>horas</small></div>
+                  <div class="slot"><span data-part="minutes">00</span><small>min</small></div>
+                  <div class="slot"><span data-part="seconds">00</span><small>seg</small></div>
+              </div>
+          </div>
+        </section>
+
+        <div class="hero">
+            <div class="hero-card animate">
+                <img src="logo.png" alt="Logo do Clube da Programação" class="logo">
+                <div class="tagline">Desafio em equipe</div>
+                <p class="subtitle" style="margin-bottom:12px;">Monte seu squad (até 4 pessoas), escolha sua linguagem favorita e venha competir.</p>
+                <div class="badge">Código de acesso: ziHjcaK</div>
+                <a class="cta" href="https://bcwd.me/d-10972" target="_blank" rel="noopener">Abrir enunciado →</a>
+                <div class="chips">
+                    <span class="chip">Python</span>
+                    <span class="chip">C++</span>
+                    <span class="chip">Java</span>
+                    <span class="chip">JavaScript</span>
+                    <span class="chip">C</span>
+                </div>
+            </div>
+
+            <div class="hero-card animate" style="animation-delay:0.08s;">
+
+                <h3 style="margin:16px 0 10px;">Regras principais</h3>
+                <div class="list">
+                    <div class="list-item">
+                        <div class="accent-dot" style="background:var(--accent);"></div>
+                        <div><strong>Equipes</strong><br><span style="color:var(--muted);">Até 4 participantes.</span></div>
+                    </div>
+                    <div class="list-item">
+                        <div class="accent-dot" style="background:var(--primary);"></div>
+                        <div><strong>Linguagens</strong><br><span style="color:var(--muted);">Python, C++, Java, JavaScript ou C.</span></div>
+                    </div>
+                    <div class="list-item">
+                        <div class="accent-dot"></div>
+                        <div><strong>Equipamento</strong><br><span style="color:var(--muted);">Um computador por equipe.</span></div>
+                    </div>
+                    <div class="list-item">
+                        <div class="accent-dot" style="background:#f687b3;"></div>
+                        <div><strong>Submissão</strong><br><span style="color:var(--muted);">Todas as soluções vão para <a href="https://judge.beecrowd.com/" target="_blank" rel="noopener" style="color:inherit;">judge.beecrowd.com</a>.</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   
+
+    <div class="footer">
+        Maratona de Programação · IF Sertão Pernambucano - Campus Floresta · Organização: Clube da Programação
+    </div>
+
+    <script>
+        (function () {
+            const el = document.getElementById('countdown');
+            if (!el) return;
+            const ds = el.getAttribute('data-deadline');
+            const deadline = ds ? new Date(ds) : null;
+            if (!deadline || isNaN(deadline.getTime())) {
+                el.textContent = 'Defina uma data/hora válida em data-deadline (ex.: 2025-12-31T09:00:00-03:00).';
+                return;
+            }
+
+            function two(n) { return String(n).padStart(2, '0'); }
+
+            function tick() {
+                const now = new Date();
+                let ms = deadline - now;
+
+                if (ms <= 0) {
+                    clearInterval(t);
+                    el.innerHTML = '<span class="started">Evento iniciado!</span>';
+                    return;
+                }
+
+                const h = Math.floor(ms / 3600000); ms -= h * 3600000;
+                const m = Math.floor(ms / 60000);   ms -= m * 60000;
+                const s = Math.floor(ms / 1000);
+
+                el.querySelector('[data-part="hours"]').textContent = two(h);
+                el.querySelector('[data-part="minutes"]').textContent = two(m);
+                el.querySelector('[data-part="seconds"]').textContent = two(s);
+            }
+
+            const t = setInterval(tick, 1000);
+            tick();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clube da Programação | IF Sertão PE</title>
+    <style>
+        :root {
+            /* Paleta Sertão Tech */
+            --cor-fundo: #FDF6E3; /* Bege Areia */
+            --cor-primaria: #D96C2C; /* Laranja Telha */
+            --cor-secundaria: #2C5282; /* Azul Tech */
+            --cor-destaque: #38A169; /* Verde Cacto */
+            --cor-texto: #2D3748;
+            --cor-branco: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--cor-branco);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--cor-secundaria);
+        }
+
+        .logo-img {
+            height: 50px; /* Ajuste conforme necessário */
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--cor-texto);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--cor-primaria);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 20px 100px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(217, 108, 44, 0.1) 0%, rgba(44, 82, 130, 0.1) 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--cor-secundaria);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--cor-primaria);
+            color: var(--cor-branco);
+            box-shadow: 0 4px 15px rgba(217, 108, 44, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: #c0561f;
+            transform: translateY(-2px);
+        }
+
+        /* Sobre */
+        .section {
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--cor-secundaria);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--cor-destaque);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--cor-branco);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            border-bottom: 4px solid var(--cor-destaque);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: var(--cor-secundaria);
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--cor-secundaria);
+            color: var(--cor-branco);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .social-link {
+            color: var(--cor-branco);
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 20px;
+            border-radius: 30px;
+        }
+
+        .social-link:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            nav { display: none; } /* Simplificado para mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo-area">
+                <img src="logo.png" alt="Logo Clube da Programação" class="logo-img">
+                <span>Clube da Programação</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#atividades">Atividades</a></li>
+                    <li><a href="#contato">Participar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Inovação no Coração do Sertão</h1>
+        <p>Desenvolva habilidades em Python, Web e IA. Conecte-se com outros estudantes e transforme ideias em código no IF Sertão PE.</p>
+        <a href="https://instagram.com/clubedaprogramacao_" class="btn btn-primary">Quero Participar</a>
+    </section>
+
+    <section id="atividades" class="section">
+        <h2 class="section-title">Nossas Trilhas</h2>
+        <div class="grid-cards">
+            <div class="card">
+                <h3>🐍 Python & Lógica</h3>
+                <p>Do "Hello World" a algoritmos complexos. Domine a linguagem que move a Data Science e a IA.</p>
+            </div>
+            <div class="card">
+                <h3>💻 Desenvolvimento Web</h3>
+                <p>Criação de sites e aplicações modernas. HTML, CSS e Frameworks para construir a web.</p>
+            </div>
+            <div class="card">
+                <h3>🌵 Projetos Locais</h3>
+                <p>Aplicação da tecnologia para resolver problemas reais da nossa região e comunidade.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="sobre" class="section" style="background-color: #fff;">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title">Onde Estamos</h2>
+            <p style="margin-bottom: 20px;">
+                O Clube da Programação é uma iniciativa acadêmica sediada no <strong>IF Sertão Pernambucano</strong>.
+                Nosso objetivo é fomentar o pensamento computacional e preparar alunos para o mercado de tecnologia.
+            </p>
+        </div>
+    </section>
+
+    <footer id="contato">
+        <div class="container" style="flex-direction: column;">
+            <h3>Faça parte da comunidade</h3>
+            <p>Siga-nos para saber das próximas reuniões e eventos.</p>
+            <br>
+            <a href="https://instagram.com/clubedaprogramacao_" target="_blank" class="social-link">
+                Siga no Instagram: @clubedaprogramacao_
+            </a>
+            <br><br>
+            <small>&copy; 2026 Clube da Programação - IF Sertão PE</small>
+        </div>
+    </footer>
+
+</body>
+</html>
