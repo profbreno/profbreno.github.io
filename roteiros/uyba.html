@@ -23,6 +23,7 @@
         .hidden-tab { display: none; }
         .active-tab { border-bottom: 3px solid #2563EB; color: #2563EB; font-weight: 700; }
         .checkbox-wrapper input:checked + div { text-decoration: line-through; opacity: 0.6; }
+        .attraction-image { width: 100%; height: 250px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         
         /* Animação suave */
         .fade-in { animation: fadeIn 0.5s ease-in-out; }
@@ -51,181 +52,316 @@
     <!-- Navegação de Abas -->
     <nav class="max-w-5xl mx-auto px-6 -mt-8 mb-8 sticky top-4 z-50">
         <div class="bg-white rounded-2xl shadow-xl flex justify-start md:justify-center overflow-x-auto p-2 gap-2">
-            <button onclick="switchTab('mvd')" id="btn-mvd" class="px-4 py-2 text-sm md:text-base transition-all active-tab whitespace-nowrap rounded-lg">Montevidéu</button>
-            <button onclick="switchTab('colonia')" id="btn-colonia" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Colonia & BA</button>
-            <button onclick="switchTab('punta')" id="btn-punta" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Punta del Este</button>
-            <button onclick="switchTab('conversor')" id="btn-conversor" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Calculadora UYU/BRL</button>
-            <button onclick="switchTab('logistica')" id="btn-logistica" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Informações & Voos</button>
+            <button onclick="switchTab('punta1')" id="btn-punta1" class="px-4 py-2 text-sm md:text-base transition-all active-tab whitespace-nowrap rounded-lg">Punta del Este</button>
+            <button onclick="switchTab('mvd')" id="btn-mvd" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Montevidéu</button>
+            <button onclick="switchTab('colonia')" id="btn-colonia" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Colonia</button>
+            <button onclick="switchTab('buenosaires')" id="btn-buenosaires" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Buenos Aires</button>
+            <button onclick="switchTab('retorno')" id="btn-retorno" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Retorno</button>
+            <button onclick="switchTab('conversor')" id="btn-conversor" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Conversor</button>
+            <button onclick="switchTab('logistica')" id="btn-logistica" class="px-4 py-2 text-sm md:text-base transition-all whitespace-nowrap rounded-lg text-gray-500">Info & Voos</button>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto px-6 mb-20">
 
-        <!-- MONTEVIDÉU -->
-        <div id="mvd" class="fade-in space-y-6">
+        <!-- FASE 1: PUNTA DEL ESTE (Dias 1-3) -->
+        <div id="punta1" class="fade-in space-y-6">
+            <div class="hotel-card p-5 rounded-xl shadow-sm">
+                <h3 class="font-bold text-green-800 flex items-center gap-2"><i class="fas fa-hotel"></i> Hospedagem em Punta del Este</h3>
+                <p class="text-sm text-green-700 mt-1"><strong>Sugerido: The Grand Hotel ou Enjoy Punta del Este.</strong> Proximidade às praias Mansa e Brava.</p>
+            </div>
+
+            <!-- Dia 1: Chegada Punta del Este -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-blue-600"></div>
+                <img src="https://images.unsplash.com/photo-1591323803333-ea760190d6d0?w=800&h=250&fit=crop" alt="Punta del Este - Praia" class="attraction-image">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-blue-600 font-bold text-xs uppercase">Dia 1 • 04/11 (Quarta)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">☀️ Chegada e Estrada até Punta del Este</h2>
+                <p class="text-gray-600 text-sm mb-3">Voo AD8760 (14:00). Retirada em MVD pela Ruta Interbalnearia (~115 km).</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-plane-arrival mt-1 text-gray-400"></i> Chegada em MVD e retirada do carro elétrico.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-car mt-1 text-gray-400"></i> Checagem do VE: cabos, triangle, kit primeiros socorros.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-map mt-1 text-gray-400"></i> Ruta Interbalnearia até Punta (península com praias Mansa & Brava).</li>
+                </ul>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Jantar:</strong> <strong>Lo de Tere</strong> (Punta del Este) — gastronomia sustentável com frutos do mar locais (raviólis de siri e culinária costeira uruguaia).
+                </div>
+            </div>
+
+            <!-- Dia 2: Bodega Garzón + José Ignacio -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
+                <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&h=250&fit=crop" alt="Bodega Garzón - Vinícola" class="attraction-image">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-blue-600 font-bold text-xs uppercase">Dia 2 • 05/11 (Quinta)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">🍷 Terroir de Garzón + José Ignacio</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã na Bodega Garzón — vinícola icônica com degustação guiada (corte Balasto, vinhos únicos).</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-wine-glass mt-1 text-gray-400"></i> Bodega Garzón: degustação e visita guiada (~UYU 2.500–6.000 / ~US$ 60–150).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Almoço tardio: Parador La Huella (José Ignacio) — renome internacional.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-lighthouse mt-1 text-gray-400"></i> Tarde: Farol de José Ignacio e retorno via La Barra.</li>
+                </ul>
+                <div class="winery-tip p-3 rounded-lg text-xs text-purple-800">
+                    <strong>Dica:</strong> Paisagem rural de Garzón com vistas panorâmicas da Ruta 39.
+                </div>
+            </div>
+
+            <!-- Dia 3: Alto de la Ballena & Casapueblo -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-purple-600"></div>
+                <img src="https://images.unsplash.com/photo-1583270423776-391f5d70576b?w=800&h=250&fit=crop" alt="Casapueblo - Pôr do Sol" class="attraction-image">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-purple-600 font-bold text-xs uppercase">Dia 3 • 06/11 (Sexta)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">🍇 Vinhos Boutique, Pôr do Sol e Alta Gastronomia</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã na Alto de la Ballena (bodega boutique, Tannat-Viognier, deck panorâmico).</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-wine-bottle mt-1 text-gray-400"></i> Alto de la Ballena: vinhos boutique com vista panorâmica.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Almoço: I'marangatú (Praia Mansa) — ceviches, poke, parador moderno à beira-mar.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-landmark mt-1 text-gray-400"></i> Tarde: Casapueblo (obra de Carlos Páez Vilaró, espetáculo "Cerimônia do Sol").</li>
+                </ul>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Jantar:</strong> <strong>La Bourgogne</strong> (Punta del Este) — alta gastronomia francesa em ambiente elegante.
+                </div>
+            </div>
+        </div>
+
+        <!-- FASE 2: MONTEVIDÉU (Dias 4-6) -->
+        <div id="mvd" class="fade-in space-y-6 hidden-tab">
             <div class="hotel-card p-5 rounded-xl shadow-sm">
                 <h3 class="font-bold text-green-800 flex items-center gap-2"><i class="fas fa-hotel"></i> Estadia em MVD</h3>
                 <p class="text-sm text-green-700 mt-1"><strong>Sugerido: Hyatt Centric Pocitos.</strong> Estrutura familiar premium frente à Rambla.</p>
             </div>
 
-            <!-- Dia 1 -->
+            <!-- Dia 4: Chegada a Montevidéu -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-blue-600"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <span class="text-blue-600 font-bold text-xs uppercase">Dia 1 • 04/11 (Quarta)</span>
-                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
-                </div>
-                <h2 class="text-xl font-bold mb-3">Chegada em Montevidéu</h2>
-                <p class="text-gray-600 text-sm mb-3">Voo AD8760 (14:00).</p>
-                <ul class="space-y-3 mb-4 text-gray-600">
-                    <li class="flex items-start gap-2"><i class="fas fa-plane-arrival mt-1 text-gray-400"></i> Chegada em MVD e retirada do carro.</li>
-                    <li class="flex items-start gap-2"><i class="fas fa-shopping-basket mt-1 text-gray-400"></i> Supermercado (Kit sobrevivência).</li>
-                    <li class="flex items-start gap-2"><i class="fas fa-walking mt-1 text-gray-400"></i> Fim de tarde na Rambla de Pocitos.</li>
-                </ul>
-                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
-                    <strong>Jantar:</strong> Restaurante <strong>Francis</strong> (Pocitos) - peixes e massas com excelente atendimento para famílias.
-                </div>
-            </div>
-
-            <!-- Dia 2 -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <span class="text-blue-600 font-bold text-xs uppercase">Dia 2 • 05/11 (Quinta)</span>
-                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
-                </div>
-                <h2 class="text-xl font-bold mb-3">Parques e Ciudad Vieja</h2>
-                <p class="text-gray-600 text-sm mb-3">Manhã no Parque Rodó (lago e sombras). Tarde na Plaza Independencia e Mercado del Puerto.</p>
-                <div class="baby-tip p-3 rounded-lg text-xs text-blue-800 flex gap-3">
-                    <i class="fas fa-baby"></i>
-                    <div>Parque Rodó tem caminhos planos excelentes para o carrinho de bebé.</div>
-                </div>
-            </div>
-
-            <!-- Dia 3 -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-purple-600"></div>
-                <div class="flex justify-between items-start mb-2">
-                    <span class="text-purple-600 font-bold text-xs uppercase">Dia 3 • 06/11 (Sexta)</span>
-                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
-                </div>
-                <h2 class="text-xl font-bold mb-3">Vinho e Jardim: Bodega Bouza</h2>
-                <p class="text-gray-600 text-sm mb-3">Visita à vinícola Bouza para almoço harmonizado. O bebé pode aproveitar os jardins e ver os animais da quinta.</p>
-                <div class="winery-tip p-3 rounded-lg text-xs text-purple-800">
-                    <strong>Reserva:</strong> Faça a reserva do almoço com meses de antecedência.
-                </div>
-            </div>
-        </div>
-
-        <!-- COLONIA & BUENOS AIRES -->
-        <div id="colonia" class="fade-in space-y-6 hidden-tab">
-            <!-- Dia 4 -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-orange-500"></div>
+                <div class="absolute top-0 left-0 w-2 h-full bg-orange-600"></div>
+                <img src="https://images.unsplash.com/photo-1583270425012-1de82718620e?w=800&h=250&fit=crop" alt="Montevidéu - Ciudad Vieja" class="attraction-image">
                 <div class="flex justify-between items-start mb-2">
                     <span class="text-orange-600 font-bold text-xs uppercase">Dia 4 • 07/11 (Sábado)</span>
                     <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
                 </div>
-                <h2 class="text-xl font-bold mb-3">Colonia del Sacramento</h2>
-                <p class="text-gray-600 text-sm mb-3">Check-out em MVD e viagem de 2h30 para Colonia. Check-in na **Posada del Angel** ou **Charco**. Pôr do sol no Bastión de San Pedro.</p>
+                <h2 class="text-xl font-bold mb-3">📍 Chegada a Montevidéu e Cidade Velha</h2>
+                <p class="text-gray-600 text-sm mb-3">Translado: Punta del Este → Montevidéu (~130 km). Recarga na Electrolinera Leguizamón.</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-plug mt-1 text-gray-400"></i> Recarga: Electrolinera Leguizamón (rápida e central).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Almoço: Mercado del Puerto – parrilla uruguaia tradicional com vinho local (Medio y Medio).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-walking mt-1 text-gray-400"></i> Tarde: Ciudad Vieja, Puerta de la Ciudadela, Plaza Independencia e Museu Andes 1972.</li>
+                </ul>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Jantar:</strong> <strong>Primuseum</strong> — jantar com show de tango intimista.
+                </div>
             </div>
 
-            <!-- Dia 5 -->
+            <!-- Dia 5: Vinhedos Urbanos -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-2 h-full bg-green-600"></div>
+                <img src="https://plus.unsplash.com/premium_photo-1742457663702-70cebffec269?w=800&h=250&fit=crop" alt="Bodega Bouza - Vinhos" class="attraction-image">
                 <div class="flex justify-between items-start mb-2">
                     <span class="text-green-600 font-bold text-xs uppercase">Dia 5 • 08/11 (Domingo)</span>
                     <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
                 </div>
-                <h2 class="text-xl font-bold mb-3">Buenos Aires: San Telmo & Don Julio</h2>
-                <p class="text-gray-600 text-sm mb-3">Ferry às 08:30 (deixar carro no porto). Visita ao Mercado de San Telmo e feira. Almoço no **Don Julio** (Palermo).</p>
-                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
-                    <strong>Pernoite:</strong> Hotel Palacio Duhau ou CasaSur Recoleta.
+                <h2 class="text-xl font-bold mb-3">🍷 Vinhedos Urbanos e Bairro do Prado</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã: Bodega Bouza – degustação com almoço harmonizado (vinhos Tannat, Albariño, B6 e coleção de carros clássicos).</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-wine-glass mt-1 text-gray-400"></i> Bodega Bouza: visita guiada e degustação.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-tree mt-1 text-gray-400"></i> Tarde: Bairro do Prado — Jardim Botânico e Rosedal.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Jantar: La Pulpería (Punta Carretas) – parrilla clássica uruguaia.</li>
+                </ul>
+                <div class="winery-tip p-3 rounded-lg text-xs text-purple-800">
+                    <strong>Reserva:</strong> Faça a reserva de almoço harmonizado com antecedência.
                 </div>
             </div>
 
-            <!-- Dia 6 -->
+            <!-- Dia 6: Rambla e Preparação -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-2 h-full bg-green-500"></div>
+                <img src="https://images.unsplash.com/photo-1598289993193-5efe1657f971?w=800&h=250&fit=crop" alt="Rambla de Montevidéu" class="attraction-image">
                 <div class="flex justify-between items-start mb-2">
                     <span class="text-green-600 font-bold text-xs uppercase">Dia 6 • 09/11 (Segunda)</span>
                     <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
                 </div>
-                <h2 class="text-xl font-bold mb-3">Cultura Portenha e Retorno</h2>
-                <p class="text-gray-600 text-sm mb-3">Manhã na Livraria El Ateneo. Ferry de volta às 17:00. Pernoite em Colonia para descansar do ferry.</p>
+                <h2 class="text-xl font-bold mb-3">🌳 Rambla, Cocô e Preparação</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã: Caminhada pela Rambla de Pocitos / Punta Carretas (pontos fotográficos clássicos).</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-walking mt-1 text-gray-400"></i> Rambla de Pocitos e Punta Carretas.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Almoço: Café Misterio (Carrasco) – gastronomia contemporânea e sushi top.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-car mt-1 text-gray-400"></i> Tarde: Carga total do VE, revisão de documentos e itens de fronteira.</li>
+                </ul>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Noite:</strong> Pernoite em MVD para preparação da travessia.
+                </div>
             </div>
         </div>
 
-        <!-- PUNTA DEL ESTE -->
-        <div id="punta" class="fade-in space-y-6 hidden-tab">
+        <!-- FASE 3: COLONIA E TRAVESSIA (Dias 7-8) -->
+        <div id="colonia" class="fade-in space-y-6 hidden-tab">
+            <div class="hotel-card p-5 rounded-xl shadow-sm">
+                <h3 class="font-bold text-green-800 flex items-center gap-2"><i class="fas fa-hotel"></i> Hospedagem em Colonia</h3>
+                <p class="text-sm text-green-700 mt-1"><strong>Sugerido: Charco Hotel ou Sheraton Colonia.</strong> No coração do Bairro Histórico UNESCO.</p>
+            </div>
             <!-- Dia 7 -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-500"></div>
+                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-600"></div>
+                <img src="https://images.unsplash.com/photo-1712926631295-abed884a8000?w=800&h=250&fit=crop" alt="Colonia del Sacramento" class="attraction-image">
                 <div class="flex justify-between items-start mb-2">
                     <span class="text-yellow-600 font-bold text-xs uppercase">Dia 7 • 10/11 (Terça)</span>
                     <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
                 </div>
-                <h2 class="text-xl font-bold mb-3">Rumo a Punta del Este</h2>
-                <p class="text-gray-600 text-sm mb-3">Viagem de Colonia a Punta (4h30). Check-in no **The Grand Hotel** (Brava/Mansa). Tarde de relax na piscina aquecida.</p>
+                <h2 class="text-xl font-bold mb-3">🛣️ Rumo ao Oeste: Montevidéu → Colonia del Sacramento</h2>
+                <p class="text-gray-600 text-sm mb-3">Estrada: ~180 km pela Ruta 1 — boa pavimentação e paisagem rural.</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-plug mt-1 text-gray-400"></i> Pontos de Recarga: ANCAP Rosario e ANCAP Colônia (para carga plena).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Almoço: Charco Bistró – refinado à beira-rio no Bairro Histórico.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-landmark mt-1 text-gray-400"></i> Passeios: Calle de los Suspiros, farol, convento e Patrimônio Mundial UNESCO.</li>
+                </ul>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Hospedagem:</strong> Charco Hotel ou Sheraton Colonia.
+                </div>
             </div>
 
             <!-- Dia 8 -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-400"></div>
+                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-500"></div>
+                <img src="https://images.unsplash.com/photo-1730415117704-1b31cad3d0c3?w=800&h=250&fit=crop" alt="Ferry Puerto Madero" class="attraction-image">
                 <div class="flex justify-between items-start mb-2">
                     <span class="text-yellow-600 font-bold text-xs uppercase">Dia 8 • 11/11 (Quarta)</span>
                     <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
                 </div>
-                <h2 class="text-xl font-bold mb-3">Praia Mansa e Lobos</h2>
-                <p class="text-gray-600 text-sm mb-3">Manhã na Parada 3 da Mansa (água de piscina). Tarde no porto para ver os lobos marinhos.</p>
+                <h2 class="text-xl font-bold mb-3">🛳️ Travessia Uruguai → Argentina</h2>
+                <p class="text-gray-600 text-sm mb-3">Logística de Ferry: Embarque no fluviomarítimo (Buquebus/Colonia Express).</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Café da manhã em Colônia del Sacramento + visita alguns pontos turísticos.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-passport mt-1 text-gray-400"></i> Aduana: Imigração argentina é feita em Colonia antes da travessia.</li>
+                </ul>
+                <div class="winery-tip p-3 rounded-lg text-xs text-purple-800">
+                    <strong>Nota:</strong> Deixar o veículo em estacionamento seguro do porto se optar por explorar Colonia antes da travessia.
+                </div>
             </div>
+        </div>
 
+        <!-- FASE 4: A METRÓPOLE PORTENHA (Dias 9-11) -->
+        <div id="buenosaires" class="fade-in space-y-6 hidden-tab">
+            <div class="hotel-card p-5 rounded-xl shadow-sm">
+                <h3 class="font-bold text-green-800 flex items-center gap-2"><i class="fas fa-hotel"></i> Hospedagem em Buenos Aires</h3>
+                <p class="text-sm text-green-700 mt-1"><strong>Sugerido: Palacio Duhau - Park Hyatt ou CasaSur Recoleta.</strong> Bairros premium para exploração a pé.</p>
+            </div>
             <!-- Dia 9 -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-400"></div>
+                <div class="absolute top-0 left-0 w-2 h-full bg-red-600"></div>
+                <img src="https://images.unsplash.com/photo-1730415117704-1b31cad3d0c3?w=800&h=250&fit=crop" alt="Buenos Aires - Puerto Madero" class="attraction-image">
                 <div class="flex justify-between items-start mb-2">
-                    <span class="text-yellow-600 font-bold text-xs uppercase">Dia 9 • 12/11 (Quinta)</span>
+                    <span class="text-red-600 font-bold text-xs uppercase">Dia 9 • 12/11 (Quinta)</span>
                     <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
                 </div>
-                <h2 class="text-xl font-bold mb-3">Bate-volta Piriápolis</h2>
-                <p class="text-gray-600 text-sm mb-3">Passeio rápido (40min). Subir ao Cerro San Antonio (teleférico ou carro) e almoço na orla.</p>
+                <h2 class="text-xl font-bold mb-3">🗓️ Explorando Buenos Aires (Puerto Madero & Recoleta)</h2>
+                <p class="text-gray-600 text-sm mb-3">Hotel em Recoleta ou Palermo.</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Almoço: Cabaña Las Lilas – parrilla premium em Puerto Madero (carnes argentinas de alta qualidade).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-walking mt-1 text-gray-400"></i> Tarde: Passeio pelo cais, pontes e bares com vista do rio.</li>
+                </ul>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Tarde & Noite:</strong> El Ateneo Grand Splendid (livraria impressionante), Cemitério da Recoleta, Jantar em El Preferido de Palermo.
+                </div>
             </div>
 
             <!-- Dia 10 -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
+                <div class="absolute top-0 left-0 w-2 h-full bg-red-500"></div>
+                <img src="https://images.unsplash.com/photo-1643227790919-3fa31d2c5645?w=800&h=250&fit=crop" alt="Palermo - Ruas Coloridas" class="attraction-image">
                 <div class="flex justify-between items-start mb-2">
-                    <span class="text-purple-600 font-bold text-xs uppercase">Dia 10 • 13/11 (Sexta)</span>
+                    <span class="text-red-600 font-bold text-xs uppercase">Dia 10 • 13/11 (Sexta)</span>
                     <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
                 </div>
-                <h2 class="text-xl font-bold mb-3">Alto de la Ballena & Casapueblo</h2>
-                <p class="text-gray-600 text-sm mb-3">Vinícola Alto de la Ballena (deck panorâmico). Tarde no café da Casapueblo (use canguru para as escadas).</p>
+                <h2 class="text-xl font-bold mb-3">🍖 Palermo, Arte & Gastronomia Iconográfica</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã no MALBA (Museu de Arte Latino-Americana) — acervo moderno e relevante.</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Almoço: Don Julio (Palermo) – considerado um dos melhores restaurantes de carne do mundo.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-shopping-bags mt-1 text-gray-400"></i> Tarde: Palermo Soho & Hollywood – boutiques, cafés, murais e cultura jovem.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-coffee mt-1 text-gray-400"></i> Parada para café em Ninina, Malvón ou Farinelli (cafés premium).</li>
+                </ul>
+                <div class="winery-tip p-3 rounded-lg text-xs text-purple-800">
+                    <strong>Jantar/Noite:</strong> Florería Atlántico – gastrobar sofisticado. Opção: show de tango ou espetáculo urbano.
+                </div>
             </div>
 
             <!-- Dia 11 -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-yellow-400"></div>
+                <div class="absolute top-0 left-0 w-2 h-full bg-pink-600"></div>
+                <img src="https://images.unsplash.com/photo-1647286433325-1b421cd5e555?w=800&h=250&fit=crop" alt="La Boca - Caminito" class="attraction-image">
                 <div class="flex justify-between items-start mb-2">
-                    <span class="text-yellow-600 font-bold text-xs uppercase">Dia 11 • 14/11 (Sábado)</span>
+                    <span class="text-pink-600 font-bold text-xs uppercase">Dia 11 • 14/11 (Sábado)</span>
                     <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
                 </div>
-                <h2 class="text-xl font-bold mb-3">La Barra e Retorno</h2>
-                <p class="text-gray-600 text-sm mb-3">Atravessar a ponte ondulada e visitar o Museu do Mar. Noite de pernoite em **Carrasco** (MVD) para estar perto do aeroporto.</p>
+                <h2 class="text-xl font-bold mb-3">🏙️ San Telmo, La Boca e Encerramento Portenho</h2>
+                <p class="text-gray-600 text-sm mb-3">Manhã em San Telmo – bairro boêmio com antiquários e arte de rua. Aproveiite Feira de San Telmo se for domingo.</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Brunch: empanadas ou parrilla casual (El Hornero ou La Choripaneria).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-landmark mt-1 text-gray-400"></i> Tarde: La Boca & Caminito – ruas coloridas, atmosfera italiana, passeio fotográfico.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Almoço Tardio: Fervor (Recoleta) – frutos do mar ou grelhados argentinos.</li>
+
+                </ul>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Opcional:</strong> Visita ao Museu da Bombonera ou tour do estádio do Boca Juniors (futebol argentino).
+                </div>
+            </div>
+        </div>
+
+        <!-- FASE 5: RETORNO A MONTEVIDÉU (Dias 12-13) -->
+        <div id="retorno" class="fade-in space-y-6 hidden-tab">
+            <div class="hotel-card p-5 rounded-xl shadow-sm">
+                <h3 class="font-bold text-green-800 flex items-center gap-2"><i class="fas fa-hotel"></i> Pernoite em Colonia</h3>
+                <p class="text-sm text-green-700 mt-1"><strong>Local:</strong> Charco Hotel ou Sheraton Colonia (segunda noite). Retorno tranquilo no dia seguinte.</p>
             </div>
 
             <!-- Dia 12 -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-2 h-full bg-blue-700"></div>
+                <div class="absolute top-0 left-0 w-2 h-full bg-indigo-600"></div>
+                <img src="https://images.unsplash.com/photo-1712926631295-abed884a8000?w=800&h=250&fit=crop" alt="Colonia del Sacramento" class="attraction-image">
                 <div class="flex justify-between items-start mb-2">
-                    <span class="text-blue-700 font-bold text-xs uppercase">Dia 12 • 15/11 (Domingo)</span>
+                    <span class="text-indigo-600 font-bold text-xs uppercase">Dia 12 • 14/11 (Sexta)</span>
                     <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
                 </div>
-                <h2 class="text-xl font-bold mb-3">Voo de Regresso</h2>
-                <p class="text-gray-600 text-sm mb-3">Manhã livre em Carrasco. Devolução do carro no aeroporto às 14:00. Voo Azul 8761 às 16:05.</p>
+                <h2 class="text-xl font-bold mb-3">🛳️ Retorno a Colonia com Pernoite</h2>
+                <p class="text-gray-600 text-sm mb-3">Desembarque no Buquebus e retorno à Colonia del Sacramento para pernoite tranquila.</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-ship mt-1 text-gray-400"></i> Ferry desembarque em Colonia com veículo (~2 horas de travessia).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-hotel mt-1 text-gray-400"></i> Check-in no hotel (Charco Hotel ou Sheraton Colonia).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils mt-1 text-gray-400"></i> Jantar relaxado no Bairro Histórico — Charco Bistró ou El Drugstore.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-walking mt-1 text-gray-400"></i> Passeio noturno pela Calle de los Suspiros com iluminação tradicional.</li>
+                </ul>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Hospedagem:</strong> Segunda noite em Colonia — repouso antes da etapa final.
+                </div>
+            </div>
+
+            <!-- Dia 13 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-blue-700"></div>
+                <img src="https://images.unsplash.com/photo-1583166614653-1a1956372d9c?w=800&h=250&fit=crop" alt="Retorno - Aeroporto Carrasco" class="attraction-image">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-blue-700 font-bold text-xs uppercase">Dia 13 • 15/11 (Sábado)</span>
+                    <label class="checkbox-wrapper"><input type="checkbox" class="hidden peer"><div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:bg-green-500 peer-checked:border-green-500 flex items-center justify-center text-white"><i class="fas fa-check text-[10px]"></i></div></label>
+                </div>
+                <h2 class="text-xl font-bold mb-3">🚗 Retorno a Montevidéu e Devolução do Veículo</h2>
+                <p class="text-gray-600 text-sm mb-3">Saída cedo de Colonia. Rumo a MVD: ~180 km até o Aeroporto de Carrasco.</p>
+                <ul class="space-y-3 mb-4 text-gray-600">
+                    <li class="flex items-start gap-2"><i class="fas fa-coffee mt-1 text-gray-400"></i> Café da manhã em Colonia antes da partida.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-map-pin mt-1 text-gray-400"></i> Estrada de retorno pela Ruta 1 até Montevidéu.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-plug mt-1 text-gray-400"></i> Última recarga em ANCAP Rosario ou Leguizamón se necessário.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-check mt-1 text-gray-400"></i> Devolução do VE: Conferir itens, cabos e documentação no aeroporto às 14:00.</li>
+                </ul>
+                <div class="bg-slate-50 p-3 rounded-lg text-xs italic">
+                    <strong>Voo:</strong> Azul 8761 às 16:05 (MVD → REC 20:55). <strong>Observação:</strong> Multas de trânsito na Argentina podem ser debitadas posteriormente.
+                </div>
             </div>
         </div>
-
-        <!-- CALCULADORA DE CONVERSÃO -->
         <div id="conversor" class="fade-in space-y-6 hidden-tab">
             <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
                 <div class="flex items-center gap-3 mb-6">
@@ -294,8 +430,20 @@
                 <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2"><i class="fas fa-info-circle text-blue-600"></i> Notas Importantes</h3>
                 <ul class="space-y-3 text-sm text-gray-600">
                     <li class="flex items-start gap-2"><i class="fas fa-id-card text-blue-500 mt-1"></i> Documentação: RG (original com foto recente) ou Passaporte obrigatórios.</li>
-                    <li class="flex items-start gap-2"><i class="fas fa-car text-orange-500 mt-1"></i> Carro: Deixe o carro no porto de Colonia (estacionamento seguro) ao ir para BA.</li>
-                    <li class="flex items-start gap-2"><i class="fas fa-ship text-green-500 mt-1"></i> Ferry: Reserve Buquebus para o domingo de San Telmo.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-car text-orange-500 mt-1"></i> Veículo Elétrico: Retirada em MVD (04/11) e devolução em Carrasco (15/11 ~14:00).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-ship text-green-500 mt-1"></i> Ferry Colonia: Buquebus (11/11) e retorno (15/11). Custo: ~US$ 450–600 (carro + 2 pax).</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-alert-triangle text-red-500 mt-1"></i> Multas na Argentina: Podem ser debitadas posteriormente via contato com locadora.</li>
+                    <li class="flex items-start gap-2"><i class="fas fa-utensils text-purple-500 mt-1"></i> IVA em Restaurantes: 22% desconto ao pagar com cartão internacional em Uruguai.</li>
+                </ul>
+            </div>
+
+            <div class="bg-gradient-to-r from-amber-50 to-yellow-50 p-6 rounded-2xl border border-amber-200">
+                <h3 class="font-bold text-amber-900 mb-3 flex items-center gap-2"><i class="fas fa-star text-amber-500"></i> Dicas Gerais</h3>
+                <ul class="space-y-2 text-sm text-amber-800">
+                    <li>✓ Reserve hotéis e restaurantes com antecedência (especialmente Bodega Bouza e Bodega Garzón).</li>
+                    <li>✓ Mobilidade urbana: Uber/Cabify funcionam bem em MVD e Buenos Aires.</li>
+                    <li>✓ Câmbio: Leve dólares americanos para trocar a melhor taxa em casas de câmbio locais.</li>
+                    <li>✓ Clima (Novembro): Primavera austral — dias agradáveis, 18–25°C.</li>
                 </ul>
             </div>
         </div>
@@ -308,7 +456,7 @@
 
     <script>
         function switchTab(tabName) {
-            const tabs = ['mvd', 'colonia', 'punta', 'logistica', 'conversor'];
+            const tabs = ['punta1', 'mvd', 'colonia', 'buenosaires', 'retorno', 'logistica', 'conversor'];
             tabs.forEach(t => {
                 document.getElementById(t).classList.add('hidden-tab');
                 document.getElementById('btn-' + t).classList.remove('active-tab');
