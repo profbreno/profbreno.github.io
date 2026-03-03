@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<CURRICULO-VITAE SISTEMA-ORIGEM-XML="LATTES_OFFLINE">
+    <DADOS-GERAIS NOME-COMPLETO="Breno Araújo">
+        <RESUMO-CV TEXTO-RESUMO="Professor do Ensino Básico, Técnico e Tecnológico no Instituto Federal de Educação, Ciência e Tecnologia do Sertão Pernambucano."/>
+    </DADOS-GERAIS>
+    <PRODUCAO-TECNICA>
+        <TRABALHO-TECNICO>
+             <DADOS-BASICOS-DO-TRABALHO-TECNICO TITULO-DO-TRABALHO-TECNICO="Sistema de Gestão Acadêmica"/>
+        </TRABALHO-TECNICO>
+    </PRODUCAO-TECNICA>
+    <DADOS-COMPLEMENTARES>
+        <PROJETOS-DE-PESQUISA>
+            <PROJETO-DE-PESQUISA NOME-DO-PROJETO="Mineração de Dados Educacionais" ANO-INICIO="2024" ANO-FIM="Atual">
+                <EQUIPE-DO-PROJETO>
+                    <INTEGRANTES-DO-PROJETO NOME-COMPLETO="Breno Araújo" RESPONSAVEL-FLAG="SIM"/>
+                </EQUIPE-DO-PROJETO>
+                <DESCRICAO-DO-PROJETO DESCRICAO-DO-PROJETO="Aplicação de técnicas de mineração de dados para identificar padrões de evasão escolar."/>
+            </PROJETO-DE-PESQUISA>
+            <PROJETO-DE-PESQUISA NOME-DO-PROJETO="Inteligência Artificial na Educação" ANO-INICIO="2023" ANO-FIM="2024">
+                 <DESCRICAO-DO-PROJETO DESCRICAO-DO-PROJETO="Investigação do uso de LLMs no suporte ao aprendizado de programação."/>
+            </PROJETO-DE-PESQUISA>
+        </PROJETOS-DE-PESQUISA>
+        <PROJETOS-DE-EXTENSAO>
+            <PROJETO-DE-EXTENSAO NOME-DO-PROJETO="Robótica nas Escolas" ANO-INICIO="2024" ANO-FIM="Atual">
+                <DESCRICAO-DO-PROJETO DESCRICAO-DO-PROJETO="Oficinas de robótica para alunos da rede pública de ensino."/>
+            </PROJETO-DE-EXTENSAO>
+        </PROJETOS-DE-EXTENSAO>
+    </DADOS-COMPLEMENTARES>
+</CURRICULO-VITAE>

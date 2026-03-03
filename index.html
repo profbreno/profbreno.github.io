@@ -1,114 +1,348 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Prof. Breno Araújo</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="css/docs.min.css" rel="stylesheet">
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#">Prof Breno Araújo</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-      
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(atual)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="webbd/">Programação Web e BD</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="autoriaweb">Autoria Web</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Engenharia de Software</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Outros</a>
-                  <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">Pesquisa</a>
-                    <a class="dropdown-item" href="#">Extensão</a>
-                    <a class="dropdown-item" href="#">Currículo Lattes</a>
-                  </div>
-                </li>
-              </ul>
-              <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Pesquisa" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
-              </form>
-            </div>
-          </nav>
-      
-          <main role="main">
-      
-            <div class="jumbotron">
-                <div class="container">
-                    <h1 class="display-4">Como instalar o Python</h1>
-                    <p class="lead">É necessário instalar a versão 3.X do python!</p>
-                </div>
-            </div>
-            <div class="container">
-                      <p>Nesta disciplina, usaremos a versão 3.x do Python, por exemplo, 3.5.1.</p>
 
-                      <p>Houve algumas melhorias entre a versão 2.x e a 3.x e vamos utilizar a versão mais moderna.</p> 
-                      
-                      <p>A versão específica utilizada pelo corretor automático é a 3.6. Ela é compatível com tudo ensinado no curso, então não se preocupe se sua versão for diferente. No entanto, tome cuidado ao usar ferramentas vistas em outros lugares, elas podem não ser compatíveis.
-                      </p>
-                      <p>Se você já tem o Python 2 instalado, não se preocupe; ambas podem coexistir no seu computador.
-                      </p>
-                      <p>Os vídeos desta sessão ensinam como instalar o Python 3 e o ambiente de programação IDLE no Windows e no Linux. No MacOS também é bem fácil, em breve disponibilizaremos um vídeo para Mac também.
-                      </p>
-                      <p>Após instalar a versão 3.x do python no seu computador, para executá-lo a partir da linha de comando, é necessário digitar python3. Aliás, se você não sabe o que é linha de comando, sugerimos começar pela leitura do texto Introdução à Linha de Comando que está disponível nesta sessão do curso.
-                      </p>
-                      <p>Caso queira pular os videos com tutoriais de como instalar a versão correta no seu sistema, visite o site oficial da linguagem Python para prosseguir com a instalação ou siga os passos abaixo.
-                      </p>
-                      <h2>Instalando Python 3 - Windows:</h2>
-                      <ol>
-                        <li>Visite <a href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></li>
-                        <li>Clique em Latest Python 3 Release</li>
-                        <li>No fim da página, faça o download de <b>Windows X86-64 executable installer</b></li>
-                        <li>Instale o arquivo obtido no passo 3 (não se esqueça de acrescentar o python ao PATH!)</li>
-                      </ol>
-                      <p>Desta forma, tanto o Python 3 quanto o IDLE serão instalados.
-                      </p>
-                      <h2>Instalando Python 3 - Linux:</h2>
-                      <p>O Python 3 já está presente nas últimas versões de usuário das distribuições mais famosas de GNU/Linux, como Ubuntu, Debian openSUSE e Fedora.
-                      </p>
-                      <p>
-                      Para instalar o IDLE você pode utilizar o gerenciador de pacotes da sua distribuição. Para tal, deve-se saber o nome do pacote que instala a ferramenta.
-                      </p>
-                      <p>
-                      Ubuntu/Debian/Mint: <b>sudo apt-get install idle3</b>
-                      </p>
-                      <p>
-                      Fedora/openSUSE/CentOS: <b>sudo yum install python3-tools python3-idle</b>
-                      </p>
-                      
-                      <h2>Instalando o Visual Studio Code:</h2>
-                      <ol>
-                          <li>Visite <a href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></li>
-                          <li>Clique em "Download" para obter a versão adequada para o seu sistema operacional.</li>
-                          <li>Após o download, execute o instalador.</li>
-                          <li>Siga as instruções na tela para concluir a instalação.</li>
-                          <li>Após a instalação, você pode abrir o VS Code e começar a usá-lo.</li>
-                        </ol>
-                      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Prof. Breno Araújo - Portfólio Acadêmico</title>
+  <meta name="description"
+    content="Página pessoal do Prof. Breno Araújo - Ensino, Pesquisa e Extensão no IF Sertão Pernambuco.">
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <!-- Custom CSS -->
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <!-- Font Awesome (Optional, using CDN for icons if needed, or remove if not desired) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Prof. Breno Araújo</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#home">Home <span class="sr-only">(atual)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">Sobre</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#teaching">Disciplinas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tutorials">Tutoriais</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#research">Pesquisa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#extension">Projetos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header / Hero Section -->
+  <header class="jumbotron text-center" id="home">
+    <div class="container">
+      <h1 class="display-4">Bem-vindo!</h1>
+      <p class="lead">Portfolio Acadêmico - Ensino, Pesquisa e Extensão.</p>
+      <a href="#teaching" class="btn btn-primary btn-lg mt-3">Ver Disciplinas</a>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="bg-light">
+    <div class="container">
+      <h2>Sobre Mim</h2>
+      <div class="row">
+        <div class="col-lg-8 mx-auto lead text-justify">
+          <p>Olá! Sou Breno Araújo, professor no IF Sertão Pernambuco. Dedico-me ao ensino de tecnologia, com foco em
+            desenvolvimento web, engenharia de software e bancos de dados. Esta página reúne informações sobre minhas
+            atividades acadêmicas, projetos de pesquisa e extensão.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaching Section -->
+  <section id="teaching">
+    <div class="container">
+      <h2>Disciplinas</h2>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title">Programação Web e BD</h4>
+              <p class="card-text">Material didático, roteiros de aula e projetos da disciplina de Programação Web e
+                Banco de Dados.</p>
+              <a href="webbd/" class="btn btn-outline-primary">Acessar Material</a>
             </div>
-          </main><!-- /.container -->
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title">Autoria Web</h4>
+              <p class="card-text">Conteúdo focado em design, usabilidade e desenvolvimento front-end.</p>
+              <a href="autoriaweb/" class="btn btn-outline-primary">Acessar Material</a>
+            </div>
+          </div>
+        </div>
 
-        <footer class="card-footer">
-          &copy; Prof. Breno Araújo | IF Sertão Pernambuco
-        </footer>
+      </div>
+    </div>
+  </section>
 
-          <!-- Principal JavaScript do Bootstrap
-          ================================================== -->
-          <!-- Foi colocado no final para a página carregar mais rápido -->
-          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-          <script src="js/bootstrap.min.js"></script>
-    </body>
+  <!-- Tutorials Section -->
+  <section id="tutorials" class="bg-light">
+    <div class="container">
+      <h2>Tutoriais</h2>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title">Tutorial Python</h4>
+              <p class="card-text">Guia de instalação do Python (conteúdo legado).</p>
+              <a href="python_install.html" class="btn btn-outline-secondary">Ver Tutorial</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research Section -->
+  <section id="research">
+    <div class="container">
+      <h2>Pesquisa</h2>
+      <h3 class="mt-4">Artigos completos publicados em periódicos</h3>
+      <ol>
+        <li>
+          CORNELIO, A. C. D. S. ; CARVALHO, M. M. ; CARVALHO, A. ; FREITAS, M. C. J. C. ; ARAÚJO, B. L. G. M. . <b>Teach
+            Programming: Desenvolvimento de um jogo educacional para o ensino de programação.</b> RESEARCH, SOCIETY AND
+          DEVELOPMENT, v. 14, p. e153141150119, 2025.
+        </li>
+        <li>
+          SÁ, ISADORA SANTOS DE ; SOUZA, IARA MARIA DE JESUS ; MIRANDA, EMANUELLY DE CÁSSIA SILVA ; FREITAS, MARIA CLARA
+          JARDIM DE CARVALHO ; CARVALHO, MARINA MORAES ; CARVALHO, ANDRÉ DE ; ARAÚJO, BRENO LEONARDO GOMES DE MENEZES .
+          <b>Barreiras e motivações para mulheres em tecnologia: Estudo com alunas do IF Sertão Pernambucano a partir de
+            uma
+            experiência extensionista.</b> RESEARCH, SOCIETY AND DEVELOPMENT, v. 14, p. e163141150133, 2025.
+        </li>
+        <li>
+          CARVALHO, ANDRÉ DE ; FREITAS, MARIA CLARA JARDIM DE CARVALHO ; CARVALHO, MARINA MORAES ; ARAÚJO, BRENO
+          LEONARDO
+          GOMES DE MENEZES . <b>Desenvolvimento do pensamento computacional através do aprendizado colaborativo: uma
+            análise do
+            projeto de extensão Clube da Programação no sertão pernambucano.</b> Brazilian Journal of Development, v.
+          11, p.
+          e84240, 2025.
+        </li>
+        <li>
+          SILVA, G. H. ; ARAÚJO, B. L. G. M. . <b>Pescape: uma ferramenta desenvolvida para registro de crimes
+            ambientais na
+            pesca em Pernambuco.</b> RESEARCH, SOCIETY AND DEVELOPMENT, v. 13, p. e10813144812, 2024.
+        </li>
+        <li>
+          SOUZA, J. V. R. ; NASCIMENTO, J. X. M. ; ARAÚJO, B. L. G. M. . <b>Análise de dados de pesca em Pernambuco,
+            Sergipe e
+            Bahia: enfoque nas denúncias de crimes contra tartarugas ameaçadas.</b> RESEARCH, SOCIETY AND DEVELOPMENT,
+          v. 13, p.
+          e11213144816, 2024.
+        </li>
+        <li>
+          ARAÚJO, B. L. G. M.; SOUZA, R. A. C. . <b>INNOTRACE: TRACING REQUIREMENTS IN INNOVATION AND SOFTWARE
+            PROCESSES.</b>
+          REVISTA DE SISTEMAS E COMPUTAÇÃO - RSC, v. 11, p. 4-17, 2021.
+        </li>
+      </ol>
+
+      <h3 class="mt-4">Resumos expandidos publicados em anais de congressos</h3>
+      <ol>
+        <li>
+          ARAÚJO, B. L. G. M.; CORREIA-NETO, J. S. ; SOUZA-JUNIOR, M. F. ; VILAR, G. . <b>Projeto e Desenvolvimento de
+            um
+            Módulo de Atividades Sociais para o Ambiente Moodle Utilizando a Metodologia OOHDM.</b> In: XVIII
+          Conferência
+          Internacional sobre Informática na Educação - TISE 2013, 2013, Porto Alegre-RS. NUEVAS IDEAS EN INFORMÁTICA
+          EDUCATIVA, 2013. v. 9. p. 566-569.
+        </li>
+      </ol>
+
+      <h3 class="mt-4">Resumos publicados em anais de congressos</h3>
+      <ol>
+        <li>
+          SOUZA, J. V. R. ; NASCIMENTO, J. X. M. ; ARAÚJO, B. L. G. M. . <b>ANÁLISE TEMPORAL E MAPEAMENTO DA CAPTURA DE
+            ESPÉCIES AMEAÇADAS NA PESCA COSTEIRA DE PERNAMBUCO, BAHIA E SERGIPE.</b> In: Semana Nacional de Ciência e
+          Tecnologia,
+          2023, Floresta-PE. Semana Nacional de Ciência e Tecnologia, 2023.
+        </li>
+        <li>
+          NASCIMENTO, J. X. M. ; SOUZA, J. V. R. ; ARAÚJO, B. L. G. M. . <b>MANIPULAÇÃO DE DADOS COM PYTHON PARA UMA
+            ANÁLISE
+            QUANTITATIVA DOS CRIMES CONTRA TARTARUGAS AMEAÇADAS EM PERNAMBUCO, SERGIPE E BAHIA.</b> In: Semana Nacional
+          de Ciência
+          e Tecnologia, 2023, Floresta-PE. Semana Nacional de Ciência e Tecnologia, 2023.
+        </li>
+        <li>
+          SILVA, G. H. ; ARAÚJO, B. L. G. M. . <b>PESCAPE: UMA FERRAMENTA DESENVOLVIDA PARA REGISTRO DE CRIMES
+            AMBIENTAIS NA
+            PESCA EM PERNAMBUCO.</b> In: Semana Nacional de Ciência e Tecnologia, 2023, Floresta-PE. Semana Nacional de
+          Ciência e
+          Tecnologia, 2023.
+        </li>
+        <li>
+          SANTANA, C. A. G. P. ; ARAÚJO, B. L. G. M. . <b>DESENVOLVIMENTO DE UM SISTEMA COMPUTACIONAL PARA MONITORAMENTO
+            DE
+            CRIMES AMBIENTAIS NO ESTADO DA BAHIA.</b> In: III CONGRESSO DE PESQUISA PÓS-GRADUAÇÃO E INOVAÇÃO DO IFBA,
+          2022,
+          Salvador-BA. III Congresso de Pós-Graduação e Inovação e XIX Seminário de Iniciação Científica, Tecnológica e
+          Inovação, 2022.
+        </li>
+        <li>
+          ALVES, E. N. ; SÁ, J. L. O. ; ARAÚJO, B. L. G. M. ; FRANCA, D. R. . <b>Problemas avícolas na região de
+            Tucuruí-PA.</b>
+          In: III SEMEX, 2021, Evento online. III Seminário de Extensão - SEMEX, 2021.
+        </li>
+        <li>
+          ARAÚJO, B. L. G. M.; SOUZA, R. A. C. . <b>Abordagem de Rastreamento de Requisitos de Inovação na Concepção de
+            Produtos de Software.</b> In: XV JEPEX, 2015, Recife. XV Jornada de Ensino, Pesquisa e Extensão da UFRPE,
+          2015.
+        </li>
+      </ol>
+
+      <h3 class="mt-4">Apresentações de Trabalho</h3>
+      <ol>
+        <li>
+          ARAÚJO, B. L. G. M.; CORREIA-NETO, J. S. ; VILAR, G. ; SOUZA-JUNIOR, M. F. . <b>Projeto e Desenvolvimento de
+            um
+            Módulo de Atividades Sociais para o Ambiente Moodle Utilizando a Metodologia OOHDM.</b> 2013. (Apresentação
+          de
+          Trabalho/Conferência ou palestra).
+        </li>
+      </ol>
+  </section>
+
+  <!-- Extension Section -->
+  <section id="extension" class="bg-light">
+    <div class="container">
+      <h3 class="mt-4 mb-3">Projetos de Pesquisa</h3>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-primary">
+            <div class="card-body">
+              <h5 class="card-title text-primary">Um Jogo Educacional para o Ensino de Programação</h5>
+              <h6 class="card-subtitle mb-2 text-muted">2024</h6>
+              <p class="card-text">Desenvolvimento de um jogo educacional inovador com gamificação para o ensino de
+                programação e cibersegurança a alunos do ensino médio técnico.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-primary">
+            <div class="card-body">
+              <h5 class="card-title text-primary">Sistema de Monitoramento de Poluição do Ar (SMPA)</h5>
+              <h6 class="card-subtitle mb-2 text-muted">2024</h6>
+              <p class="card-text">Criação de rede de sensores de baixo custo (Arduino) para monitoramento de poluentes
+                no sertão de Pernambuco e integração com plataformas GIS.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-primary">
+            <div class="card-body">
+              <h5 class="card-title text-primary">HIDROMONITORA: Interface Pública</h5>
+              <h6 class="card-subtitle mb-2 text-muted">2024</h6>
+              <p class="card-text">Elaboração de interface pública para divulgação científica de dados sobre os recursos
+                hídricos do Estado de Pernambuco.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-primary">
+            <div class="card-body">
+              <h5 class="card-title text-primary">Ferramenta para Registro de Crimes Ambientais na Pesca</h5>
+              <h6 class="card-subtitle mb-2 text-muted">2023</h6>
+              <p class="card-text">Desenvolvimento de plataforma tecnológica para registro, monitoramento e visualização
+                de dados sobre crimes ambientais no setor pesqueiro.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-primary">
+            <div class="card-body">
+              <h5 class="card-title text-primary">Análise de Dados sobre a Pesca em PE</h5>
+              <h6 class="card-subtitle mb-2 text-muted">2023</h6>
+              <p class="card-text">Coleta e análise de dados pesqueiros para identificação de espécies, produção e
+                qualidade ambiental dos recursos marinhos em Pernambuco.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-primary">
+            <div class="card-body">
+              <h5 class="card-title text-primary">Site do curso de BSI</h5>
+              <h6 class="card-subtitle mb-2 text-muted">2010 - 2011</h6>
+              <p class="card-text">Pesquisa e desenvolvimento do site do curso de Sistemas de Informação utilizando as
+                melhores tecnologias CMS disponíveis na época.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="mt-5 mb-3">Projetos de Extensão</h3>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-success">
+            <div class="card-body">
+              <h5 class="card-title text-success">Clube de Programação</h5>
+              <h6 class="card-subtitle mb-2 text-muted">2024 - Atual</h6>
+              <p class="card-text">Ambiente colaborativo para ensino de programação através de workshops, palestras e
+                desafios práticos para a comunidade.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-success">
+            <div class="card-body">
+              <h5 class="card-title text-success">Ambiente de Ideias e Produções</h5>
+              <h6 class="card-subtitle mb-2 text-muted">2019 - 2020</h6>
+              <p class="card-text">Espaço dedicado ao fomento de ideias inovadoras e produções acadêmicas e
+                tecnológicas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-4">
+    <div class="container">
+      <p class="m-0 text-white mb-2">&copy; 2026 Prof. Breno Araújo | IF Sertão Pernambuco</p>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/eubrenoleonardo" target="_blank" class="text-white mr-3"><i
+            class="fab fa-instagram fa-2x"></i></a>
+        <a href="https://www.linkedin.com/in/prof-breno-leonardo/" target="_blank" class="text-white"><i
+            class="fab fa-linkedin fa-2x"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+</body>
+
 </html>
