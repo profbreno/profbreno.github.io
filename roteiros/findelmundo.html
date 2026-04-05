@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expedição Extremo Sul | Indico ir!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Animação suave para troca de abas */
+        .tab-content {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Estilização customizada para checkboxes */
+        input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: #d97706; /* amber-600 */
+            cursor: pointer;
+        }
+        /* Esconder barra de rolagem nas abas de fases */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Hero Header Branded (Indico ir!) -->
+    <header class="bg-gradient-to-r from-slate-900 to-slate-800 text-white shadow-lg relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+
+        <!-- Faixa superior com bg_topo em largura total -->
+        <div class="absolute left-0 right-0 top-[80px] h-2 bg-amber-600 z-20 shadow-md"></div>
+        <div class="relative min-h-[80px]">
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('img/bg_topo.png');"></div>
+            <div class="absolute inset-0 bg-slate-900/20"></div>
+            
+            <div class="max-w-4xl mx-auto px-4 relative z-30 min-h-[80px] flex items-end justify-between gap-6">
+                <!-- Logo -->
+                <div class="flex-shrink-0 -mb-16">
+                    <img src="img/logo.png" alt="Indico ir!" class="w-32 h-32 rounded-full border-slate-800 shadow-lg bg-white">
+                </div>
+
+                <!-- Rede Social -->
+                <div class="flex-shrink-0 mb-4">
+                    <a href="https://instagram.com/indicoir" target="_blank" class="inline-flex items-center gap-2 bg-slate-800/80 hover:bg-slate-700 px-5 py-2 rounded-full text-amber-400 font-medium transition duration-300 text-sm backdrop-blur-sm border border-slate-600 shadow-sm">
+                        <i class="fab fa-instagram text-lg"></i> @indicoir
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detalhes da expedição sem bg_topo -->
+        <div class="max-w-4xl mx-auto px-4 pt-20 pb-10 text-center relative z-10">
+                <h2 class="text-2xl md:text-3xl font-bold mb-2 text-slate-100">Expedição Fim do Mundo 🌎</h2>
+                <p class="text-lg text-slate-300">9.051 km • Floresta (PE) ➔ Ushuaia (ARG)</p>
+                <p class="text-sm text-amber-500 mt-2 font-medium uppercase tracking-wider"><i class="fas fa-car-side mr-2"></i>Ruta 40 & Carretera Austral</p>
+        </div>
+    </header>
+
+   <!-- Main Content -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full">
+        
+        <!-- Tab Navigation -->
+        <div class="flex flex-wrap md:flex-nowrap gap-2 bg-white p-2 rounded-xl shadow-sm mb-8 sticky top-4 z-20">
+            <button id="btn-roteiro" onclick="switchTab('roteiro')" class="tab-btn flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-200 bg-amber-600 text-white shadow-md flex items-center justify-center gap-2">
+                <i class="fas fa-map-marked-alt"></i> O Roteiro
+            </button>
+            <button id="btn-dicas" onclick="switchTab('dicas')" class="tab-btn flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-200 bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center justify-center gap-2">
+                <i class="fas fa-lightbulb"></i> Dicas de Estrada
+            </button>
+            <button id="btn-checklist" onclick="switchTab('checklist')" class="tab-btn flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-200 bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center justify-center gap-2">
+                <i class="fas fa-tasks"></i> Checklists
+            </button>
+        </div>
+
+        <!-- TAB: ROTEIRO -->
+        <section id="roteiro" class="tab-content block">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fas fa-route text-amber-600"></i> Fases da Viagem (44 Dias)
+            </h2>
+            
+            <!-- Navegação das Fases (Sub-Abas) -->
+            <div class="flex overflow-x-auto gap-2 mb-6 pb-2 hide-scrollbar">
+                <button id="btn-fase1" onclick="switchFase('fase1')" class="fase-btn whitespace-nowrap py-2 px-4 rounded-lg font-semibold transition-all duration-200 bg-amber-600 text-white shadow-md">
+                    🇧🇷 Fase 1
+                </button>
+                <button id="btn-fase2" onclick="switchFase('fase2')" class="fase-btn whitespace-nowrap py-2 px-4 rounded-lg font-semibold transition-all duration-200 bg-slate-100 text-slate-600 hover:bg-slate-200">
+                    🇦🇷 Fase 2
+                </button>
+                <button id="btn-fase3" onclick="switchFase('fase3')" class="fase-btn whitespace-nowrap py-2 px-4 rounded-lg font-semibold transition-all duration-200 bg-slate-100 text-slate-600 hover:bg-slate-200">
+                    ⛰️ Fase 3
+                </button>
+                <button id="btn-fase4" onclick="switchFase('fase4')" class="fase-btn whitespace-nowrap py-2 px-4 rounded-lg font-semibold transition-all duration-200 bg-slate-100 text-slate-600 hover:bg-slate-200">
+                    🇨🇱 Fase 4
+                </button>
+                <button id="btn-fase5" onclick="switchFase('fase5')" class="fase-btn whitespace-nowrap py-2 px-4 rounded-lg font-semibold transition-all duration-200 bg-slate-100 text-slate-600 hover:bg-slate-200">
+                    🧊 Fase 5
+                </button>
+                <button id="btn-fase6" onclick="switchFase('fase6')" class="fase-btn whitespace-nowrap py-2 px-4 rounded-lg font-semibold transition-all duration-200 bg-slate-100 text-slate-600 hover:bg-slate-200">
+                    🏔️ Fase 6
+                </button>
+                <button id="btn-fase7" onclick="switchFase('fase7')" class="fase-btn whitespace-nowrap py-2 px-4 rounded-lg font-semibold transition-all duration-200 bg-slate-100 text-slate-600 hover:bg-slate-200">
+                    🐧 Fase 7
+                </button>
+            </div>
+
+            <!-- Container Principal das Fases -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 min-h-[400px]">
+                
+                <!-- Fase 1 -->
+                <div id="fase1" class="fase-content block animation-fade">
+                    <h3 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4 flex justify-between items-center">
+                        <span>Cruzando o Brasil</span>
+                        <span class="text-sm bg-slate-100 text-slate-500 px-3 py-1 rounded-full">Dias 1 a 7</span>
+                    </h3>
+
+                    <!-- Mapa Fase 1 -->
+                    <div class="mb-6 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                        <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?saddr=Floresta,+PE,+Brasil&daddr=Foz+do+Iguaçu,+PR,+Brasil&output=embed" class="w-full grayscale-[20%] hover:grayscale-0 transition-all duration-500"></iframe>
+                        <div class="bg-slate-50 p-3 flex flex-col sm:flex-row justify-between items-center border-t border-slate-200 gap-3">
+                            <span class="text-sm text-slate-600 font-medium"><i class="fas fa-map-marked-alt text-amber-600 mr-1"></i> Rota Geral: Floresta ➔ Foz do Iguaçu</span>
+                            <a href="https://www.google.com/maps/dir/Floresta,+PE,+Brasil/Petrolina,+PE/Vit%C3%B3ria+da+Conquista,+BA/Montes+Claros,+MG/Uberaba,+MG/Londrina,+PR/Foz+do+Igua%C3%A7u,+PR" target="_blank" class="text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 px-4 py-2 rounded-full font-bold transition-colors w-full sm:w-auto text-center shadow-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i> Abrir Rota Detalhada
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3 text-slate-600 text-sm md:text-base">
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 1</span> <span><strong class="text-slate-800">Floresta (PE) ➔ Petrolina (PE):</strong> Trecho curto inicial (~300 km) para adaptação da família no carro.</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 2</span> <span><strong class="text-slate-800">Petrolina (PE) ➔ Vitória da Conquista (BA):</strong> Dia mais longo cortando o interior baiano (~680 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 3</span> <span><strong class="text-slate-800">Vitória da Conquista (BA) ➔ Montes Claros (MG):</strong> Entrada na região Sudeste (~500 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 4</span> <span><strong class="text-slate-800">Montes Claros (MG) ➔ Uberaba (MG):</strong> Cruzando o interior de Minas Gerais (~580 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 5</span> <span><strong class="text-slate-800">Uberaba (MG) ➔ Londrina (PR):</strong> Chegada à região Sul com excelentes estradas pedagiadas (~550 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 6</span> <span><strong class="text-slate-800">Londrina (PR) ➔ Foz do Iguaçu (PR):</strong> Chegada à zona de fronteira (~500 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 7</span> <span><strong class="text-slate-800">Foz do Iguaçu (Dia Extra):</strong> Descanso da maratona no Brasil, visita opcional às Cataratas, câmbio de moeda e revisão dos documentos do carro.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Fase 2 -->
+                <div id="fase2" class="fase-content hidden animation-fade">
+                    <h3 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4 flex justify-between items-center">
+                        <span>O Pampa e Mendoza</span>
+                        <span class="text-sm bg-slate-100 text-slate-500 px-3 py-1 rounded-full">Dias 8 a 13</span>
+                    </h3>
+
+                    <!-- Mapa Fase 2 -->
+                    <div class="mb-6 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                        <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?saddr=Foz+do+Iguaçu,+PR,+Brasil&daddr=Mendoza,+Argentina&output=embed" class="w-full grayscale-[20%] hover:grayscale-0 transition-all duration-500"></iframe>
+                        <div class="bg-slate-50 p-3 flex flex-col sm:flex-row justify-between items-center border-t border-slate-200 gap-3">
+                            <span class="text-sm text-slate-600 font-medium"><i class="fas fa-map-marked-alt text-amber-600 mr-1"></i> Rota Geral: Foz do Iguaçu ➔ Mendoza</span>
+                            <a href="https://www.google.com/maps/dir/Foz+do+Igua%C3%A7u,+PR/Corrientes,+Argentina/Santa+Fe,+Argentina/C%C3%B3rdoba,+Argentina/Mendoza,+Argentina" target="_blank" class="text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 px-4 py-2 rounded-full font-bold transition-colors w-full sm:w-auto text-center shadow-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i> Abrir Rota Detalhada
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3 text-slate-600 text-sm md:text-base">
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 8</span> <span><strong class="text-slate-800">Foz do Iguaçu ➔ Corrientes (ARG):</strong> Trâmites na aduana e início da viagem no Pampa argentino (~600 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 9</span> <span><strong class="text-slate-800">Corrientes ➔ Santa Fe (ARG):</strong> Viagem fluída pelas longas retas das planícies (~600 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 10</span> <span><strong class="text-slate-800">Santa Fe ➔ Córdoba (ARG):</strong> Trecho curto para aproveitar a chegada numa cidade com ótima infraestrutura (~350 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 11</span> <span><strong class="text-slate-800">Córdoba ➔ Mendoza (ARG):</strong> O primeiro encontro com a grandiosa Cordilheira dos Andes (~600 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 12</span> <span><strong class="text-slate-800">Mendoza (Dia Extra 1):</strong> Descanso e passeio familiar pelo gigantesco Parque General San Martín.</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 13</span> <span><strong class="text-slate-800">Mendoza (Dia Extra 2):</strong> Visita a uma vinícola family-friendly aos pés dos Andes.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Fase 3 -->
+                <div id="fase3" class="fase-content hidden animation-fade">
+                    <h3 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4 flex justify-between items-center">
+                        <span>A Mítica Ruta 40 Norte</span>
+                        <span class="text-sm bg-slate-100 text-slate-500 px-3 py-1 rounded-full">Dias 14 a 18</span>
+                    </h3>
+
+                    <!-- Mapa Fase 3 -->
+                    <div class="mb-6 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                        <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?saddr=Mendoza,+Argentina&daddr=San+Carlos+de+Bariloche,+Argentina&output=embed" class="w-full grayscale-[20%] hover:grayscale-0 transition-all duration-500"></iframe>
+                        <div class="bg-slate-50 p-3 flex flex-col sm:flex-row justify-between items-center border-t border-slate-200 gap-3">
+                            <span class="text-sm text-slate-600 font-medium"><i class="fas fa-map-marked-alt text-amber-600 mr-1"></i> Rota Geral: Mendoza ➔ Bariloche</span>
+                            <a href="https://www.google.com/maps/dir/Mendoza,+Argentina/Malarg%C3%BCe,+Argentina/Chos+Malal,+Argentina/San+Carlos+de+Bariloche,+Argentina" target="_blank" class="text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 px-4 py-2 rounded-full font-bold transition-colors w-full sm:w-auto text-center shadow-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i> Abrir Rota Detalhada
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3 text-slate-600 text-sm md:text-base">
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 14</span> <span><strong class="text-slate-800">Mendoza ➔ Malargüe (ARG):</strong> Início da aventura pela icónica Ruta 40, com cenários mais áridos (~300 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 15</span> <span><strong class="text-slate-800">Malargüe ➔ Chos Malal (ARG):</strong> Estradas sinuosas e vistas espetaculares da pré-cordilheira (~350 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 16</span> <span><strong class="text-slate-800">Chos Malal ➔ Bariloche (ARG):</strong> Chegada triunfal à famosa região dos lagos andinos (~450 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 17</span> <span><strong class="text-slate-800">Bariloche (Dia Extra 1):</strong> Passeio de carro panorâmico pelo Circuito Chico e lagos.</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 18</span> <span><strong class="text-slate-800">Bariloche (Dia Extra 2):</strong> Subida no teleférico do Cerro Campanario e aproveitar os chocolates locais.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Fase 4 -->
+                <div id="fase4" class="fase-content hidden animation-fade">
+                    <h3 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4 flex justify-between items-center">
+                        <span>Carretera Austral</span>
+                        <span class="text-sm bg-slate-100 text-slate-500 px-3 py-1 rounded-full">Dias 19 a 27</span>
+                    </h3>
+
+                    <!-- Mapa Fase 4 -->
+                    <div class="mb-6 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                        <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?saddr=San+Carlos+de+Bariloche,+Argentina&daddr=Puerto+Río+Tranquilo,+Chile&output=embed" class="w-full grayscale-[20%] hover:grayscale-0 transition-all duration-500"></iframe>
+                        <div class="bg-slate-50 p-3 flex flex-col sm:flex-row justify-between items-center border-t border-slate-200 gap-3">
+                            <span class="text-sm text-slate-600 font-medium"><i class="fas fa-map-marked-alt text-amber-600 mr-1"></i> Rota Geral: Bariloche ➔ P. Río Tranquilo</span>
+                            <a href="https://www.google.com/maps/dir/San+Carlos+de+Bariloche,+Argentina/Puerto+Montt,+Chile/Chait%C3%A9n,+Chile/Puyuhuapi,+Chile/Coyhaique,+Chile/Puerto+R%C3%ADo+Tranquilo,+Chile" target="_blank" class="text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 px-4 py-2 rounded-full font-bold transition-colors w-full sm:w-auto text-center shadow-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i> Abrir Rota Detalhada
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3 text-slate-600 text-sm md:text-base">
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 19</span> <span><strong class="text-slate-800">Bariloche ➔ Puerto Montt (CHI):</strong> Cruzamento da fronteira via Passo Cardenal Samoré em direção ao Pacífico (~300 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 20</span> <span><strong class="text-slate-800">Puerto Montt (Dia Extra):</strong> Reabastecimento pesado de comida/água e almoço no Mercado de Angelmó.</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 21</span> <span><strong class="text-slate-800">Puerto Montt ➔ Chaitén (CHI):</strong> Início da Carretera Austral. Ritmo lento e travessias obrigatórias de balsa (~240 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 22</span> <span><strong class="text-slate-800">Chaitén ➔ Puyuhuapi (CHI):</strong> Muita estrada de terra (rípio), fiordes e florestas húmidas (~200 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 23</span> <span><strong class="text-slate-800">Puyuhuapi ➔ Coyhaique (CHI):</strong> Chegada à maior cidade da região de Aysén para reabastecimento (~230 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 24</span> <span><strong class="text-slate-800">Coyhaique (Dia Extra):</strong> Descanso crucial na maior cidade da Carretera Austral. Aproveite para reabastecimento completo, lavandaria e uma revisão geral do carro antes de seguir.</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 25</span> <span><strong class="text-slate-800">Coyhaique ➔ Puerto Río Tranquilo (CHI):</strong> Estrada margeando as águas azuis do Lago General Carrera (~220 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 26</span> <span><strong class="text-slate-800">Puerto Río Tranquilo (Dia Extra 1):</strong> Passeio de barco obrigatório até às Capillas de Mármol (Cavernas de Mármore).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 27</span> <span><strong class="text-slate-800">Puerto Río Tranquilo (Dia Extra 2):</strong> Dia livre para descansar do sacolejo das estradas de rípio.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Fase 5 -->
+                <div id="fase5" class="fase-content hidden animation-fade">
+                    <h3 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4 flex justify-between items-center">
+                        <span>Patagônia & Glaciares</span>
+                        <span class="text-sm bg-slate-100 text-slate-500 px-3 py-1 rounded-full">Dias 28 a 35</span>
+                    </h3>
+
+                    <!-- Mapa Fase 5 -->
+                    <div class="mb-6 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                        <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?saddr=Puerto+Río+Tranquilo,+Chile&daddr=El+Calafate,+Argentina&output=embed" class="w-full grayscale-[20%] hover:grayscale-0 transition-all duration-500"></iframe>
+                        <div class="bg-slate-50 p-3 flex flex-col sm:flex-row justify-between items-center border-t border-slate-200 gap-3">
+                            <span class="text-sm text-slate-600 font-medium"><i class="fas fa-map-marked-alt text-amber-600 mr-1"></i> Rota Geral: P. Río Tranquilo ➔ El Calafate</span>
+                            <a href="https://www.google.com/maps/dir/Puerto+R%C3%ADo+Tranquilo,+Chile/Los+Antiguos,+Argentina/Gobernador+Gregores,+Argentina/El+Chalt%C3%A9n,+Argentina/El+Calafate,+Argentina" target="_blank" class="text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 px-4 py-2 rounded-full font-bold transition-colors w-full sm:w-auto text-center shadow-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i> Abrir Rota Detalhada
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3 text-slate-600 text-sm md:text-base">
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 28</span> <span><strong class="text-slate-800">P. Río Tranquilo ➔ Los Antiguos (ARG):</strong> Retorno à Argentina contornando o imenso lago (~170 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 29</span> <span><strong class="text-slate-800">Los Antiguos ➔ Gobernador Gregores (ARG):</strong> A deserta Ruta 40 patagónica, com vento intenso e estepes (~400 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 30</span> <span><strong class="text-slate-800">Gobernador Gregores ➔ El Chaltén (ARG):</strong> Desvio da rota principal em direção às montanhas pontiagudas do Fitz Roy (~300 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 31</span> <span><strong class="text-slate-800">El Chaltén (Dia Extra 1):</strong> Trilhas fáceis adequadas para a família, como o Mirador de los Cóndores.</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 32</span> <span><strong class="text-slate-800">El Chaltén (Dia Extra 2):</strong> Explorar os cafés e a vida descontraída na capital argentina do trekking.</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 33</span> <span><strong class="text-slate-800">El Chaltén ➔ El Calafate (ARG):</strong> Trecho curto com excelente asfalto margeando lagos azul-turquesa (~220 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 34</span> <span><strong class="text-slate-800">El Calafate (Dia Extra 1):</strong> Visita inesquecível às passarelas do majestoso Glaciar Perito Moreno.</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 35</span> <span><strong class="text-slate-800">El Calafate (Dia Extra 2):</strong> Compras de lembranças, visita ao Glaciarium e preparação para cruzar novamente a fronteira.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Fase 6 -->
+                <div id="fase6" class="fase-content hidden animation-fade">
+                    <h3 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4 flex justify-between items-center">
+                        <span>O Desvio a Torres del Paine</span>
+                        <span class="text-sm bg-slate-100 text-slate-500 px-3 py-1 rounded-full">Dias 36 a 39</span>
+                    </h3>
+
+                    <!-- Mapa Fase 6 -->
+                    <div class="mb-6 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                        <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?saddr=El+Calafate,+Argentina&daddr=Parque+Nacional+Torres+del+Paine,+Chile&output=embed" class="w-full grayscale-[20%] hover:grayscale-0 transition-all duration-500"></iframe>
+                        <div class="bg-slate-50 p-3 flex flex-col sm:flex-row justify-between items-center border-t border-slate-200 gap-3">
+                            <span class="text-sm text-slate-600 font-medium"><i class="fas fa-map-marked-alt text-amber-600 mr-1"></i> Rota Geral: El Calafate ➔ Torres del Paine</span>
+                            <a href="https://www.google.com/maps/dir/El+Calafate,+Argentina/Puerto+Natales,+Chile/Parque+Nacional+Torres+del+Paine,+Chile" target="_blank" class="text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 px-4 py-2 rounded-full font-bold transition-colors w-full sm:w-auto text-center shadow-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i> Abrir Rota Detalhada
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3 text-slate-600 text-sm md:text-base">
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 36</span> <span><strong class="text-slate-800">El Calafate ➔ Puerto Natales (CHI):</strong> Cruzar a fronteira em Cerro Castillo e estabelecer base na cidade chilena (~270 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 37</span> <span><strong class="text-slate-800">Torres del Paine (Dia Extra 1):</strong> Conduzir da base até ao parque. Apreciar a vista icónica dos Cuernos del Paine e do Lago Pehoé.</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 38</span> <span><strong class="text-slate-800">Torres del Paine (Dia Extra 2):</strong> Explorar outras zonas do parque como a Laguna Amarga ou fazer pequenas caminhadas com a família antes de retornar a Natales.</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 39</span> <span><strong class="text-slate-800">Puerto Natales ➔ Río Gallegos (ARG):</strong> Retornar à Argentina, cruzando novamente a estepe, preparando-se para a descida final (~260 km).</span></li>
+                    </ul>
+                </div>
+
+                <!-- Fase 7 -->
+                <div id="fase7" class="fase-content hidden animation-fade">
+                    <h3 class="text-xl font-bold text-slate-800 border-b pb-3 mb-4 flex justify-between items-center">
+                        <span>O Fim do Mundo</span>
+                        <span class="text-sm bg-slate-100 text-slate-500 px-3 py-1 rounded-full">Dias 40 a 44</span>
+                    </h3>
+
+                    <!-- Mapa Fase 7 -->
+                    <div class="mb-6 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                        <iframe width="100%" height="250" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?saddr=Río+Gallegos,+Argentina&daddr=Ushuaia,+Argentina&output=embed" class="w-full grayscale-[20%] hover:grayscale-0 transition-all duration-500"></iframe>
+                        <div class="bg-slate-50 p-3 flex flex-col sm:flex-row justify-between items-center border-t border-slate-200 gap-3">
+                            <span class="text-sm text-slate-600 font-medium"><i class="fas fa-map-marked-alt text-amber-600 mr-1"></i> Rota Geral: Río Gallegos ➔ Ushuaia</span>
+                            <a href="https://www.google.com/maps/dir/R%C3%ADo+Gallegos,+Argentina/R%C3%ADo+Grande,+Argentina/Ushuaia,+Argentina" target="_blank" class="text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 px-4 py-2 rounded-full font-bold transition-colors w-full sm:w-auto text-center shadow-sm">
+                                <i class="fas fa-external-link-alt mr-1"></i> Abrir Rota Detalhada
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3 text-slate-600 text-sm md:text-base">
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 40</span> <span><strong class="text-slate-800">Río Gallegos ➔ Rio Grande (ARG):</strong> Dia complexo, cruzando para o Chile para a balsa do Estreito de Magalhães, e reentrando na Argentina na Terra do Fogo (~360 km).</span></li>
+                        <li class="flex gap-3"><span class="font-bold text-amber-600 min-w-[65px]">Dia 41</span> <span><strong class="text-slate-800">Rio Grande ➔ Ushuaia (ARG):</strong> A chegada! Travessia do Paso Garibaldi nas montanhas nevadas e descida até à cidade do fim do mundo (~210 km).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 42</span> <span><strong class="text-slate-800">Ushuaia (Dia Extra 1):</strong> Descanso e primeira caminhada pela beira-mar e centro comercial para celebrar o feito.</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 43</span> <span><strong class="text-slate-800">Ushuaia (Dia Extra 2):</strong> Visita ao Parque Nacional Tierra del Fuego e foto clássica na Placa final da Ruta 3 (Bahía Lapataia).</span></li>
+                        <li class="flex gap-3 bg-slate-50 p-2 rounded-lg border-l-2 border-amber-600"><span class="font-bold text-amber-600 min-w-[65px]">Dia 44</span> <span><strong class="text-slate-800">Ushuaia (Dia Extra 3):</strong> Navegação pelo Canal de Beagle para observar lobos-marinhos e o farol Les Eclaireurs. Fim da expedição de ida!</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB: DICAS -->
+        <section id="dicas" class="tab-content hidden">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-book-open text-amber-600"></i> Manual de Sobrevivência Patagónica
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Combustível e Dinheiro -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-amber-500">
+                    <div class="text-3xl mb-4 text-amber-500"><i class="fas fa-gas-pump"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Combustível & Dinheiro</h3>
+                    <p class="text-slate-600 mb-3"><strong>A regra de ouro:</strong> "Meio tanque é tanque vazio". Viu um posto YPF (Argentina) ou Copec (Chile)? Pare e complete.</p>
+                    <p class="text-slate-600">Postos isolados ficam sem internet frequentemente. Tenha sempre <strong>pesos em espécie</strong> suficientes para pagar 2 ou 3 tanques cheios.</p>
+                </div>
+
+                <!-- Condução no Rípio -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-slate-500">
+                    <div class="text-3xl mb-4 text-slate-500"><i class="fas fa-road"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Condução no Rípio (Cascalho)</h3>
+                    <p class="text-slate-600 mb-3">A velocidade ideal e segura no rípio é entre <strong>40 km/h e 60 km/h</strong>. Mais que isso o carro perde aderência e parece "flutuar".</p>
+                    <p class="text-slate-600">Ao cruzar com outro veículo, reduza drasticamente a velocidade e encoste à direita para evitar que pedras voadoras <strong>trinquem seu para-brisa</strong>.</p>
+                </div>
+
+                <!-- O Vento Patagónico -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-cyan-500">
+                    <div class="text-3xl mb-4 text-cyan-500"><i class="fas fa-wind"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">O Vento Patagónico</h3>
+                    <p class="text-slate-600 mb-3">Na estepe (principalmente na Ruta 40 sul), os ventos laterais podem balançar o carro violentamente.</p>
+                    <p class="text-slate-600">Segure o volante com as duas mãos sempre. <strong>Nunca freie bruscamente</strong> ou faça movimentos rápidos de direção se uma rajada te atingir.</p>
+                </div>
+
+                <!-- Viagem com Criança -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-500">
+                    <div class="text-3xl mb-4 text-green-500"><i class="fas fa-baby-carriage"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Kit Sobrevivência Infantil</h3>
+                    <p class="text-slate-600 mb-3">Distâncias longas podem significar imprevistos. Se um pneu furar, a troca no frio com vento demora.</p>
+                    <p class="text-slate-600">Mantenha na cabine (não no porta-malas fechado): 5 litros de água, cobertores extras, lanches, fraldas de sobra e brinquedos favoritos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: CHECKLIST -->
+        <section id="checklist" class="tab-content hidden">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+                <i class="fas fa-check-square text-amber-600"></i> Checklists da Viagem
+            </h2>
+            <p class="text-slate-500 mb-6">Os itens marcados aqui são salvos automaticamente no seu navegador.</p>
+
+            <div class="space-y-8">
+                <!-- Documentos Pessoais -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="bg-slate-800 text-white p-4 font-bold text-lg flex items-center gap-2">
+                        <i class="fas fa-id-card"></i> Documentos Pessoais (Para todos)
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-rg-passaporte" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">RG ou Passaporte</span>
+                                <span class="text-sm text-slate-500">RG emitido há menos de 10 anos, em bom estado (CNH NÃO vale para imigração).</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-certidao" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Certidão de Nascimento (Isaque)</span>
+                                <span class="text-sm text-slate-500">Original ou cópia autenticada para comprovar filiação, junto ao documento dele.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-cnh" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">CNH e PID</span>
+                                <span class="text-sm text-slate-500">CNH original válida (PID é opcional, mas recomendada).</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Documentos do Carro -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="bg-slate-800 text-white p-4 font-bold text-lg flex items-center gap-2">
+                        <i class="fas fa-file-contract"></i> Documentos do Veículo
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-crlv" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">CRLV (Documento do Carro)</span>
+                                <span class="text-sm text-slate-500">Impresso (preferencialmente verde) ou a versão em PDF impressa em boa qualidade.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-autorizacao" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Autorização de Saída (Se aplicável)</span>
+                                <span class="text-sm text-slate-500">Se o carro for financiado, alugado ou em nome de terceiros (com reconhecimento/Apostila de Haia).</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-carta-verde" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Seguro Carta Verde</span>
+                                <span class="text-sm text-slate-500">Obrigatório na Argentina. Imprimir a apólice.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-soapex" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Seguro SOAPEX</span>
+                                <span class="text-sm text-slate-500">Obrigatório no Chile. Comprar online antes da viagem e imprimir.</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Itens Obrigatórios no Carro -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="bg-slate-800 text-white p-4 font-bold text-lg flex items-center gap-2">
+                        <i class="fas fa-toolbox"></i> Equipamentos Obrigatórios (Exigência Policial)
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-triangulos" class="mt-1">
+                            <span class="font-bold text-slate-800">2 Triângulos de Sinalização</span>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-extintor" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Extintor de Incêndio (Na validade)</span>
+                                <span class="text-sm text-slate-500">Deve ser guardado dentro da cabine (fácil acesso), não no porta-malas.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-coletes" class="mt-1">
+                            <span class="font-bold text-slate-800">2 Coletes Refletivos (Motorista e passageiro)</span>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-primeiros-socorros" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Kit de Primeiros Socorros</span>
+                                <span class="text-sm text-slate-500">Gaze, ataduras, antisséptico, tesoura, fita micropore.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-cambao" class="mt-1">
+                            <span class="font-bold text-slate-800">Cambão (Barra de reboque rígida - recomendável)</span>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-pneus" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Kit Reparo de Pneu + Minicompressor</span>
+                                <span class="text-sm text-slate-500">Para pequenos furos no rípio, evita a troca imediata no frio.</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tecnologia e Comunicação -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="bg-slate-800 text-white p-4 font-bold text-lg flex items-center gap-2">
+                        <i class="fas fa-satellite-dish"></i> Tecnologia e Comunicação
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-starlink" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Antena Starlink (Internet via Satélite)</span>
+                                <span class="text-sm text-slate-500">Fundamental para manter a comunicação, consultar a meteorologia e acionar emergências nas extensas áreas isoladas da Patagónia sem rede móvel.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-energia-starlink" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Bateria Portátil (Power Station) e Cabos 12V</span>
+                                <span class="text-sm text-slate-500">Essencial para alimentar a Starlink de forma independente. Inclua os cabos/adaptadores para ligar a antena diretamente à bateria ou à tomada de 12V do carro (isqueiro).</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Equipamentos de Camping -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div class="bg-slate-800 text-white p-4 font-bold text-lg flex items-center gap-2">
+                        <i class="fas fa-campground"></i> Equipamentos de Camping
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-barraca" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Barraca, Sacos de Dormir e Isolante Térmico</span>
+                                <span class="text-sm text-slate-500">Barraca resistente a ventos fortes (ideal 3 ou 4 estações), sacos de dormir para frio extremo e isolantes térmicos confortáveis.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-fogareiro" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Fogareiro e Gás</span>
+                                <span class="text-sm text-slate-500">Fogareiro portátil (tipo campinggás), cartuchos de gás extras e um kit compacto de panelas.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-geladeira" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Geladeira 12V ou Cooler Térmico</span>
+                                <span class="text-sm text-slate-500">Essencial para conservar lanches, alimentos frescos e o leite do Isaque durante as travessias longas.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-iluminacao-camp" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Lanternas e Energia</span>
+                                <span class="text-sm text-slate-500">Lanternas de cabeça (livram as mãos para montar a barraca no escuro), pilhas e powerbanks extras.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors">
+                            <input type="checkbox" id="chk-utensilios-camp" class="mt-1">
+                            <div>
+                                <span class="font-bold text-slate-800 block">Utensílios e Higiene Básica</span>
+                                <span class="text-sm text-slate-500">Pratos/copos/talheres de acampamento, canivete multiuso, sacos de lixo grosso, papel higiênico e lenços umedecidos.</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Branded -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center mt-auto border-t-4 border-amber-600">
+        <h3 class="text-xl font-bold text-white mb-2">Indico ir!</h3>
+        <p>Acompanhe a nossa expedição em família no Instagram <a href="https://instagram.com/indicoir" target="_blank" class="text-amber-500 hover:text-amber-400">@indicoir</a>.</p>
+        <p class="text-sm mt-4 text-slate-500">© 2026 Roteiros Indico ir! • Dirija com segurança.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Função para alternar as abas principais (Roteiro, Dicas, Checklists)
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-amber-600', 'text-white', 'shadow-md');
+                el.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            });
+            
+            const targetContent = document.getElementById(tabId);
+            targetContent.classList.remove('hidden');
+            targetContent.classList.add('block');
+            
+            const targetBtn = document.getElementById('btn-' + tabId);
+            targetBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            targetBtn.classList.add('bg-amber-600', 'text-white', 'shadow-md');
+        }
+
+        // Função para alternar as sub-abas das Fases do Roteiro
+        function switchFase(faseId) {
+            document.querySelectorAll('.fase-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            
+            document.querySelectorAll('.fase-btn').forEach(el => {
+                el.classList.remove('bg-amber-600', 'text-white', 'shadow-md');
+                el.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            });
+            
+            const targetContent = document.getElementById(faseId);
+            targetContent.classList.remove('hidden');
+            targetContent.classList.add('block');
+            
+            const targetBtn = document.getElementById('btn-' + faseId);
+            targetBtn.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+            targetBtn.classList.add('bg-amber-600', 'text-white', 'shadow-md');
+        }
+
+        // Lógica para Salvar/Carregar o estado dos Checkboxes usando LocalStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            
+            checkboxes.forEach(box => {
+                const savedState = localStorage.getItem('expedicao_' + box.id);
+                if(savedState === 'true') {
+                    box.checked = true;
+                }
+                
+                box.addEventListener('change', (e) => {
+                    localStorage.setItem('expedicao_' + box.id, e.target.checked);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
