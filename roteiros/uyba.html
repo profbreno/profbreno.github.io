@@ -31,21 +31,38 @@
     </style>
 </head>
 <body class="bg-slate-50 text-slate-700">
+        <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
 
+        <!-- Faixa superior com bg_topo em largura total -->
+        <div class="absolute left-0 right-0 top-[80px] h-2 bg-white z-20 shadow-md"></div>
+        <div class="relative min-h-[80px]">
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('img/bg_topo.png');"></div>
+            <div class="absolute inset-0 bg-slate-900/20"></div>
+            
+            <div class="max-w-4xl mx-auto px-4 relative z-30 min-h-[80px] flex items-end justify-between gap-6">
+                <!-- Logo -->
+                <div class="flex-shrink-0 -mb-16">
+                    <img src="img/logo.png" alt="Indico ir!" class="w-32 h-32 rounded-full border-slate-800 shadow-lg bg-white">
+                </div>
+
+                <!-- Rede Social -->
+                <div class="flex-shrink-0 mb-4">
+                    <a href="https://instagram.com/indicoir" target="_blank" class="inline-flex items-center gap-2 bg-slate-800/80 hover:bg-slate-700 px-5 py-2 rounded-full text-amber-400 font-medium transition duration-300 text-sm backdrop-blur-sm border border-slate-600 shadow-sm">
+                        <i class="fab fa-instagram text-lg"></i> @indicoir
+                    </a>
+                </div>
+            </div>
+        </div>
+    
     <!-- Hero Section -->
     <header class="bg-gradient-to-r from-blue-700 to-blue-500 text-white pb-24 pt-10 px-6 rounded-b-[3rem] shadow-lg">
+        
         <div class="max-w-4xl mx-auto text-center">
             <div class="inline-block bg-yellow-400 text-blue-900 font-bold px-4 py-1 rounded-full text-sm mb-4 shadow-sm text-blue-900 uppercase tracking-wider">
                 <i class="fas fa-plane"></i> 04 a 15 de Novembro de 2026
             </div>
             <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-white">Uruguai & Buenos Aires</h1>
             <p class="text-xl opacity-90 font-light italic text-white">"O conforto do bebé em primeiro lugar"</p>
-            
-            <!-- Flight Quick Info -->
-            <div class="mt-6 inline-flex items-center gap-3 bg-white/20 backdrop-blur-md px-4 py-2 rounded-xl text-sm">
-                <i class="fas fa-ticket-alt"></i>
-                <span>Reserva Azul: <strong class="text-yellow-300">123456</strong></span>
-            </div>
         </div>
     </header>
 
