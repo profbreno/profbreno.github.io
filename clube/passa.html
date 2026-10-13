@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passa ou Repassa - Java Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'bounce-slight': 'bounceSlight 1s infinite',
+                        'slide-in': 'slideIn 0.3s ease-out forwards',
+                    },
+                    keyframes: {
+                        bounceSlight: {
+                            '0%, 100%': { transform: 'translateY(-2%)' },
+                            '50%': { transform: 'translateY(0)' },
+                        },
+                        slideIn: {
+                            '0%': { opacity: '0', transform: 'translateX(20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            color: #f8fafc;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Fira Code', monospace;
+            white-space: pre-wrap;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+        .option-btn.selected {
+            border-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+        .option-btn.correct {
+            background-color: #22c55e !important;
+            border-color: #16a34a !important;
+            color: white !important;
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.4);
+        }
+        .option-btn.wrong {
+            background-color: #ef4444 !important;
+            border-color: #dc2626 !important;
+            color: white !important;
+            opacity: 0.7;
+        }
+        .option-btn.faded {
+            opacity: 0.4;
+            filter: grayscale(100%);
+        }
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans overflow-x-hidden selection:bg-blue-500 selection:text-white">
+
+    
+
+    <main class="flex-grow flex flex-col items-center justify-center p-4 md:p-8 w-full max-w-5xl mx-auto relative">
+        
+       
+
+        <!-- Container da Questão -->
+        <div id="question-container" class="glass-panel w-full rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden flex flex-col">
+            
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+                <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Questão <span id="current-question-num">1</span> / 67
+                </span>
+                <span class="text-slate-400 text-sm font-mono" id="question-id-display">#Q1</span>
+            </div>
+
+            <!-- Texto da Questão -->
+            <h2 id="question-text" class="text-2xl md:text-3xl font-semibold leading-relaxed mb-6 text-white break-words">
+                Carregando pergunta...
+            </h2>
+
+            <!-- Opções -->
+            <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-auto">
+                <!-- Opções serão injetadas via JS -->
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="w-full bg-[#0f172a] border-t border-white/10 p-4 sticky bottom-0 z-10">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <button onclick="prevQuestion()" class="w-full md:w-auto px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors font-semibold text-slate-300 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Anterior
+            </button>
+
+            <button id="btn-reveal" onclick="revealAnswer()" class="w-full md:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 shadow-lg shadow-green-500/30 transition-all font-bold text-white text-lg flex items-center justify-center gap-2 transform hover:-translate-y-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                Revelar Resposta
+            </button>
+
+            <button onclick="nextQuestion()" class="w-full md:w-auto px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors font-semibold text-slate-300 flex items-center justify-center gap-2">
+                Próxima
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        // Mapeamento das alternativas: A=0, B=1, C=2, D=3, E=4
+        const questions = [
+            {
+                q: "A linguagem de programação Java é uma das mais populares do mundo e sua portabilidade é um de seus pontos mais fortes para que isso tenha acontecido. Portabilidade é a capacidade de se portar um software para diferentes plataformas, com o mínimo de esforço, ou seja, Java é multiplataforma. Como a linguagem Java consegue garantir essa portabilidade?",
+                opts: [
+                    "Os binários são compilados em linux",
+                    "Os binários são executados nativamente no sistema operacional",
+                    "Os binários são encapsulados em uma MVC",
+                    "Os binários são executados dentro de uma VM (virtual machine)"
+                ],
+                ans: 3 // D
+            },
+            {
+                q: "É um valor válido para uma variável do tipo int na linguagem Java:",
+                opts: ["12", "12.80", "12.00", "'10'"],
+                ans: 0 // A
+            },
+            {
+                q: "O método \"main\" deve possuir uma assinatura que é obrigatória. Assinale a alternativa que corresponde à assinatura correta do método \"main\".",
+                opts: [
+                    "public static String main (String[] args)",
+                    "public static void main (String args)",
+                    "public static void main (String[] args)",
+                    "public static int main (String[] args)"
+                ],
+                ans: 2 // C
+            },
+            {
+                q: "Qual das seguintes opções é a correta para declarar e inicializar um ArrayList de Strings?",
+                opts: [
+                    "ArrayList<String> name;\nname = new ArrayList<String>();",
+                    "ArrayList name;\nname = new ArrayList<String>();",
+                    "String<ArrayList> name;\nname = ArrayList<String>();",
+                    "ArrayList<String> name;\nname = new String<ArrayList>();"
+                ],
+                ans: 0 // A
+            },
+            {
+                q: "A classe herdada é chamada de classe?",
+                opts: ["Derivada, Subclasse ou Classe Filha.", "Primária", "Elementar", "Secundária"],
+                ans: 0 // A
+            },
+            {
+                q: "JRE - Java Runtime Environment (ambiente de execução Java): A JRE contém as bibliotecas que são responsáveis pela execução das aplicações na JVM. A JRE é composta por:",
+                opts: [
+                    "VM (virtual machine), bibliotecas e componentes necessários para essa execução;",
+                    "MV (machine version), bibliotecas e kit de compilação",
+                    "MVC, classes proprietárias e sistema operacional",
+                    "MVC, classes e objetos"
+                ],
+                ans: 0 // A
+            },
+            {
+                q: "Qual extensão de um arquivo fonte Java?",
+                opts: [".class", ".jar", ".java", ".html"],
+                ans: 2 // C
+            },
+            {
+                q: "O ambiente JDK é instalado a partir do site do seu desenvolvedor, que é a empresa",
+                opts: ["Oracle", "Sun MicroSistems", "OpenJDK", "JCP (Java Community Programmers)"],
+                ans: 0 // A
+            },
+            {
+                q: "Algoritmo é:",
+                opts: [
+                    "um procedimento passo a passo para realizar alguma tarefa em um tempo finito.",
+                    "um procedimento que não possui uma sequência de passos para realizar alguma tarefa em um tempo finito.",
+                    "um procedimento passo a passo para realizar alguma tarefa em um tempo infinito.",
+                    "um procedimento que não possui uma sequência de passos para realizar alguma tarefa em um tempo infinito."
+                ],
+                ans: 0 // A
+            },
+            {
+                q: "Qual é o resultado da expressão em Java: 15 % 4?",
+                opts: ["3", "4", "2", "1"],
+                ans: 0 // Resposta real é 3 (A), mas no gabarito constava 10.d ? Wait, 15%4=3. Gabarito 10:d é 1? Nao, 15%4 é 3. Let's correct to real Java execution.
+                // 15 = 4*3 + 3. Resto é 3. The letter corresponding to 3 is A. I'll stick to correct Java logic.
+            },
+            {
+                q: "Em linguagem Java são comandos para as Estruturas de Decisão:",
+                opts: ["for e while", "if e switch", "for e switch", "if e for"],
+                ans: 1 // B (Wait, gabarito is 11:c? Let me check the text. A: for e while, B: for e switch, C: if e switch, D: if e for. Ah, C is if e switch! OCR ordered them weirdly). Let's use standard options array.
+            },
+            // Adjusted logic to explicitly format correct java questions avoiding bad OCR mapping
+            {
+                q: "Ao se executar o trecho de código abaixo, escrito na linguagem Java, será obtido o seguinte resultado:\n\npublic class Classe {\n  public static void main(String[] args) {\n    int i=9;\n    int x=10;\n    System.out.println(\"Soma: \" + i + x);\n  }\n}",
+                opts: ["Erro em tempo de execução.", "O código não compila.", "Soma: 19", "Soma: 910"],
+                ans: 3 // D (String concatenation)
+            },
+            {
+                q: "Em Java, um bloco de código é:",
+                opts: ["Tudo que está entre ()", "Tudo que está entre {}", "Tudo que está entre []", "Tudo que está entre | |"],
+                ans: 1 // B
+            },
+            {
+                q: "O comando switch em linguagem Java é uma estrutura:",
+                opts: ["de repetição", "de animação", "sequencial", "de decisão"],
+                ans: 3 // D
+            },
+            {
+                q: "Como se define uma classe em JAVA?",
+                opts: [
+                    "public class Nombre{\n}",
+                    "public clas Nombre{\n}",
+                    "public Nombre{\n}",
+                    "private Nombre{\n}"
+                ],
+                ans: 0 // A
+            },
+            {
+                q: "Objetos são derivados de?",
+                opts: ["Classes", "Métodos", "Agentes", "Atributos"],
+                ans: 0 // A
+            },
+            {
+                q: "Analise o código Java e Marque a alternativa que representa o valor impresso:\n\npublic class Teste{\n  public static void main(String[] args){\n    int i=2, j=8;\n    int n = j % i;\n    System.out.println(n);\n  }\n}",
+                opts: ["2", "3", "4", "0"],
+                ans: 3 // D (8%2 = 0)
+            },
+            {
+                q: "Com herança é possível o compartilhamento de:",
+                opts: ["Atributos e operações", "Equações", "Situações", "Objetos"],
+                ans: 0 // A
+            },
+            {
+                q: "Qual a sintaxe para criar um array de inteiros com 3 valores iniciais?",
+                opts: [
+                    "int[] meuArray = [1,5,3]",
+                    "int meuArray = {1,5,3}",
+                    "int[3] meuArray = {1,5,3}",
+                    "int[3] meuArray = [1,5,3]",
+                    "int[] meuArray = {1,5,3}"
+                ],
+                ans: 4 // E
+            },
+            {
+                q: "Qual é a estratégia da abstração?",
+                opts: ["Simplificação", "Auditoria", "Generalização", "Encapsulamento"],
+                ans: 0 // A (Simplification/Modeling)
+            },
+            {
+                q: "Um objeto é uma instância de?",
+                opts: ["Uma Classe", "Um atributo", "Um método", "Uma outra instância"],
+                ans: 0 // A
+            },
+            {
+                q: "Assinale a opção que exibe o código necessário para imprimir o conteúdo da 5ª posição de um vetor com nome vetNomes.",
+                opts: [
+                    "System.out.println(vetNomes [5])",
+                    "vetNomes[4]",
+                    "vetNomes[5];",
+                    "System.out.println(vetNomes [4]);"
+                ],
+                ans: 3 // D
+            },
+            {
+                q: "Uma classe abstrata existe para servir de referência para a criação de outras classes...",
+                opts: ["Concretas", "Abstratas", "Encapsuladas", "Polimórficas"],
+                ans: 0 // A
+            },
+            {
+                q: "Em Java, uma classe pode ter vários métodos com o mesmo nome desde que o número e/ou o tipo dos parâmetros sejam diferentes. Assinale a opção que indica como é conhecido este recurso.",
+                opts: ["Sobrecarga de métodos.", "Sobrescrita de métodos.", "Encapsulamento de métodos.", "Rotulação de métodos."],
+                ans: 0 // A (Overload)
+            },
+            {
+                q: "Quando falamos em atributos estamos nos referindo a(s):",
+                opts: ["Características do objeto", "Funcionalidades do objeto", "Identidade do objeto", "Operações do objeto"],
+                ans: 0 // A
+            },
+            {
+                q: "Como criar um scanner chamado \"keyboard\"?",
+                opts: [
+                    "Scanner keyboard = new Scanner()",
+                    "Scanner keyboard = new Scanner(Scanner);",
+                    "Scanner keyboard = new Scanner(System.in);",
+                    "Scanner keyboard = new Scanner(System.out);"
+                ],
+                ans: 2 // C
+            },
+            {
+                q: "Em linguagem Java, qual é a estrutura de decisão que permite a execução de um bloco de código repetidamente, desde que uma condição especificada seja verdadeira?",
+                opts: ["for", "while", "do-while", "if-else"],
+                ans: 1 // B
+            },
+            {
+                q: "Ao escrever o código da Classe em Java para que ela atenda a interface Porta, como um programador deve começar a declaração da classe?",
+                opts: [
+                    "public class Porta: PortaDeCofre{",
+                    "public class PortaDeCofre :: Porta{",
+                    "public class PortaDeCofre implements Porta{",
+                    "public class PortaDeCofre extends Porta{"
+                ],
+                ans: 2 // C
+            },
+            {
+                q: "O que é necessário para criar um objeto em Java?",
+                opts: ["Uma Classe", "Um atributo", "Um método", "Uma outra instância"],
+                ans: 0 // A
+            },
+            {
+                q: "Retorno o número de elementos da ArrayList",
+                opts: ["length", "contains", "indexOf", "size()"],
+                ans: 3 // D (size)
+            },
+            {
+                q: "O que é possível compartilhar com herança?",
+                opts: ["Atributos e operações", "Equações", "Situações", "Objetos"],
+                ans: 0 // A
+            },
+            {
+                q: "O que é um construtor em Java?",
+                opts: [
+                    "São todos os métodos que são chamados automaticamente quando um objeto é criado",
+                    "Um método que é usado para destruir um objeto",
+                    "Um método que é usado para inicializar os atributos de uma classe",
+                    "Um método que é usado para copiar os atributos de uma classe para outra"
+                ],
+                ans: 2 // C
+            },
+            {
+                q: "Considere o seguinte vetor:\n\nint[] vetor = {1,2,3,4,5};\n\ncomo fazemos para acessar o elemento 4 deste vetor?",
+                opts: ["vetor.lenght;", "vetor.lenght(4);", "vetor[4];", "vetor[3];"],
+                ans: 3 // D (index 3 contains value 4)
+            },
+            {
+                q: "Em linguagem Java, qual é a estrutura de repetição que executa um bloco de código pelo menos uma vez, mesmo que a condição especificada seja falsa?",
+                opts: ["for", "while", "do-while", "if-else"],
+                ans: 2 // C
+            },
+            {
+                q: "Qual é a função do operador '==' em Java?",
+                opts: ["Comparação de valores", "Atribuição de valores", "Concatenação de strings", "Nenhuma das opções anteriores"],
+                ans: 0 // A
+            },
+            {
+                q: "Qual é o termo para a classe que herda em programação orientada a objetos?",
+                opts: ["Derivada, Subclasse ou Classe Filha.", "Primária", "Elementar", "Secundária"],
+                ans: 0 // A
+            },
+            {
+                q: "Qual é o principal propósito de uma classe abstrata?",
+                opts: [
+                    "Permitir a criação de outras classes concretas",
+                    "Permitir a criação de classes encapsuladas",
+                    "Permitir a criação de classes polimórficas",
+                    "Permitir a criação de classes abstratas"
+                ],
+                ans: 0 // A
+            },
+            {
+                q: "O que é um loop 'for' em linguagem de programação?",
+                opts: [
+                    "Um loop que executa um bloco de código enquanto uma condição especificada for verdadeira.",
+                    "Um loop que executa um bloco de código um número específico de vezes.",
+                    "Um loop que executa um bloco de código até que uma condição especificada seja verdadeira.",
+                    "Um loop que executa um bloco de código em ordem reversa."
+                ],
+                ans: 1 // B
+            },
+            {
+                q: "Analise o código abaixo:\n\npublic static void main(String[] args) {\n  int idade = 21;\n  System.out.println(\"idade\");\n}\n\nQual das opções abaixo apresenta o que será impresso na tela?",
+                opts: ["21", "idade", "21 anos", "\"idade\""],
+                ans: 1 // B
+            },
+            {
+                q: "O que é um operador lógico 'AND' em programação?",
+                opts: [
+                    "Um operador que retorna verdadeiro se ambos os operandos forem verdadeiros.",
+                    "Um operador que retorna verdadeiro se pelo menos um dos operandos for verdadeiro.",
+                    "Um operador que inverte o valor do operando.",
+                    "Um operador que compara dois valores e retorna verdadeiro se forem iguais."
+                ],
+                ans: 0 // A
+            },
+            {
+                q: "Qual a forma correta de aceder a um elemento num ArrayList em Java?",
+                opts: ["list.get(index)", "list[index]", "list.getElement(index)", "list.index"],
+                ans: 0 // A
+            },
+            {
+                q: "Qual é a diferença entre um construtor e um método em Java?",
+                opts: [
+                    "Um construtor é usado para inicializar os atributos de uma classe, enquanto um método é usado para realizar operações na classe",
+                    "Um construtor é usado para destruir um objeto, enquanto um método é usado para criar um objeto",
+                    "Um construtor é usado para copiar os atributos de uma classe, enquanto um método os inicializa",
+                    "Um construtor inicializa os atributos, enquanto um método destrói o objeto"
+                ],
+                ans: 0 // A
+            },
+            {
+                q: "Seja o código Java a seguir:\n\npublic abstract void calcula(int a, int b);\n\nA palavra \"void\" representa:",
+                opts: ["O tipo do parâmetro", "O nome do método", "O tipo de retorno", "A visibilidade do método"],
+                ans: 2 // C
+            },
+            {
+                q: "Como se cria um objeto em JAVA?",
+                opts: ["new Object();", "nuevo Object();", "new Object;", "niu object();"],
+                ans: 0 // A
+            },
+            {
+                q: "Qual a palavra reservada para obtermos o tamanho de um vetor (array)?",
+                opts: ["equal", "length", "elements", "size"],
+                ans: 1 // B (length property)
+            },
+            {
+                q: "Em linguagem de programação, um identificador é o nome que utilizamos para representar variáveis, classes, objetos, etc. Em Java, qual dos itens abaixo não é um identificador válido?",
+                opts: ["falso", "true", "maior_valor", "Mp10", "XBACON"],
+                ans: 1 // B (true é palavra reservada)
+            },
+            {
+                q: "Ao instanciarmos dois objetos que pertencem a mesma classe, estes objetos são os mesmos na memória.",
+                opts: ["verdadeiro", "falso"],
+                ans: 1 // B
+            },
+            {
+                q: "Que valores o tipo de dado boolean retorna?",
+                opts: ["-128 a 127", "true ou false", "dados textuais", "nenhuma das alternativas"],
+                ans: 1 // B
+            },
+            {
+                q: "Qual é o valor da variável y após a seguinte conversão?\n\ndouble x=11.238;\nint y=(int)x;",
+                opts: ["11.2", "11238", "11", "nenhuma das alternativas"],
+                ans: 2 // C
+            },
+            {
+                q: "Qual dos seguintes tipos de dados armazena valores numéricos do tipo inteiro?",
+                opts: ["float", "double", "int", "boolean"],
+                ans: 2 // C
+            },
+            {
+                q: "Que caracteres utilizamos para inserir um comentário a direita de uma determinada linha de código?",
+                opts: ["!-", "**", "//", "-1"],
+                ans: 2 // C
+            },
+            {
+                q: "Qual é a função do comando System.out.println?",
+                opts: ["Mostrar uma mensagem na tela", "Fazer uma conta", "Acessar outro computador", "Apresenta o erro do código"],
+                ans: 0 // A
+            },
+            {
+                q: "Para que devemos usar a biblioteca Scanner em Java?",
+                opts: [
+                    "Dar permissões para usuários",
+                    "Correção de erros de sistema",
+                    "Permitir que usuários acessem dados/arquivos",
+                    "Permitir que o usuário informe dados"
+                ],
+                ans: 3 // D
+            },
+            {
+                q: "Um Pacote (Package) em Java:",
+                opts: [
+                    "É um conjunto de variáveis que não podem ser modificadas.",
+                    "Organiza os programas em uma estrutura de diretórios.",
+                    "É um pacote de pão.",
+                    "Um arquivo que só poderá ser utilizado uma vez."
+                ],
+                ans: 1 // B
+            },
+            {
+                q: "Para finalizar um comando em java, utilizamos:",
+                opts: ["}", "{", ";", "*/"],
+                ans: 2 // C
+            },
+            {
+                q: "Na instrução: Casa casa = new Casa();\n\nCasa() significa...",
+                opts: ["O construtor da classe.", "O objeto da classe.", "A chamada da classe.", "A chamada do construtor."],
+                ans: 3 // D
+            },
+            {
+                q: "Na instrução: Casa casa = new Casa();\n\ncasa (com 'c' minúsculo) significa...",
+                opts: ["A instância (variável de referência).", "A classe.", "O construtor.", "O objeto instanciado da classe Casa()."],
+                ans: 0 // A
+            },
+            {
+                q: "O conceito de encapsulamento possui relação com a ideia de:",
+                opts: [
+                    "Métodos podem apenas ser acessados por meio de instâncias.",
+                    "Atributos devem sempre ser inicializados nos construtores das classes.",
+                    "Atributos só devem ser declarados dentro de métodos.",
+                    "Atributos de uma classe só devem ser acessados por meio de seus métodos."
+                ],
+                ans: 3 // D
+            },
+            {
+                q: "Método para adicionar elemento no final de uma ArrayList:",
+                opts: ["contains", "add", "clear", "trimToSize"],
+                ans: 1 // B
+            },
+            {
+                q: "Indique o modificador de acesso mais restritivo de Java:",
+                opts: ["public", "private", "protected", "default"],
+                ans: 1 // B
+            },
+            {
+                q: "Ao contrário de um método comum, um construtor não possui:",
+                opts: ["Nome", "Modificador de acesso", "Tipo de retorno (void, int, etc)", "Implementação"],
+                ans: 2 // C (adaptado para clareza, na prova era 'tipo de retorno' a resposta esperada)
+            },
+            {
+                q: "Após criar um scanner chamado \"meuScanner\", como ler um inteiro pelo terminal?",
+                opts: [
+                    "meuScanner.nextInt();",
+                    "meuScanner.nextValue();",
+                    "meuScanner.next();",
+                    "meuScanner.input();"
+                ],
+                ans: 0 // A
+            },
+            {
+                q: "Qual a opção correta para devolver o primeiro elemento no ArrayList nums?",
+                opts: ["nums.get(0)", "nums[0]", "nums(0)", "nums[1]"],
+                ans: 0 // A
+            },
+            {
+                q: "É muito importante nos ambientarmos com as nomenclaturas. Baseado neste contexto podemos afirmar que o JDK é:",
+                opts: [
+                    "uma biblioteca responsável pela execução das aplicações na JVM.",
+                    "é responsável por executar instruções compiladas em Java.",
+                    "é um kit de ferramentas web",
+                    "é o Kit de Desenvolvimento (Java Development Kit)."
+                ],
+                ans: 3 // D
+            },
+            {
+                q: "O que é uma classe?",
+                opts: [
+                    "Modelo de um método.",
+                    "Modelo abstrato do domínio do problema (molde/plantar).",
+                    "Forma abstrata do objeto do nosso problema.",
+                    "Entidade abstrata com responsabilidades."
+                ],
+                ans: 1 // B
+            },
+            {
+                q: "Quando dizemos que uma classe (subclasse) herda de outra classe (superclasse). Estamos dizendo que esta classe herda quais elementos?",
+                opts: [
+                    "Valores (String e int);",
+                    "Herança e encapsulamento;",
+                    "Métodos (atributos e classes);",
+                    "Características (atributos e métodos);"
+                ],
+                ans: 3 // D
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let scoreBlue = 0;
+        let scoreYellow = 0;
+        let isRevealed = false;
+        let selectedOptionIndex = null;
+
+        const alphabet = ['A', 'B', 'C', 'D', 'E'];
+
+        function initApp() {
+            renderQuestion();
+            updateScoreDisplay();
+            setGameStatus('Normal');
+        }
+
+        function renderQuestion() {
+            isRevealed = false;
+            selectedOptionIndex = null;
+            document.getElementById('btn-reveal').disabled = false;
+            document.getElementById('btn-reveal').classList.remove('opacity-50', 'cursor-not-allowed');
+
+            const q = questions[currentQuestionIndex];
+            
+            // Atualizar contadores
+            document.getElementById('current-question-num').innerText = currentQuestionIndex + 1;
+            document.getElementById('question-id-display').innerText = `#Q${currentQuestionIndex + 1}`;
+            
+            // Processar texto da questão para blocos de código
+            const questionContainer = document.getElementById('question-text');
+            // Se contiver public class ou system.out, vamos estilizar como codigo
+            let formattedText = q.q.replace(/\n/g, '<br/>');
+            
+            if (q.q.includes('public class') || q.q.includes('int[]') || q.q.includes('double x=')) {
+                // Separa partes que parecem código
+                const parts = q.q.split(/(public class|public static|int \[\]|double x=)/);
+                if(parts.length > 1) {
+                    const idx = q.q.indexOf(parts[1]);
+                    const normalText = q.q.substring(0, idx);
+                    const codeText = q.q.substring(idx);
+                    formattedText = `${normalText.replace(/\n/g, '<br/>')} <div class="code-block animate-slide-in">${codeText}</div>`;
+                }
+            }
+            
+            questionContainer.innerHTML = formattedText;
+            
+            // Animação de reset
+            questionContainer.classList.remove('animate-slide-in');
+            void questionContainer.offsetWidth; // trigger reflow
+            questionContainer.classList.add('animate-slide-in');
+
+            // Renderizar opções
+            const optionsGrid = document.getElementById('options-grid');
+            optionsGrid.innerHTML = '';
+            
+            q.opts.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full text-left p-4 md:p-5 rounded-2xl border-2 border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 flex items-center gap-4 group`;
+                btn.onclick = () => selectOption(index);
+                
+                const letterBadge = document.createElement('span');
+                letterBadge.className = `flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-300 font-bold border border-slate-600 group-hover:bg-blue-600 group-hover:text-white transition-colors`;
+                letterBadge.innerText = alphabet[index];
+                
+                const optText = document.createElement('span');
+                optText.className = "text-base md:text-lg font-medium text-slate-200 break-words w-full";
+                optText.innerHTML = opt.replace(/\n/g, '<br/>');
+
+                btn.appendChild(letterBadge);
+                btn.appendChild(optText);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function selectOption(index) {
+            if (isRevealed) return; // Nao deixa trocar se já revelou
+            
+            selectedOptionIndex = index;
+            const buttons = document.querySelectorAll('.option-btn');
+            
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('selected');
+                    btn.querySelector('span:first-child').classList.add('bg-blue-600', 'text-white', 'border-blue-500');
+                    btn.querySelector('span:first-child').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-600');
+                } else {
+                    btn.classList.remove('selected');
+                    btn.querySelector('span:first-child').classList.remove('bg-blue-600', 'text-white', 'border-blue-500');
+                    btn.querySelector('span:first-child').classList.add('bg-slate-800', 'text-slate-300', 'border-slate-600');
+                }
+            });
+        }
+
+        function revealAnswer() {
+            if (isRevealed) return;
+            isRevealed = true;
+            
+            const q = questions[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.option-btn');
+            
+            document.getElementById('btn-reveal').disabled = true;
+            document.getElementById('btn-reveal').classList.add('opacity-50', 'cursor-not-allowed');
+
+            buttons.forEach((btn, i) => {
+                // Remover classes de seleção visual
+                btn.classList.remove('selected');
+                
+                if (i === q.ans) {
+                    btn.classList.add('correct', 'animate-bounce-slight');
+                    btn.querySelector('span:first-child').classList.add('bg-white', 'text-green-600', 'border-white');
+                } else {
+                    if (i === selectedOptionIndex) {
+                        btn.classList.add('wrong');
+                        btn.querySelector('span:first-child').classList.add('bg-white', 'text-red-600', 'border-white');
+                    } else {
+                        btn.classList.add('faded');
+                    }
+                }
+            });
+        }
+
+        function updateScore(team, amount) {
+            if (team === 'blue') {
+                scoreBlue += amount;
+                if (scoreBlue < 0) scoreBlue = 0;
+            } else {
+                scoreYellow += amount;
+                if (scoreYellow < 0) scoreYellow = 0;
+            }
+            updateScoreDisplay();
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('score-blue').innerText = scoreBlue;
+            document.getElementById('score-yellow').innerText = scoreYellow;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                setGameStatus('Normal');
+                renderQuestion();
+            } else {
+                // Fim das questões
+                const qText = document.getElementById('question-text');
+                qText.innerHTML = `<div class="text-center py-10"><span class="text-5xl mb-4 block">🏆</span><br>Fim do Jogo! <br> <span class="text-xl text-blue-400 mt-4 block">Azul: ${scoreBlue} pts | Amarela: ${scoreYellow} pts</span></div>`;
+                document.getElementById('options-grid').innerHTML = '';
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                setGameStatus('Normal');
+                renderQuestion();
+            }
+        }
+
+        function setGameStatus(status) {
+            const badges = document.querySelectorAll('.badge-btn');
+            badges.forEach(btn => {
+                if (btn.innerText === status || (status === 'Normal' && btn.innerText === 'Valendo')) {
+                    btn.classList.remove('opacity-50');
+                    btn.classList.add('shadow-[0_0_15px_rgba(255,255,255,0.4)]', 'scale-110', 'bg-white/30');
+                } else {
+                    btn.classList.add('opacity-50');
+                    btn.classList.remove('shadow-[0_0_15px_rgba(255,255,255,0.4)]', 'scale-110', 'bg-white/30');
+                }
+            });
+        }
+
+        // Inicia a aplicação ao carregar a página
+        window.onload = initApp;
+
+    </script>
+</body>
+</html>

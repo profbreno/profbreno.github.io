@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passa ou Repassa - Python Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'bounce-slight': 'bounceSlight 1s infinite',
+                        'slide-in': 'slideIn 0.3s ease-out forwards',
+                    },
+                    keyframes: {
+                        bounceSlight: {
+                            '0%, 100%': { transform: 'translateY(-2%)' },
+                            '50%': { transform: 'translateY(0)' },
+                        },
+                        slideIn: {
+                            '0%': { opacity: '0', transform: 'translateX(20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            color: #f8fafc;
+        }
+        .bg-burst {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 12% 15%, rgba(34, 197, 94, 0.22), transparent 32%),
+                radial-gradient(circle at 88% 12%, rgba(59, 130, 246, 0.24), transparent 30%),
+                radial-gradient(circle at 50% 80%, rgba(251, 191, 36, 0.18), transparent 38%);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Fira Code', monospace;
+            white-space: pre-wrap;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+            line-height: 1.55;
+            box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.2);
+            overflow-x: auto;
+        }
+        .code-block code {
+            display: block;
+            font-size: 0.92rem;
+        }
+        .option-code {
+            display: block;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        .option-btn.selected {
+            border-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+        .option-btn.correct {
+            background-color: #22c55e !important;
+            border-color: #16a34a !important;
+            color: white !important;
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.4);
+        }
+        .option-btn.wrong {
+            background-color: #ef4444 !important;
+            border-color: #dc2626 !important;
+            color: white !important;
+            opacity: 0.7;
+        }
+        .option-btn.faded {
+            opacity: 0.4;
+            filter: grayscale(100%);
+        }
+        .home-title {
+            text-shadow: 0 8px 26px rgba(0, 0, 0, 0.45);
+        }
+        .pulse-java {
+            animation: pulseJava 2.8s ease-in-out infinite;
+        }
+        @keyframes pulseJava {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-6px) scale(1.03); }
+        }
+        .pie-splash {
+            animation: splash 3.1s ease-in-out infinite;
+            transform-origin: center;
+        }
+        @keyframes splash {
+            0%, 100% { transform: rotate(-2deg) translateY(0px); }
+            50% { transform: rotate(3deg) translateY(-8px); }
+        }
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+
+        .draw-pill {
+            letter-spacing: 0.04em;
+        }
+        .draw-picked-pop {
+            animation: drawPickedPop 0.55s ease-out;
+        }
+        @keyframes drawPickedPop {
+            0% {
+                transform: scale(0.9);
+                background: rgba(37, 99, 235, 0.25);
+                box-shadow: 0 0 0 rgba(59, 130, 246, 0);
+            }
+            45% {
+                transform: scale(1.08);
+                background: rgba(59, 130, 246, 0.45);
+                box-shadow: 0 0 18px rgba(59, 130, 246, 0.55);
+            }
+            100% {
+                transform: scale(1);
+                background: rgba(15, 23, 42, 0.8);
+                box-shadow: 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans overflow-x-hidden selection:bg-blue-500 selection:text-white">
+
+    <div class="bg-burst"></div>
+
+    <section id="home-screen" class="min-h-screen flex items-center justify-center px-4 md:px-8 py-10">
+        <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div class="glass-panel rounded-3xl p-7 md:p-10 border border-white/15 shadow-2xl">
+                <span class="inline-flex items-center gap-2 bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-semibold tracking-wider uppercase px-3 py-1 rounded-full">
+                    Edição especial
+                </span>
+                <h1 class="home-title mt-4 text-4xl md:text-6xl font-extrabold leading-tight">
+                    Passa ou Repassa
+                    <span class="block text-emerald-300">Python + Torta na Cara</span>
+                </h1>
+                <p class="mt-5 text-slate-300 text-lg leading-relaxed">
+                    Entre na disputa, teste seus conhecimentos de Java e garanta sua honra antes de levar uma torta na cara.
+                </p>
+                <div class="mt-7 flex flex-wrap gap-3">
+                    <button onclick="startGame()" class="px-7 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-lime-500 hover:from-emerald-400 hover:to-lime-400 text-slate-950 font-extrabold tracking-wide shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-1">
+                        Comecar Jogo
+                    </button>
+                    <span class="px-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-slate-300 text-sm md:text-base">
+                        <strong class="text-white" id="home-total-questions">0</strong> perguntas no modo desafio
+                    </span>
+                </div>
+
+                <div class="mt-4 w-full flex flex-wrap items-center gap-2 bg-white/5 border border-white/10 rounded-xl p-2">
+                    <span class="text-xs md:text-sm text-slate-300 font-semibold whitespace-nowrap">Sorteador</span>
+                    <span class="draw-status draw-pill px-3 py-1 rounded-lg bg-slate-900/80 border border-white/10 text-emerald-300 text-xs md:text-sm font-mono">
+                        Restantes: 0
+                    </span>
+                    <span class="draw-picked draw-pill px-3 py-1 rounded-lg bg-slate-900/80 border border-white/10 text-blue-300 text-xs md:text-sm font-mono">
+                        Sorteada: --
+                    </span>
+                    <button onclick="drawRandomQuestion()" class="btn-draw px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold transition-colors">
+                        Sortear
+                    </button>
+                    <button onclick="goToDrawnQuestion()" class="btn-go-draw px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold transition-colors opacity-50 cursor-not-allowed" disabled>
+                        Ir
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="glass-panel rounded-3xl p-6 flex flex-col items-center text-center">
+                    <h3 class="font-bold text-xl text-blue-200">Tema Python</h3>
+                    <img
+                        src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
+                        alt="Logo Python"
+                        class="pulse-java h-36 md:h-44 mt-4 drop-shadow-[0_8px_24px_rgba(59,130,246,0.45)]"
+                    >
+                    <p class="text-slate-300 mt-4 text-sm">Questoes sobre sintaxe, estruturas de controle, listas e logica.</p>
+                </div>
+
+                <div class="glass-panel rounded-3xl p-6 flex flex-col items-center text-center">
+                    <h3 class="font-bold text-xl text-amber-200">Torta na cara</h3>
+                    <svg class="pie-splash mt-4" width="170" height="140" viewBox="0 0 170 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustracao de torta na cara">
+                        <ellipse cx="85" cy="116" rx="60" ry="14" fill="#5B4A1E"/>
+                        <path d="M30 84C30 84 44 42 85 42C126 42 140 84 140 84H30Z" fill="#EAB308"/>
+                        <path d="M36 84H134L126 106H44L36 84Z" fill="#CA8A04"/>
+                        <path d="M53 64C53 64 58 52 67 52C76 52 79 64 79 64H53Z" fill="#F8FAFC"/>
+                        <path d="M90 64C90 64 95 50 106 50C117 50 120 64 120 64H90Z" fill="#F8FAFC"/>
+                        <circle cx="132" cy="24" r="18" fill="#FED7AA"/>
+                        <circle cx="126" cy="20" r="3" fill="#1F2937"/>
+                        <circle cx="138" cy="20" r="3" fill="#1F2937"/>
+                        <path d="M124 31C124 31 128 35 132 35C136 35 140 31 140 31" stroke="#1F2937" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M117 12C117 12 113 4 106 5" stroke="#F8FAFC" stroke-width="6" stroke-linecap="round"/>
+                        <path d="M147 11C147 11 153 4 160 7" stroke="#F8FAFC" stroke-width="6" stroke-linecap="round"/>
+                    </svg>
+                    <p class="text-slate-300 mt-4 text-sm">Errou? A torcida decide se vai ter torta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main id="quiz-main" class="hidden flex-grow flex flex-col items-center justify-center p-4 md:p-8 w-full max-w-5xl mx-auto relative">
+        
+       
+
+        <!-- Container da Questão -->
+        <div id="question-container" class="glass-panel w-full rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden flex flex-col">
+            
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+                <span class="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Questão <span id="current-question-num">1</span> / <span id="total-questions">0</span>
+                </span>
+                <span class="text-slate-400 text-sm font-mono" id="question-id-display">#Q1</span>
+            </div>
+
+            <!-- Texto da Questão -->
+            <h2 id="question-text" class="text-2xl md:text-3xl font-semibold leading-relaxed mb-6 text-white break-words">
+                Carregando pergunta...
+            </h2>
+
+            <!-- Opções -->
+            <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-auto">
+                <!-- Opções serão injetadas via JS -->
+            </div>
+
+        </div>
+    </main>
+
+    <footer id="quiz-footer" class="hidden w-full bg-[#0f172a] border-t border-white/10 p-4 sticky bottom-0 z-10">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+
+            <div class="w-full md:w-auto flex flex-wrap items-center gap-2 bg-white/5 border border-white/10 rounded-xl p-2">
+                <span class="text-xs md:text-sm text-slate-300 font-semibold whitespace-nowrap">Sorteador</span>
+                <span class="draw-status draw-pill px-3 py-1 rounded-lg bg-slate-900/80 border border-white/10 text-emerald-300 text-xs md:text-sm font-mono">
+                    Restantes: 0
+                </span>
+                <span class="draw-picked draw-pill px-3 py-1 rounded-lg bg-slate-900/80 border border-white/10 text-blue-300 text-xs md:text-sm font-mono">
+                    Sorteada: --
+                </span>
+                <button onclick="drawRandomQuestion()" class="btn-draw px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold transition-colors">
+                    Sortear
+                </button>
+                <button onclick="goToDrawnQuestion()" class="btn-go-draw px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold transition-colors opacity-50 cursor-not-allowed" disabled>
+                    Ir
+                </button>
+            </div>
+            
+            <button onclick="prevQuestion()" class="w-full md:w-auto px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors font-semibold text-slate-300 flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                Anterior
+            </button>
+
+            <button id="btn-reveal" onclick="revealAnswer()" class="w-full md:w-auto px-10 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 shadow-lg shadow-green-500/30 transition-all font-bold text-white text-lg flex items-center justify-center gap-2 transform hover:-translate-y-1">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                Revelar Resposta
+            </button>
+
+            <button onclick="nextQuestion()" class="w-full md:w-auto px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors font-semibold text-slate-300 flex items-center justify-center gap-2">
+                Próxima
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        // Mapeamento das alternativas: A=0, B=1, C=2, D=3, E=4
+        const questions = [
+    {
+        q: "Qual dos \"if\" abaixo será executado corretamente?\n\n1: number = 5\n   if number 2==0:\n       print(\"Número par\")\n   else\n       print(\"Número impar\")\n\n2: number = 5\n   if number% 2==0\n       print(\"Número par\")\n\n3: number = 5\n   if number% 2=0;\n       print(\"Número par\")\n   else:\n       print(\"Número impar\")\n\n4: number = 5\n   if number % 2 == 0:\n       print(\"Número par\")\n   else:\n       print(\"Número impar\")",
+        opts: ["Opção 1", "Opção 2", "Opção 3", "Opção 4"],
+        ans: 2 // C - Nota: A opção 4 (D) é a correta em Python, mas o gabarito oficial marca C (3).
+    },
+    {
+        q: "Em Python, 'Olá', é o mesmo que \"Olá\"",
+        opts: ["Falso", "Verdadeiro"],
+        ans: 1 // B
+    },
+    {
+        q: "Comando utilizado para entrada de dados pelo teclado em Python.",
+        opts: ["integer('Texto')", "print('Texto')", "input('Texto')", "var('Texto')"],
+        ans: 2 // C
+    },
+    {
+        q: "Como você começa a escrever um loop while em Python?",
+        opts: ["while x > y:", "while x > y {", "x > y while {", "while (x > y)"],
+        ans: 0 // A
+    },
+    {
+        q: "Qual a palavra reservada (comando) é utilizado para apresentar no ecrã um número ou texto?",
+        opts: ["command", "output", "input", "print"],
+        ans: 3 // D
+    },
+    {
+        q: "Python usa { } para identificar blocos de códigos dentro de estruturas como IF e WHILE.",
+        opts: ["Verdadeiro", "Falso"],
+        ans: 1 // B
+    },
+    {
+        q: "Qual a saída do código abaixo?\nfor i in range(10):\n  print(i)",
+        opts: [
+            "123456789", 
+            "Traceback (most recent call last):\nFile \"/Users/carl/Documents/test.py\", line 3, in <module>\nfor i in rnge(10):\nNameError: name 'rnge' is not defined", 
+            "0123456789", 
+            "0\\n1\\n2\\n3\\n4\\n5\\n6\\n7\\n8\\n9"
+        ],
+        ans: 3 // D
+    },
+    {
+        q: "Selecione a alternativa que apresenta o conceito do operador lógico or (ou).",
+        opts: [
+            "Retorna True se todas as condições forem verdadeiras, caso contrário retorna False.",
+            "Retorna True se uma das condições for verdadeiras, caso contrário retorna False.",
+            "Realiza a subtração de duas variáveis.",
+            "Inverte o resultado: se o resultado da expressão for True, o operador retorna False."
+        ],
+        ans: 1 // B
+    },
+    {
+        q: "Na programação, ... é um objeto (uma posição, frequentemente localizada na memória) capaz de reter e representar um valor ou expressão.... Armazenam dados. Só \"existem\" em tempo de execução, são associadas a \"nomes\", chamados identificadores. Estes conceitos se referem a:",
+        opts: ["estrutura de decisão", "variáveis", "estrutura de repetição", "pseudocódigo"],
+        ans: 1 // B
+    },
+    {
+        q: "num1 = int(input(\"Enter your first number\"))\nnum2 = int(input(\"Enter your second number\"))\nprint(num1 + num2)\nQual resultado aparecerá no console se for inserido os números 15 e 20 pelo usuário?",
+        opts: ["35", "\"num1+num2\"", "1520", "Erro"],
+        ans: 0 // A
+    },
+    {
+        q: "Qual método pode ser usado para retornar uma string em letras maiúsculas?",
+        opts: ["upper()", "upperCase()", "toUpperCase()", "uppercase()"],
+        ans: 0 // A
+    },
+    {
+        q: "Selecione a alternativa que apresenta um operador aritmético.",
+        opts: ["=", "*", "<", "and"],
+        ans: 1 // B
+    },
+    {
+        q: "Qual é a extensão dos ficheiros python?",
+        opts: [".pptx", ".docx", ".py", ".xlsx"],
+        ans: 2 // C
+    },
+    {
+        q: "Selecione a alternativa que representa Tabela-Verdade da imagem:\nV + V = V\nV + F = V\n F + V = V\n F + F = F",
+        opts: ["not (não)", "and (e)", "or (ou)", "xor"],
+        ans: 2 // C
+    },
+    {
+        q: "Como você começa a escrever um loop for em Python?",
+        opts: ["for x > y", "for each x in y:", "for x in y:", "for (x=0; x<y; x++)"],
+        ans: 2 // C
+    },
+    {
+        q: "No código a seguir, o o que acontecerá se uma senha errada for digitada?\nwhile senha ! = \"computer\":\n  print(\"Entre com a senha: \")\n  senha = input()",
+        opts: ["Ele continuará pedindo para digitar a senha", "Ele irá logar no sistema", "Dará um erro", "O programa será encerrado"],
+        ans: 0 // A
+    },
+    {
+        q: "Qual dessas coleções define uma LISTA?",
+        opts: [
+            "(\"maça\", \"banana\", \"amora\")", 
+            "{\"maça\", \"banana\", \"amora\"}", 
+            "{\"nome\": \"maça\", \"cor\": \"vermelha\"}", 
+            "[\"maça\", \"banana\", \"amora\"]"
+        ],
+        ans: 3 // D
+    },
+    {
+        q: "# What is the output?\nnumber = 5\nwhile number > 0:\n  number = number - 1\n  print(number)\nQual é a saída?",
+        opts: ["54321", "43210", "4 3 2 1 0", "5 4 3 2 1"],
+        ans: 1 // B
+    },
+    {
+        q: "Que simbolo é utilizado em python para atribuir valores a uma variável?",
+        opts: ["asterísco *", "forward slash /", "soma +", "igual ="],
+        ans: 3 // D
+    },
+    {
+        q: "Selecione a alternativa que representa Tabela-Verdade da imagem:\nV + V = V\nV + F = F\n F + V = F\n F + F = F",
+        opts: ["not (não)", "and (e)", "or (ou)", "xor"],
+        ans: 1 // B
+    },
+    {
+        q: "Quando não sabemos o número de repetição, deveremos usar qual estrutura de controle em Python?",
+        opts: ["if", "while", "if/elif/else", "for", "if/else"],
+        ans: 1 // B
+    },
+    {
+        q: "Para criar um looping infinito ou uma repetição sem fim no em Python, podemos usar a seguinte estrutura:",
+        opts: ["while c==1:", "while True:", "while looping:", "while c!=0:", "while False:"],
+        ans: 1 // B
+    },
+    {
+        q: "Qual é a saída do seguinte comando?\nvar = 30\nif var < 2 or var > 8:\n  print(\"menor que 2 ou maior que 8\")\nelse:\n  print(\"entre 2 e 8\")",
+        opts: ["entre 2 e 8", "menor que 2 ou maior que 8", "SyntaxError", "Nenhuma alternativa"],
+        ans: 1 // B
+    },
+    {
+        q: "Se queremos mais do que duas opções, o que utilizamos?",
+        opts: ["elif", "if", "else", "ifif"],
+        ans: 0 // A
+    },
+    {
+        q: "Qual é o resultado da expressão:\n(False or True) or False",
+        opts: ["False", "True", "Erro", "Nenhum"],
+        ans: 1 // B
+    },
+    {
+        q: "Qual é a sintaxe correta para gerar \"Hello World\" em Python?",
+        opts: ["echo \"Hello World\"", "print(\"Hello World\")", "echo(\"Hello World\");", "p(\"Hello World\")"],
+        ans: 1 // B
+    },
+    {
+        q: "Como se atribui um valor inteiro em python?",
+        opts: ["int", "ing", "in", "integer"],
+        ans: 0 // A
+    },
+    {
+        q: "Qual o resultado da saída do código seguinte?\nprint( 3*4+5 )",
+        opts: ["27", "12", "17", "SyntaxError"],
+        ans: 2 // C
+    },
+    {
+        q: "Qual é o resultado da seguinte linha de código?\nprint(\"Hello world!\\nHello world!\")",
+        opts: ["Hello world!\\nHello world! (com quebra de linha)", "Hello world! Hello world!", "Hello world!", "SyntaxError"],
+        ans: 0 // A
+    },
+    {
+        q: "O que é uma variável?",
+        opts: ["Uma caixa (localização na memória) onde são guardados os valores", "tipo de gráfico", "tipo de memória", "tipo de dados"],
+        ans: 0 // A
+    },
+    {
+        q: "Se colocarmos uma instrução fora de uma estrutura de repetição, ela vai executar ___. Porém, se colocarmos essa mesma instrução dentro de uma estrutura de repetição, ela vai executar ___.",
+        opts: ["várias vezes / uma vez", "uma vez / várias vezes", "infinitamente / infinitamente", "várias vezes / várias vezes", "uma vez / uma vez"],
+        ans: 1 // B
+    },
+    {
+        q: "x = 4\nx = \"Camila\"\nprint(x)\nA saída do programa acima é:",
+        opts: ["Camila", "4", "4Camila", "Erro"],
+        ans: 0 // A
+    },
+    {
+        q: "Selecione a alternativa com um nome válido para uma variável na linguagem Python.",
+        opts: ["media salarial", "multiplicação", "if", "1 numero", "salario1"],
+        ans: 4 // E
+    },
+    {
+        q: "Qual é a saída do seguinte comando?\nvar = 10\nif var < 2 and var > 8:\n  print(\"menor que 2 e maior que 8\")\nelse:\n  print(\"menor que 2 ou maior que 8\")",
+        opts: ["menor que 2 e maior que 8", "menor que 2 ou maior que 8", "Erro", "Nenhuma das opções"],
+        ans: 1 // B
+    },
+    {
+        q: "counter = 5\nwhile counter > 2:\n  print (counter)\n  counter -= 1\nQual é a saída do seguinte comando?",
+        opts: ["5\\n4\\n3", "123", "54321", "432"],
+        ans: 0 // A
+    },
+    {
+        q: "Selecione a alternativa que apresenta o operador de atribuição.",
+        opts: ["//", "<", "=", "*"],
+        ans: 2 // C
+    },
+    {
+        q: "Como se atribui um valor string em python?",
+        opts: ["stg", "str", "stri", "string"],
+        ans: 1 // B
+    },
+    {
+        q: "for x in range (1,11):\n  print (x)\nO que resulta deste código?",
+        opts: ["apresenta os números de 1 a 11", "Print Error", "apresenta os números de 2 a 10", "apresenta os números de 1 a 10"],
+        ans: 3 // D
+    },
+    {
+        q: "Word = input('Choose a word: ')\nfor letter in Word:\n  print (letter)\nO que resulta deste código?",
+        opts: ["apresenta um erro (se Word não for definido antes, caso case sensitive)", "apresenta a palavra 'letter'", "Apresenta uma entrada de dados para o utilizador", "Apresenta uma entrada de dados a cada momento"],
+        ans: 0 // A
+    },
+    {
+        q: "Qual a sintaxe utilizada para inserir uma quebra de linha numa string?",
+        opts: ["\\n", "n", "\\v", "/"],
+        ans: 0 // A
+    },
+    {
+        q: "for x in range(0,12,2):\n  print (x)\nQual será a saída desse código?",
+        opts: ["2,4,6,8,10", "2,4,6,8,10,12", "0,2,4,6,8,10", "1,2,3,4,5,6,7,8,9,10,11,12"],
+        ans: 2 // C
+    },
+    {
+        q: "Marque abaixo estruturas de repetição presentes no Python:",
+        opts: ["While e For", "While e Elif", "For e Else", "If e While"],
+        ans: 0 // A
+    },
+    {
+        q: "Python usa INDENTAÇÃO para identificar blocos de códigos dentro de estruturas como IF e WHILE.",
+        opts: ["True", "False"],
+        ans: 0 // A
+    },
+    {
+        q: "A estrutura ENQUANTO é:",
+        opts: ["Uma estrutura de condição", "Uma estrutura de alienação", "Uma estrutura de atribuição", "Uma estrutura de repetição"],
+        ans: 3 // D
+    },
+    {
+        q: "Qual é a instrução que podemos usar para interromper um laço a qualquer momento?",
+        opts: ["else", "break", "pausa", "stop"],
+        ans: 1 // B
+    },
+    {
+        q: "name = \"Dave\"\nprint (name)\nQual é o resultado da saída?",
+        opts: ["name", "'Dave'", "Dave", "(name)"],
+        ans: 2 // C
+    },
+    {
+        q: "São estruturas de repetição",
+        opts: ["if, else, elif", "for e while", "listas, for e while", "if, else, elif, for e while"],
+        ans: 1 // B
+    },
+    {
+        q: "Qual loop é mais indicado quando você sabe quantas vezes deseja repetir algo?",
+        opts: ["IF function", "Loop while", "Loop for", "Condicional"],
+        ans: 2 // C
+    },
+    {
+        q: "Analise o código abaixo e identifique quais das afirmações abaixo são verdadeiras:\nfor counter in range(10,101,10):\n  print(counter)",
+        opts: ["Começa em 1, vai até 100, aumenta em 1", "Começa em 10, vai até 100, aumenta em 10", "Começa em 10, vai até 101, aumenta em 10", "Começa em 10, vai até 1000, aumenta em 10"],
+        ans: 1 // B
+    },
+    {
+        q: "variable_1 = 1\nvariable_2 = 2\nauxiliary = variable_1\nvariable_1 = variable_2\nvariable_2 = auxiliary\nprint(\"variable_1\",variable_1)\nprint(\"variable_2\",variable_2)\nQual é a saída do seguinte comando?",
+        opts: ["variable_1 2\\nvariable_22", "variable_1 1\\nvariable_22", "variable_1 2\\nvariable_2 1", "variable_1 1\\nvariable_2 1"],
+        ans: 2 // C
+    },
+    {
+        q: "Qual o operador que significa equivalente a igual?",
+        opts: ["=>", "<=", "=", "=="],
+        ans: 3 // D
+    },
+    {
+        q: "Qual dessas coleções define uma TUPLA?",
+        opts: [
+            "{\"nome\": \"maça\", \"cor\": \"vermelha\"}", 
+            "[\"maça\", \"banana\", \"amora\"]", 
+            "(\"maça\", \"banana\", \"amora\")", 
+            "{\"maça\", \"banana\", \"amora\"}"
+        ],
+        ans: 2 // C
+    },
+    {
+        q: "Se queremos mais do que duas opções, o que utilizamos?",
+        opts: ["ifif", "else", "if", "elif"],
+        ans: 3 // D
+    },
+    {
+        q: "Qual dos operadores aritméticos a seguir tem a maior prioridade (executa primeiro)?",
+        opts: ["+", "/", "**", "//", "*"],
+        ans: 2 // C
+    },
+    {
+        q: "Como você começa a escrever uma instrução if em Python?",
+        opts: ["if (x > y)", "if x > y:", "if x > y then:", "if x > y"],
+        ans: 1 // B
+    },
+    {
+        q: "Qual é a saída do seguinte comando?\nfor i in range(0, 6, 3):\n  print(i)",
+        opts: ["0\\n1\\n2\\n3", "0\\n3", "1\\n2\\n3\\n4\\n5\\n6", "0\\n3\\n6"],
+        ans: 1 // B
+    },
+    {
+        q: "If, elif e else pertencem a que tipos de estrutura?",
+        opts: ["Repetição", "Sequencial", "Função", "Condição"],
+        ans: 3 // D
+    },
+    {
+        q: "O que acontece com um bloco que está dentro de um 'while True:' em Python?",
+        opts: [
+            "ele vai executar por 1 mil vezes, já que esse é o limite de memória", 
+            "ele nunca vai executar, já que não existe uma condição especificada", 
+            "ele vai ficar em um laço eterno e nunca poderá ser interrompido, nem por uma instrução break", 
+            "ele vai ficar em um laço eterno, a não ser que seja interrompido por uma instrução break"
+        ],
+        ans: 3 // D
+    },
+    {
+        q: "# What is the output?\nnumber = 5\nwhile number > 0:\n  number = number - 1\n  print(number)\nQual é a saída?",
+        opts: ["54321", "4\\n3\\n2\\n1\\n0", "43210", "3\\n2\\n1"],
+        ans: 1 // B
+    },
+    {
+        q: "Qual dessas coleções define um DICIONÁRIO?",
+        opts: [
+            "{\"nome\": \"maça\", \"cor\": \"vermelha\"}", 
+            "[\"maça\", \"banana\", \"amora\"]", 
+            "(\"maça\", \"banana\", \"amora\")", 
+            "{\"maça\", \"banana\", \"amora\"}"
+        ],
+        ans: 0 // A
+    },
+    {
+        q: "Selecione a alternativa que representa Tabela-Verdade da imagem (V -> F; F -> V):",
+        opts: ["not (não)", "and (e)", "or (ou)", "xor"],
+        ans: 0 // A
+    },
+    {
+        q: "Qual o comando em python que coloca a questão ao utilizador - aguarda que o utilizador apresente dados?",
+        opts: ["input()", "open()", "print()", "answer()"],
+        ans: 0 // A
+    },
+    {
+        q: "O que faz o seguinte código?\nmyAge=int(myAge)",
+        opts: [
+            "Converte a var (variavel) myAge para condição", 
+            "Converte a var (variavel) myAge para inteiro", 
+            "Converte a var (variavel) myAge de inteiro para string", 
+            "Converte a var (variavel) myAge para string"
+        ],
+        ans: 1 // B
+    },
+    {
+        q: "Selecione a alternativa que apresenta o conceito do operador lógico and (e).",
+        opts: [
+            "Inverte o resultado: se o resultado da expressão for True, o operador retorna False.", 
+            "Retorna True se qualquer uma das condições for verdadeiras, caso contrário retorna False.", 
+            "Retorna True apenas se todas as condições forem verdadeiras, caso contrário retorna False.", 
+            "Realiza a subtração de duas variáveis."
+        ],
+        ans: 2 // C
+    },
+    {
+        q: "Qual é a saída do seguinte comando?\nvar = 0\nprint(var != 0)\nprint(not (var == 0))",
+        opts: ["True\\nFalse", "False\\nFalse", "True\\nTrue", "False\\nTrue"],
+        ans: 1 // B
+    },
+    {
+        q: "Comando utilizado para saída de dados em tela no Python.",
+        opts: ["var('Texto')", "integer('Texto')", "print('Texto')", "input('Texto')"],
+        ans: 2 // C
+    },
+    {
+        q: "Em Python a forma correta de nomear variáveis é:",
+        opts: ["25NewUser", "new_user25", "NEWUSER25", "NewUser25", "25_new_user"],
+        ans: 1 // B
+    },
+    {
+        q: "variable_1 = 1\nvariable_2 = 2\nvariable_1, variable_2 = variable_2, variable_1\nprint(\"variable_1\",variable_1)\nprint(\"variable_2\",variable_2)\nQual é a saída do seguinte comando?",
+        opts: ["variable_1 1\\nvariable_2 1", "variable_1 1\\nvariable_2 2", "variable_1 2\\nvariable_2 1", "variable_1 2\\nvariable_2 2"],
+        ans: 2 // C
+    },
+    {
+        q: "Qual é a saída do seguinte comando?\nvar = 2\nvar = 3\nprint(var)",
+        opts: ["5", "3", "2", "var"],
+        ans: 1 // B
+    },
+    {
+        q: "for x in range (1,11):\n  print (x)\nO que esse código fará?",
+        opts: ["imprimir os números de 1 a 10", "imprimir os números de 2 a 10", "imprimir Error", "imprimir os números de 1 a 11"],
+        ans: 0 // A
+    },
+    {
+        q: "formula = b² + 5 + a.c\nEscolha a alternativa com a aplicação da fórmula acima no Python.",
+        opts: ["formula = b*2 + 5 + a.c", "formula = b(2) + 5 + a*c", "formula < b(2) - 5.a.c", "formula = b**2 + 5 + a*c"],
+        ans: 3 // D
+    },
+    {
+        q: "variable_1 = 1\nvariable_2 = 2\nvariable_2 = variable_1\nvariable_1 = variable_2\nprint(\"variable_1\",variable_1)\nprint(\"variable_2\",variable_2)\nQual é a saída do seguinte comando?",
+        opts: ["variable_1 2\\nvariable_2 2", "variable_1 1\\nvariable_2 1", "variable_1 2\\nvariable_2 1", "variable_1 1\\nvariable_2 2"],
+        ans: 1 // B
+    },
+    {
+        q: "Qual é a linha de comando que atribui corretamente \"Tanner\" a uma variável?",
+        opts: ["name = \"Tanner\"", "input(\"Tanner\")", "name = print(\"Tanner\")", "name = input(\"Tanner\")"],
+        ans: 0 // A
+    },
+    {
+        q: "Selecione a alternativa que apresenta um operador de comparação (relacional).",
+        opts: ["=", "*", "//", "<"],
+        ans: 3 // D
+    },
+    {
+        q: "nome= \"Andressa\"\nidade = 18\nDas opções a seguir, qual a forma correta para saída de dados das seguintes variáveis:",
+        opts: [
+            "print('Seu nome é \" + nome + \"e tem\" + idade + \"anos\"", 
+            "print('Seu nome é {nome} e tem {idade} anos')", 
+            "print(f' Seu nome é nome e tem idade anos')", 
+            "print('Seu nome é', nome, 'e tem', idade, 'anos')"
+        ],
+        ans: 3 // D
+    },
+    {
+        q: "Qual o simbolo utilizado em Python para fazer um comentário?",
+        opts: [";", "#", "@", "//"],
+        ans: 1 // B
+    },
+    {
+        q: "Qual a saída do código na imagem?\nfor i in range(10):\n  print(i)",
+        opts: ["123456789\\n>>>", "Traceback (most recent call last):", "0123456789", "0\\n1\\n2\\n3\\n4\\n5\\n6\\n7\\n8\\n9"],
+        ans: 3 // D
+    },
+    {
+        q: "formula = b² + 5 + a.c\nEscolha a alternativa com a aplicação da fórmula acima no Python.",
+        opts: ["formula = b(2) + 5 + a*c", "formula < b(2) - 5.a.c", "formula = b**2 + 5 + a*c", "formula = b*2 + 5 + a.c"],
+        ans: 2 // C
+    }
+];
+
+        let currentQuestionIndex = 0;
+        let scoreBlue = 0;
+        let scoreYellow = 0;
+        let isRevealed = false;
+        let selectedOptionIndex = null;
+        let audioCtx = null;
+        let remainingRandomIndexes = [];
+        let askedIndexes = new Set();
+        let pendingDrawIndex = null;
+        let isDrawing = false;
+        let drawAnimationTimer = null;
+        let drawAnimationTimeout = null;
+        let lastRouletteTickAt = 0;
+
+        const alphabet = ['A', 'B', 'C', 'D', 'E'];
+
+        function initApp() {
+            document.getElementById('total-questions').innerText = questions.length;
+            document.getElementById('home-total-questions').innerText = questions.length;
+            updateScoreDisplay();
+            setGameStatus('Normal');
+            initRandomDrawPool();
+        }
+
+        function startGame(forcedQuestionIndex = null) {
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('quiz-main').classList.remove('hidden');
+            document.getElementById('quiz-footer').classList.remove('hidden');
+
+            if (forcedQuestionIndex !== null) {
+                currentQuestionIndex = forcedQuestionIndex;
+            }
+
+            renderQuestion();
+            markCurrentAsAsked();
+        }
+
+        function renderQuestion() {
+            isRevealed = false;
+            selectedOptionIndex = null;
+            document.getElementById('btn-reveal').disabled = false;
+            document.getElementById('btn-reveal').classList.remove('opacity-50', 'cursor-not-allowed');
+
+            const q = questions[currentQuestionIndex];
+            
+            // Atualizar contadores
+            document.getElementById('current-question-num').innerText = currentQuestionIndex + 1;
+            document.getElementById('question-id-display').innerText = `#Q${currentQuestionIndex + 1}`;
+            
+            // Processar texto da questão para blocos de código
+            const questionContainer = document.getElementById('question-text');
+            questionContainer.innerHTML = formatQuestionText(q.q);
+            
+            // Animação de reset
+            questionContainer.classList.remove('animate-slide-in');
+            void questionContainer.offsetWidth; // trigger reflow
+            questionContainer.classList.add('animate-slide-in');
+
+            // Renderizar opções
+            const optionsGrid = document.getElementById('options-grid');
+            optionsGrid.innerHTML = '';
+            
+            q.opts.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full text-left p-4 md:p-5 rounded-2xl border-2 border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 flex items-center gap-4 group`;
+                btn.onclick = () => selectOption(index);
+                
+                const letterBadge = document.createElement('span');
+                letterBadge.className = `flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-300 font-bold border border-slate-600 group-hover:bg-blue-600 group-hover:text-white transition-colors`;
+                letterBadge.innerText = alphabet[index];
+                
+                const optText = document.createElement('span');
+                optText.className = "text-base md:text-lg font-medium text-slate-200 break-words w-full";
+                optText.innerHTML = formatOptionText(opt);
+
+                btn.appendChild(letterBadge);
+                btn.appendChild(optText);
+                optionsGrid.appendChild(btn);
+            });
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function isCodeLikeLine(line) {
+            const trimmed = line.trim();
+            if (!trimmed) return false;
+
+            return /^(#|for\b|while\b|if\b|elif\b|else:|print\(|input\(|from\b|import\b|def\b|class\b|return\b|break\b|continue\b)/i.test(trimmed)
+                || /^[a-zA-Z_][a-zA-Z0-9_]*\s*=/.test(trimmed)
+                || /\b(and|or|not|in|range)\b/.test(trimmed)
+                || /^\w+\s*\(.+\)$/.test(trimmed);
+        }
+
+        function formatTextLines(lines) {
+            return lines.map((line) => escapeHtml(line)).join('<br/>');
+        }
+
+        function formatCodeLines(lines) {
+            const codeContent = lines.map((line) => escapeHtml(line)).join('\n');
+            return `<pre class="code-block animate-slide-in"><code>${codeContent}</code></pre>`;
+        }
+
+        function formatQuestionText(rawText) {
+            const lines = rawText.replace(/\r\n/g, '\n').split('\n');
+            const segments = [];
+            let textBuffer = [];
+            let codeBuffer = [];
+
+            const flushText = () => {
+                if (!textBuffer.length) return;
+                segments.push(formatTextLines(textBuffer));
+                textBuffer = [];
+            };
+
+            const flushCode = () => {
+                if (!codeBuffer.length) return;
+                segments.push(formatCodeLines(codeBuffer));
+                codeBuffer = [];
+            };
+
+            lines.forEach((line) => {
+                const trimmed = line.trim();
+                const isIndented = /^\s+\S/.test(line);
+                const looksCode = isCodeLikeLine(line) || (codeBuffer.length > 0 && (isIndented || trimmed === ''));
+
+                if (looksCode) {
+                    flushText();
+                    codeBuffer.push(line);
+                    return;
+                }
+
+                if (codeBuffer.length > 0) {
+                    flushCode();
+                }
+
+                textBuffer.push(line);
+            });
+
+            flushCode();
+            flushText();
+            return segments.join('');
+        }
+
+        function formatOptionText(optionText) {
+            const normalized = optionText.replace(/\r\n/g, '\n');
+            const lines = normalized.split('\n');
+            const hasCodeSignal = lines.length > 1 && lines.some((line) => isCodeLikeLine(line));
+
+            if (hasCodeSignal) {
+                return `<span class="option-code">${escapeHtml(normalized)}</span>`;
+            }
+
+            return escapeHtml(normalized).replace(/\n/g, '<br/>');
+        }
+
+        function selectOption(index) {
+            if (isRevealed) return; // Nao deixa trocar se já revelou
+            
+            selectedOptionIndex = index;
+            const buttons = document.querySelectorAll('.option-btn');
+            
+            buttons.forEach((btn, i) => {
+                if (i === index) {
+                    btn.classList.add('selected');
+                    btn.querySelector('span:first-child').classList.add('bg-blue-600', 'text-white', 'border-blue-500');
+                    btn.querySelector('span:first-child').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-600');
+                } else {
+                    btn.classList.remove('selected');
+                    btn.querySelector('span:first-child').classList.remove('bg-blue-600', 'text-white', 'border-blue-500');
+                    btn.querySelector('span:first-child').classList.add('bg-slate-800', 'text-slate-300', 'border-slate-600');
+                }
+            });
+        }
+
+        function revealAnswer() {
+            if (isRevealed) return;
+            isRevealed = true;
+            playRevealSound();
+            
+            const q = questions[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.option-btn');
+            
+            document.getElementById('btn-reveal').disabled = true;
+            document.getElementById('btn-reveal').classList.add('opacity-50', 'cursor-not-allowed');
+
+            buttons.forEach((btn, i) => {
+                // Remover classes de seleção visual
+                btn.classList.remove('selected');
+                
+                if (i === q.ans) {
+                    btn.classList.add('correct', 'animate-bounce-slight');
+                    btn.querySelector('span:first-child').classList.add('bg-white', 'text-green-600', 'border-white');
+                } else {
+                    if (i === selectedOptionIndex) {
+                        btn.classList.add('wrong');
+                        btn.querySelector('span:first-child').classList.add('bg-white', 'text-red-600', 'border-white');
+                    } else {
+                        btn.classList.add('faded');
+                    }
+                }
+            });
+        }
+
+        function updateScore(team, amount) {
+            if (team === 'blue') {
+                scoreBlue += amount;
+                if (scoreBlue < 0) scoreBlue = 0;
+            } else {
+                scoreYellow += amount;
+                if (scoreYellow < 0) scoreYellow = 0;
+            }
+            updateScoreDisplay();
+        }
+
+        function updateScoreDisplay() {
+            const scoreBlueEl = document.getElementById('score-blue');
+            const scoreYellowEl = document.getElementById('score-yellow');
+
+            if (scoreBlueEl) scoreBlueEl.innerText = scoreBlue;
+            if (scoreYellowEl) scoreYellowEl.innerText = scoreYellow;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                setGameStatus('Normal');
+                renderQuestion();
+                markCurrentAsAsked();
+            } else {
+                // Fim das questões
+                const qText = document.getElementById('question-text');
+                qText.innerHTML = `<div class="text-center py-10"><span class="text-5xl mb-4 block">🏆</span><br>Fim do Jogo! <br> <span class="text-xl text-blue-400 mt-4 block">Azul: ${scoreBlue} pts | Amarela: ${scoreYellow} pts</span></div>`;
+                document.getElementById('options-grid').innerHTML = '';
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                setGameStatus('Normal');
+                renderQuestion();
+                markCurrentAsAsked();
+            }
+        }
+
+        function initRandomDrawPool() {
+            clearDrawAnimation();
+            remainingRandomIndexes = questions.map((_, index) => index);
+            askedIndexes = new Set();
+            pendingDrawIndex = null;
+            isDrawing = false;
+            updateDrawStatus();
+            updatePickedDisplay();
+            enableDrawButton();
+            disableGoDrawButton();
+        }
+
+        function markCurrentAsAsked() {
+            askedIndexes.add(currentQuestionIndex);
+            remainingRandomIndexes = remainingRandomIndexes.filter((index) => index !== currentQuestionIndex);
+            updateDrawStatus();
+            if (remainingRandomIndexes.length === 0) {
+                disableDrawButton();
+            }
+        }
+
+        function drawRandomQuestion() {
+            if (remainingRandomIndexes.length === 0 || isDrawing) {
+                disableDrawButton();
+                return;
+            }
+
+            isDrawing = true;
+            disableGoDrawButton();
+            setDrawButtonsLoading();
+
+            drawAnimationTimer = setInterval(() => {
+                const previewPosition = Math.floor(Math.random() * remainingRandomIndexes.length);
+                const previewIndex = remainingRandomIndexes[previewPosition];
+                showPickedIndex(previewIndex);
+                animatePickedDisplay();
+                playRouletteTickSound();
+            }, 80);
+
+            drawAnimationTimeout = setTimeout(() => {
+                clearDrawAnimation();
+
+                const randomPosition = Math.floor(Math.random() * remainingRandomIndexes.length);
+                const chosenIndex = remainingRandomIndexes[randomPosition];
+                remainingRandomIndexes.splice(randomPosition, 1);
+                pendingDrawIndex = chosenIndex;
+
+                updateDrawStatus();
+                updatePickedDisplay();
+                animatePickedDisplay();
+                playDrawResultSound();
+                enableGoDrawButton();
+
+                isDrawing = false;
+                if (remainingRandomIndexes.length === 0) {
+                    disableDrawButton();
+                } else {
+                    enableDrawButton();
+                }
+            }, 1000);
+        }
+
+        function goToDrawnQuestion() {
+            if (pendingDrawIndex === null) return;
+
+            const chosenIndex = pendingDrawIndex;
+            const homeScreen = document.getElementById('home-screen');
+
+            pendingDrawIndex = null;
+            updatePickedDisplay();
+            disableGoDrawButton();
+
+            if (homeScreen && !homeScreen.classList.contains('hidden')) {
+                startGame(chosenIndex);
+                return;
+            }
+
+            currentQuestionIndex = chosenIndex;
+            setGameStatus('Normal');
+            renderQuestion();
+            markCurrentAsAsked();
+        }
+
+        function updateDrawStatus() {
+            document.querySelectorAll('.draw-status').forEach((status) => {
+                status.innerText = `Restantes: ${remainingRandomIndexes.length}`;
+            });
+        }
+
+        function updatePickedDisplay() {
+            document.querySelectorAll('.draw-picked').forEach((picked) => {
+                picked.innerText = pendingDrawIndex === null
+                    ? 'Sorteada: --'
+                    : `Sorteada: ${formatQuestionTag(pendingDrawIndex)}`;
+            });
+        }
+
+        function showPickedIndex(index) {
+            document.querySelectorAll('.draw-picked').forEach((picked) => {
+                picked.innerText = `Sorteada: ${formatQuestionTag(index)}`;
+            });
+        }
+
+        function formatQuestionTag(index) {
+            const digits = String(questions.length).length;
+            return `Q${String(index + 1).padStart(digits, '0')}`;
+        }
+
+        function clearDrawAnimation() {
+            if (drawAnimationTimer) {
+                clearInterval(drawAnimationTimer);
+                drawAnimationTimer = null;
+            }
+            if (drawAnimationTimeout) {
+                clearTimeout(drawAnimationTimeout);
+                drawAnimationTimeout = null;
+            }
+        }
+
+        function getAudioContext() {
+            try {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioContextClass) return null;
+                    audioCtx = new AudioContextClass();
+                }
+
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                return audioCtx;
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function playRouletteTickSound() {
+            const nowMs = performance.now();
+            if (nowMs - lastRouletteTickAt < 60) return;
+            lastRouletteTickAt = nowMs;
+
+            const ctx = getAudioContext();
+            if (!ctx) return;
+
+            const now = ctx.currentTime;
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(0.045, now + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
+            gain.connect(ctx.destination);
+
+            const osc = ctx.createOscillator();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(980, now);
+            osc.connect(gain);
+            osc.start(now);
+            osc.stop(now + 0.06);
+        }
+
+        function playDrawResultSound() {
+            const ctx = getAudioContext();
+            if (!ctx) return;
+
+            const now = ctx.currentTime;
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.exponentialRampToValueAtTime(0.18, now + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.52);
+            gain.connect(ctx.destination);
+
+            const osc1 = ctx.createOscillator();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(740, now);
+            osc1.frequency.exponentialRampToValueAtTime(988, now + 0.2);
+            osc1.connect(gain);
+            osc1.start(now);
+            osc1.stop(now + 0.26);
+
+            const osc2 = ctx.createOscillator();
+            osc2.type = 'triangle';
+            osc2.frequency.setValueAtTime(988, now + 0.18);
+            osc2.frequency.exponentialRampToValueAtTime(1175, now + 0.5);
+            osc2.connect(gain);
+            osc2.start(now + 0.18);
+            osc2.stop(now + 0.52);
+        }
+
+        function animatePickedDisplay() {
+            document.querySelectorAll('.draw-picked').forEach((picked) => {
+                picked.classList.remove('draw-picked-pop');
+                void picked.offsetWidth;
+                picked.classList.add('draw-picked-pop');
+            });
+        }
+
+        function disableDrawButton() {
+            document.querySelectorAll('.btn-draw').forEach((drawButton) => {
+                drawButton.disabled = true;
+                drawButton.classList.add('opacity-50', 'cursor-not-allowed');
+                drawButton.classList.remove('hover:bg-emerald-500');
+                drawButton.innerText = 'Esgotado';
+            });
+        }
+
+        function enableDrawButton() {
+            document.querySelectorAll('.btn-draw').forEach((drawButton) => {
+                drawButton.disabled = false;
+                drawButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                drawButton.classList.add('hover:bg-emerald-500');
+                drawButton.innerText = 'Sortear';
+            });
+        }
+
+        function setDrawButtonsLoading() {
+            document.querySelectorAll('.btn-draw').forEach((drawButton) => {
+                drawButton.disabled = true;
+                drawButton.classList.add('opacity-50', 'cursor-not-allowed');
+                drawButton.classList.remove('hover:bg-emerald-500');
+                drawButton.innerText = 'Sorteando...';
+            });
+        }
+
+        function disableGoDrawButton() {
+            document.querySelectorAll('.btn-go-draw').forEach((goButton) => {
+                goButton.disabled = true;
+                goButton.classList.add('opacity-50', 'cursor-not-allowed');
+                goButton.classList.remove('hover:bg-blue-500');
+            });
+        }
+
+        function enableGoDrawButton() {
+            document.querySelectorAll('.btn-go-draw').forEach((goButton) => {
+                goButton.disabled = false;
+                goButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                goButton.classList.add('hover:bg-blue-500');
+            });
+        }
+
+        function playRevealSound() {
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+
+                const now = ctx.currentTime;
+                const gain = ctx.createGain();
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(0.15, now + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
+                gain.connect(ctx.destination);
+
+                const osc1 = ctx.createOscillator();
+                osc1.type = 'triangle';
+                osc1.frequency.setValueAtTime(440, now);
+                osc1.frequency.exponentialRampToValueAtTime(880, now + 0.16);
+                osc1.connect(gain);
+                osc1.start(now);
+                osc1.stop(now + 0.2);
+
+                const osc2 = ctx.createOscillator();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(660, now + 0.18);
+                osc2.frequency.exponentialRampToValueAtTime(520, now + 0.42);
+                osc2.connect(gain);
+                osc2.start(now + 0.17);
+                osc2.stop(now + 0.45);
+            } catch (error) {
+                // Mantem o jogo funcional mesmo se o navegador bloquear audio.
+            }
+        }
+
+        function setGameStatus(status) {
+            const badges = document.querySelectorAll('.badge-btn');
+            badges.forEach(btn => {
+                if (btn.innerText === status || (status === 'Normal' && btn.innerText === 'Valendo')) {
+                    btn.classList.remove('opacity-50');
+                    btn.classList.add('shadow-[0_0_15px_rgba(255,255,255,0.4)]', 'scale-110', 'bg-white/30');
+                } else {
+                    btn.classList.add('opacity-50');
+                    btn.classList.remove('shadow-[0_0_15px_rgba(255,255,255,0.4)]', 'scale-110', 'bg-white/30');
+                }
+            });
+        }
+
+        // Inicia a aplicação ao carregar a página
+        window.onload = initApp;
+
+    </script>
+</body>
+</html>
